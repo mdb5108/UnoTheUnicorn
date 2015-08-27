@@ -45,11 +45,13 @@
     <Compile Include="Unicorn.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DebugView MonoGame">
-      <HintPath>..\..\..\..\Downloads\Farseer Physics Engine 3.5 Samples\Farseer Physics DebugView 3.5\bin\WindowsGL\Debug\DebugView MonoGame.dll</HintPath>
+    <Reference Include="DebugView MonoGame, Version=3.5.0.31831, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\DebugView MonoGame.dll</HintPath>
     </Reference>
-    <Reference Include="FarseerPhysics MonoGame">
-      <HintPath>..\..\..\..\Downloads\Farseer Physics Engine 3.5 Samples\Farseer Physics Engine 3.5\bin\WindowsGL\Debug\FarseerPhysics MonoGame.dll</HintPath>
+    <Reference Include="FarseerPhysics MonoGame, Version=3.5.0.31670, Culture=neutral, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Dlls\FarseerPhysics MonoGame.dll</HintPath>
     </Reference>
     <Reference Include="OpenTK">
       <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\WindowsGL\OpenTK.dll</HintPath>

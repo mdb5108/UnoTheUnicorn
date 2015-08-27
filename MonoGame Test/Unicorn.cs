@@ -70,6 +70,7 @@ namespace pony
                if(_body.LinearVelocity.X < 1)
                 {
                     _body.ApplyForce(new Vector2(5, 0));
+                   
                 }
             }else if(Keyboard.GetState().IsKeyUp(Keys.Right))
             {
