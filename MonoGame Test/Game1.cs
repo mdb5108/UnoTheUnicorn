@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using pony;
 using levels;
+using Game2;
 
 namespace MonoGame_Test
 {
@@ -29,6 +30,12 @@ namespace MonoGame_Test
         World _world;           // World where all the physics work 
         Body _floor;            // body that is effected by physics
         Levels _levels;
+
+
+        // Initialize a ballon
+        Balloon b1; 
+       
+
         public Game1()
         {
             Height = 800;
@@ -63,6 +70,11 @@ namespace MonoGame_Test
             // DebugView for Physics objects
             debugview = new DebugViewXNA(_world);
             base.Initialize();
+
+            // test~
+           
+          
+        
         }
 
         /// <summary>
@@ -78,6 +90,11 @@ namespace MonoGame_Test
             _levels.InitializeBoundaries(_world);
             Vector2 unopos = new Vector2(50, 300);
             Uno.Initialize(Content.Load<Texture2D>("Uno"), unopos,_world);
+
+          
+            b1 = new Balloon(new Vector2(500, 300),Content);
+            b1.LoadContent(Content);
+           
         }
 
         /// <summary>
@@ -114,7 +131,7 @@ namespace MonoGame_Test
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Orange);
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend);
 
             var projection = Matrix.CreateOrthographicOffCenter(
@@ -127,6 +144,8 @@ namespace MonoGame_Test
 
             Uno.Draw(spriteBatch);
 
+            // test~
+            b1.Draw(spriteBatch);
             spriteBatch.End();
          
 
