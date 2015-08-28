@@ -45,6 +45,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unicorn.cs" />
+    <Compile Include="Walls.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="DebugView MonoGame, Version=3.5.0.31831, Culture=neutral, processorArchitecture=x86">
@@ -75,10 +76,6 @@
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Content\Font.spritefont" />
-    <None Include="Content\Font.xnb" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Graphics\player.xnb">

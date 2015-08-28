@@ -30,8 +30,8 @@ namespace MonoGame_Test
         World _world;           // World where all the physics work 
         Body _floor;            // body that is effected by physics
         Levels _levels;
-
-
+        SpriteFont font;
+        public string debugstring="Debuglog";
         // Initialize a ballon
         Balloon b1; 
        
@@ -49,12 +49,7 @@ namespace MonoGame_Test
             Content.RootDirectory = "Content";
         }
 
-        /// <summary>
-        /// Allows the game to perform any initialization it needs to before starting to run.
-        /// This is where it can query for any required services and load any non-graphic
-        /// related content.  Calling base.Initialize will enumerate through any components
-        /// and initialize them as well.
-        /// </summary>
+     
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -62,25 +57,18 @@ namespace MonoGame_Test
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Uno = new Unicorn();
+            Uno = new Unicorn(this);
         
             // Create a world for physics to act
             _world = new World(new Vector2(0f, 9.8f));
+            //_world = new World(new Vector2(200, 0));
             _levels = new Levels();
             // DebugView for Physics objects
             debugview = new DebugViewXNA(_world);
             base.Initialize();
-
-            // test~
-           
-          
-        
+            Components.Add(Uno);
         }
 
-        /// <summary>
-        /// LoadContent will be called once per game and is the place to load
-        /// all of your content.
-        /// </summary>
         protected override void LoadContent()
         {
             // TODO: use this.Content to load your game content here
@@ -88,29 +76,22 @@ namespace MonoGame_Test
             debugview.LoadContent(GraphicsDevice, Content);
 
             _levels.InitializeBoundaries(_world);
-            Vector2 unopos = new Vector2(50, 300);
+            Vector2 unopos = new Vector2(Width/2, 300);
             Uno.Initialize(Content.Load<Texture2D>("Uno"), unopos,_world);
+            font = Content.Load<SpriteFont>("TestingFont");
 
-          
             b1 = new Balloon(new Vector2(500, 300),Content);
             b1.LoadContent(Content);
            
         }
 
-        /// <summary>
-        /// UnloadContent will be called once per game and is the place to unload
-        /// game-specific content.
-        /// </summary>
+       
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
+            //Uno.UnloadContent();
         }
 
-        /// <summary>
-        /// Allows the game to run logic such as updating the world,
-        /// checking for collisions, gathering input, and playing audio.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -119,21 +100,20 @@ namespace MonoGame_Test
              deltatime = gameTime.ElapsedGameTime.Milliseconds;
              deltatime = deltatime / 1000;
 
-             Uno.Update(gameTime,deltatime);
+             Uno.Update(gameTime,deltatime,_world);
        
             _world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
             base.Update(gameTime);
         }
 
-        /// <summary>
-        /// This is called when the game should draw itself.
-        /// </summary>
-        /// <param name="gameTime">Provides a snapshot of timing values.</param>
+       
+   
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Orange);
             spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend);
 
+           
             var projection = Matrix.CreateOrthographicOffCenter(
                 0f,
                 ConvertUnits.ToSimUnits(graphics.GraphicsDevice.Viewport.Width),
@@ -143,7 +123,7 @@ namespace MonoGame_Test
             debugview.RenderDebugData(ref projection);
 
             Uno.Draw(spriteBatch);
-
+            spriteBatch.DrawString(font, Uno.contactbodyname, new Vector2(Width/2, 20), Color.Tomato);
             // test~
             b1.Draw(spriteBatch);
             spriteBatch.End();

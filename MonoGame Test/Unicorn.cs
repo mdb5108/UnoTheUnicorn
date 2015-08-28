@@ -7,11 +7,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using FarseerPhysics;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
-
+using MonoGame_Test;
 namespace pony
 {
-    class Unicorn
+    class Unicorn : DrawableGameComponent
     {
         public Texture2D UnicornTexture;
 
@@ -21,9 +22,28 @@ namespace pony
 
         private bool spacekey = false;
         private bool rightkey = false;
-
+        private bool leftkey = false;
+        public string contactbodyname="nothing";
         Body _body;
-       
+        public List<string> contactnames=new List<string>();
+
+        float JumpX=0, JumpY=0,RestingValueX=0,RestingValueY=0, 
+              RightX=0,RightY=0,RightVeltoCheck=0,RightMaxVel=0, 
+              LeftX=0, LeftY = 0,LeftVeltoCheck=0,LeftMaxVel=0;
+
+        enum direction
+        {
+            floor,
+            leftwall,
+            rightwall,
+            ceiling
+        };
+        direction Direction;
+
+        public Unicorn(Game game):base(game)
+        {
+            
+        }
 
         public void Initialize(Texture2D texture,Vector2 pos,World world)
         {
@@ -36,47 +56,146 @@ namespace pony
             _body.BodyType = BodyType.Dynamic;
             _body.Restitution = 0f;
             _body.Position = ConvertUnits.ToSimUnits(pos.X,pos.Y);
-            hitting = false;
+         
+            _body.BodyName = "Unicorn";
+             hitting = false;
+            _body.OnCollision += MyOnCollision;
+            _body.OnSeparation += MyOnSeparation;
         }
 
+        public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)
+        {
+            if(!contactnames.Contains(f2.Body.BodyName))
+            {
+                contactnames.Add(f2.Body.BodyName);
+            }
+           // contactbodyname = f1.Body.BodyName + "  " + f2.Body.BodyName;
+           
+            return true;
+        }
+
+        public void MyOnSeparation(Fixture f1, Fixture f2)
+        {
+            if(contactnames.Contains(f2.Body.BodyName))
+            {
+                contactnames.Remove(f2.Body.BodyName);
+            }
+            contactbodyname = "  " ;
+        }
+
+        protected override void UnloadContent()
+        {
+            _body.OnCollision -= MyOnCollision;
+            _body.OnSeparation -= MyOnSeparation;
+            UnicornTexture.Dispose();
+        }
         // dt is deltatime
-        public void Update(GameTime gametime,float dt)
+        public void Update(GameTime gametime,float dt,World world)
         {
             Position = ConvertUnits.ToDisplayUnits(_body.Position.X-0.5f,
                                                     _body.Position.Y-0.7f);
-          //  hitting = Position.Y > 350 ? true : false;
-
+            hitting = contactnames.Count==0 ? false : true;
+           // _body.Rotation = 90*dt;
             spacekey = Keyboard.GetState().IsKeyDown(Keys.Space);
             rightkey = Keyboard.GetState().IsKeyDown(Keys.Right);
+            leftkey = Keyboard.GetState().IsKeyDown(Keys.Left);
+
+            ChangeDirections(world);
+            KeyBoardInput(dt);
+            contactbodyname = _body.LinearVelocity.ToString();
+        }
+
+        void ChangeDirections(World world)
+        {
+            if(contactnames.Contains("floor"))
+            {
+                Direction = direction.floor;
+            }else if(contactnames.Contains("left"))
+            {
+                Direction = direction.leftwall;
+            }else if(contactnames.Contains("right"))
+            {
+                Direction = direction.rightwall;
+            }else if(contactnames.Contains("ceiling"))
+            {
+                Direction = direction.ceiling;
+            }
+
+            switch(Direction)
+            {
+                case direction.floor:
+                    JumpX = 0; JumpY = -400; RestingValueX = 0; RestingValueY = _body.LinearVelocity.Y;
+                    RightX = 5; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
+                    LeftX = -5; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
+                    world.Gravity = new Vector2(0, 9.8f);
+
+                    break;
+                case direction.leftwall:
+                    JumpX = 400; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
+                    RightX = 0; RightY = 5; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
+                    LeftX = 0; LeftY = -5; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
+                    world.Gravity = new Vector2(-9.8f, 0);
+                    break;
+                case direction.rightwall:
+                    JumpX = -400; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
+                    RightX = 0; RightY = -5; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = -2;
+                    LeftX = 0; LeftY = 5; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = 1;
+                    world.Gravity = new Vector2(9.8f, 0);
+                    break;
+                case direction.ceiling:
+                    JumpX = 0; JumpY = 400; RestingValueX = 0; RestingValueY = _body.LinearVelocity.Y;
+                    RightX = 5; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
+                    LeftX = -5; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
+                    world.Gravity = new Vector2(0, -9.8f);
+                    break;
+                default:
+                    break;
+            }
+        }
+
+        void KeyBoardInput(float dt)
+        {
+            //////////////////////////////////////////JUMP/////////////////////////////////////////////
             if (spacekey)
             {
                 elapsedtime += dt;
-                if(elapsedtime<=dt)
+                if (hitting && elapsedtime <= dt)
                 {
-                    if (_body.LinearVelocity.Y > -6)
-                    {
-                        _body.ApplyForce(new Vector2(0, -400), new Vector2(0, 2));
-                    }
-                }  
+                 
+                   _body.ApplyForce(new Vector2(JumpX, JumpY));
+                    
+                }
             }
             else if (Keyboard.GetState().IsKeyUp(Keys.Space))
             {
                 elapsedtime = 0;
             }
-
-
+            /////////////////////////////////////////RIGHT///////////////////////////////////////////////
             if (rightkey)
             {
-               if(_body.LinearVelocity.X < 1)
+                if (RightVeltoCheck < RightMaxVel || RightVeltoCheck==0)
                 {
-                    _body.ApplyForce(new Vector2(5, 0));
-                   
-                }
-            }else if(Keyboard.GetState().IsKeyUp(Keys.Right))
-            {
-                _body.LinearVelocity = new Vector2(0, _body.LinearVelocity.Y);
-            }
+                    _body.ApplyForce(new Vector2(RightX, RightY));
 
+                }
+            }
+            else if (!leftkey && Keyboard.GetState().IsKeyUp(Keys.Right))
+            {
+                _body.LinearVelocity = new Vector2(RestingValueX, RestingValueY);
+            }
+            ///////////////////////////////////////////LEFT///////////////////////////////////////////////
+            if (leftkey)
+            {
+                if (LeftVeltoCheck > LeftMaxVel || LeftVeltoCheck == 0)
+                {
+                    _body.ApplyForce(new Vector2(LeftX, LeftY));
+                }
+              
+            }
+            else if (!rightkey && Keyboard.GetState().IsKeyUp(Keys.Left))
+            {
+                _body.LinearVelocity = new Vector2(RestingValueX,RestingValueY);
+            }
         }
 
         public void Draw(SpriteBatch spritebatch)
@@ -84,6 +203,15 @@ namespace pony
             spritebatch.Draw(UnicornTexture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
         }
 
+        double ConvertDegreetoRadians(float degree)
+        {
+            double radian = 0;
+
+            radian = degree * (Math.PI/ 180);
+
+            return radian;
+
+        }
 
     }
 }
