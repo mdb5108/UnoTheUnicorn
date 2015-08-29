@@ -92,7 +92,7 @@ namespace pony
         // dt is deltatime
         public void Update(GameTime gametime,float dt,World world)
         {
-            Position = ConvertUnits.ToDisplayUnits(_body.Position.X-0.5f,
+            Position = ConvertUnits.ToDisplayUnits(_body.Position.X-0.6f,
                                                     _body.Position.Y-0.7f);
             hitting = contactnames.Count==0 ? false : true;
            // _body.Rotation = 90*dt;
@@ -138,8 +138,8 @@ namespace pony
                     break;
                 case direction.rightwall:
                     JumpX = -400; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
-                    RightX = 0; RightY = -5; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = -2;
-                    LeftX = 0; LeftY = 5; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = 1;
+                    RightX = 0; RightY = 5; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
+                    LeftX = 0; LeftY = -5; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
                     world.Gravity = new Vector2(9.8f, 0);
                     break;
                 case direction.ceiling:
