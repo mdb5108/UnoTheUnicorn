@@ -8,6 +8,8 @@ using FarseerPhysics.DebugView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+
 using pony;
 using levels;
 using Game2;
@@ -36,9 +38,11 @@ namespace MonoGame_Test
         List<Balloon> balloons = new List<Balloon>();
         List<Vector2> balloonsPos = new List<Vector2> {new Vector2(100,100),new Vector2(200,200),new Vector2(300,300),new Vector2(400,400),new Vector2(500,500),new Vector2(600,500),new Vector2(700,500)};
         int amount;
-       // Balloon b1; 
         Texture2D backgroundTexture;
-       
+
+
+        //Add Songs
+        private Song backgroundMusic;
 
         public Game1()
         {
@@ -103,6 +107,9 @@ namespace MonoGame_Test
    
            
             backgroundTexture = Content.Load<Texture2D>("StoneDungeon_bg");
+
+          //  backgroundMusic = Content.Load<Song>("test");
+           // MediaPlayer.Play(backgroundMusic);
         }
 
        
