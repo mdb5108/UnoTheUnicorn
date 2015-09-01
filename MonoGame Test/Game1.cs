@@ -34,6 +34,7 @@ namespace MonoGame_Test
         public string debugstring="Debuglog";
         // Initialize a ballon
         Balloon b1; 
+        Texture2D backgroundTexture;
        
 
         public Game1()
@@ -83,6 +84,7 @@ namespace MonoGame_Test
             b1 = new Balloon(new Vector2(500, 300),Content);
             b1.LoadContent(Content);
            
+            backgroundTexture = Content.Load<Texture2D>("StoneDungeon_bg");
         }
 
        
@@ -111,9 +113,12 @@ namespace MonoGame_Test
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Orange);
-            spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend);
+            spriteBatch.Begin(SpriteSortMode.Immediate,BlendState.AlphaBlend);
 
-           
+            spriteBatch.Draw(backgroundTexture, new Rectangle(0,
+                                                              0,
+                                                              graphics.GraphicsDevice.Viewport.Width,
+                                                              graphics.GraphicsDevice.Viewport.Height), Color.White);
             var projection = Matrix.CreateOrthographicOffCenter(
                 0f,
                 ConvertUnits.ToSimUnits(graphics.GraphicsDevice.Viewport.Width),
