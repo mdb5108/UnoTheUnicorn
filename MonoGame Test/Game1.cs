@@ -33,7 +33,10 @@ namespace MonoGame_Test
         SpriteFont font;
         public string debugstring="Debuglog";
         // Initialize a ballon
-        Balloon b1; 
+        List<Balloon> balloons = new List<Balloon>();
+        List<Vector2> balloonsPos = new List<Vector2> {new Vector2(100,100),new Vector2(200,200),new Vector2(300,300)};
+        int amount = 3;
+       // Balloon b1; 
         Texture2D backgroundTexture;
        
 
@@ -48,6 +51,15 @@ namespace MonoGame_Test
                 IsFullScreen = true
             };
             Content.RootDirectory = "Content";
+
+
+
+            // Initialize the balloon list
+            for (int i = 0; i < amount; i++)
+            {
+                Balloon balloon = new Balloon((Vector2)balloonsPos[i],Content);
+                balloons.Add(balloon);
+            }
         }
 
      
@@ -81,8 +93,14 @@ namespace MonoGame_Test
             Uno.Initialize(Content.Load<Texture2D>("Uno"), unopos,_world);
             font = Content.Load<SpriteFont>("TestingFont");
 
-            b1 = new Balloon(new Vector2(500, 300),Content);
-            b1.LoadContent(Content);
+
+            for (int i = 0; i < amount; i++)
+            {
+                Balloon b = (Balloon)balloons[i];
+                b.LoadContent(Content);
+            }
+         //   b1 = new Balloon(new Vector2(500, 300),Content);
+          //  b1.LoadContent(Content);
            
             backgroundTexture = Content.Load<Texture2D>("StoneDungeon_bg");
         }
@@ -130,7 +148,13 @@ namespace MonoGame_Test
             Uno.Draw(spriteBatch);
             spriteBatch.DrawString(font, Uno.contactbodyname, new Vector2(Width/2, 20), Color.Tomato);
             // test~
-            b1.Draw(spriteBatch);
+            for (int i = 0; i < amount; i++)
+            {
+                Balloon b = (Balloon)balloons[i];
+                b.Draw(spriteBatch);
+
+            }
+         //   b1.Draw(spriteBatch);
             spriteBatch.End();
          
 
