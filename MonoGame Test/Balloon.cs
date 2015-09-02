@@ -12,23 +12,25 @@ namespace MonoGame_Test
     public class Balloon
     {
         private Texture2D Texture;
-        private string path;
+        public string path;
         private Vector2 Position;
         public bool isActive;
 
         private Texture2D popTexture;
         private int popImageCount;
-        private string color;
+       
 
         public ContentManager Content;
         Body _body;
         public string name;
-        public Balloon(Vector2 Position, ContentManager Content)
+       
+                
+        public Balloon(Vector2 Position, ContentManager Content, string colorPath)
         {
             this.Position = Position;
             this.Content = Content;
             isActive = true;
-            path = "blue_Balloon";
+            path = colorPath;
 
      
         }
@@ -48,13 +50,13 @@ namespace MonoGame_Test
         }
         public void LoadContent(ContentManager Content)
         {
-            this.Content = Content;
+          
             Texture = Content.Load<Texture2D>(path);
 
 
       
-                string tempPath = "PopImg";
-                popTexture = Content.Load<Texture2D>(tempPath);
+            string tempPath = "PopImg";
+            popTexture = Content.Load<Texture2D>(tempPath);
                 
            
         }
@@ -69,16 +71,21 @@ namespace MonoGame_Test
            
         }
 
-        public void Update(Unicorn unicorn)
+        public Balloon Update(Unicorn unicorn)
         {
             float distance = Vector2.Distance(unicorn.Position, Position );
 
             if (Math.Abs(distance) < 20)
+            {
                 isActive = false;
-                
-                
+
+                return this;
+            }
+
+            return null;
 
         }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {

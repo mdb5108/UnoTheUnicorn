@@ -18,6 +18,7 @@ using xTile;
 using xTile.Dimensions;
 using xTile.Display;
 
+
 namespace MonoGame_Test
 {
     /// <summary>
@@ -38,10 +39,14 @@ namespace MonoGame_Test
         Levels _levels;
         SpriteFont font;
         public string debugstring="Debuglog";
-        // Initialize a ballon
-        List<Balloon> balloons = new List<Balloon>();
-        List<Vector2> balloonsPos = new List<Vector2> {new Vector2(100,100),new Vector2(200,200),new Vector2(300,300),new Vector2(400,400),new Vector2(500,500),new Vector2(600,500),new Vector2(700,500)};
        
+        
+        // Initialize  balloons
+        List<Balloon> balloons = new List<Balloon>();
+        List<Vector2> balloonsPos = new List<Vector2> {new Vector2(100,500),new Vector2(200,420),new Vector2(300,540),new Vector2(400,500),new Vector2(500,520),new Vector2(600,510),new Vector2(700,470)};
+        string[] colorType = { "Balloon_blue", "Balloon_green", "Balloon_orange", "Balloon_red", "Balloon_yellow" };
+        List<string> colorPath;
+
         int amount;
         Texture2D backgroundTexture;
 
@@ -50,12 +55,15 @@ namespace MonoGame_Test
         xTile.Dimensions.Rectangle viewport;
 
         //Add Songs
-        private Song backgroundMusic;
-
+        Song song;
+      
         public Game1()
         {
-            Height = 1024;
-            Width = 1536;
+         //   Height = 1024;
+          //  Width = 1536;
+
+            Height = 700;
+            Width = 900;
             graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferHeight = Height,
@@ -67,10 +75,12 @@ namespace MonoGame_Test
             Content.RootDirectory = "Content";
 
             // Initialize the balloon list
-            amount = balloonsPos.Count;
+           amount = balloonsPos.Count;
+           colorPath = new List<string>{colorType[0],colorType[1],colorType[2],colorType[3],colorType[4],colorType[2],colorType[0]};
+
             for (int i = 0; i < amount; i++)
             {
-                Balloon balloon = new Balloon((Vector2)balloonsPos[i],Content);
+                Balloon balloon = new Balloon((Vector2)balloonsPos[i], Content, (string)colorPath[i]);
                 balloons.Add(balloon);
             }
 
@@ -83,7 +93,7 @@ namespace MonoGame_Test
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            Uno = new Unicorn(this);
+            Uno = new Unicorn(this, Content);
         
             // Create a world for physics to act
             _world = new World(new Vector2(0f, 9.8f));
@@ -125,11 +135,17 @@ namespace MonoGame_Test
                 b.LoadContent(Content);
             }
    
+
            
             backgroundTexture = Content.Load<Texture2D>("StoneDungeon_bg");
 
           //  backgroundMusic = Content.Load<Song>("test");
            // MediaPlayer.Play(backgroundMusic);
+          //  this.song = Content.Load<Song>("test");
+          //  MediaPlayer.Play(song);
+            //  Uncomment the following line will also loop the song
+            //  MediaPlayer.IsRepeating = true;
+          //  MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
         }
 
        
@@ -172,12 +188,25 @@ namespace MonoGame_Test
                 }
             }
 
+
             // balloons pop check
+
+
+
+            // balloons pop check & change color 
+
             for (int i = 0; i < balloons.Count; i++)
             {
                 Balloon b = (Balloon)balloons[i];
-                b.Update(Uno);
-             
+                Balloon balloon = b.Update(Uno);
+
+                if (balloon!=null)   // test color
+                {
+                    Uno.ChangeHair(balloon.path);
+                   // Console.WriteLine(balloon.path);
+                }
+
+                balloon = null;
             }
             base.Update(gameTime);
         }
