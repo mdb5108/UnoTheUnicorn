@@ -12,7 +12,7 @@ using FarseerPhysics.Factories;
 using MonoGame_Test;
 namespace pony
 {
-    class Unicorn : DrawableGameComponent
+    public class Unicorn : DrawableGameComponent
     {
         public Texture2D UnicornTexture;
 
@@ -25,14 +25,21 @@ namespace pony
         private bool leftkey = false;
         public string contactbodyname="nothing";
         Body _body;
-        public List<string> contactnames=new List<string>();
+        public List<string> contactfloornames = new List<string>();
+        public List<string> contactcolornames = new List<string>();
+
+        private int JumpForce = 300;
 
         float JumpX=0, JumpY=0,RestingValueX=0,RestingValueY=0,  // RestingValue: Force needed to get back to resting phase
               RightX=0,RightY=0,RightVeltoCheck=0,RightMaxVel=0, 
               LeftX=0, LeftY = 0,LeftVeltoCheck=0,LeftMaxVel=0;
 
         private float _resetTime = 0;
+        private int Jumps = 0;
+        private float JumpelapsedTime = 0;
 
+        float deltaTime = 0;
+        private string touchingcolor = "n";
         enum direction
         {
             floor,
@@ -41,6 +48,15 @@ namespace pony
             ceiling
         };
         direction Direction;
+
+        // n= no color, o=orange,b=blue
+        public enum color
+        {
+            n,
+            o,
+            b
+        }
+        public color CurrentColor;
 
         public Unicorn(Game game):base(game)
         {
@@ -51,7 +67,7 @@ namespace pony
         {
             UnicornTexture = texture;
             Position = pos;
-
+            CurrentColor = color.n;
             _body = BodyFactory.CreateRectangle(world,
                                                 ConvertUnits.ToSimUnits(80),
                                                 ConvertUnits.ToSimUnits(80), 0f);
@@ -62,31 +78,43 @@ namespace pony
              hitting = false;
             _body.OnCollision += MyOnCollision;
             _body.OnSeparation += MyOnSeparation;
+            
         }
 
         public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)
         {
-            if(f2.Body.BodyName == "baloon")
+            if(f2.Body.BodyName!=null)
             {
-              
+                string[] words = f2.Body.BodyName.Split('.');
+                // words[0] is the color and words[1] is the side
+                // contactbodyname = words[0] + "     " + words[1];
+                touchingcolor = words[0];
+
+                if (!contactfloornames.Contains(words[1]))
+                {
+                    contactfloornames.Add(words[1]);
+                }
 
             }
-            if(!contactnames.Contains(f2.Body.BodyName))
-            {
-                contactnames.Add(f2.Body.BodyName);
-            }
- 
+
             return true;
         }
 
         public void MyOnSeparation(Fixture f1, Fixture f2)
         {
-            if(contactnames.Contains(f2.Body.BodyName))
+           if(f2.Body.BodyName != null)
             {
-                contactnames.Remove(f2.Body.BodyName);
-                _resetTime = 0;
+                string[] words = f2.Body.BodyName.Split('.');
+                touchingcolor = CurrentColor.ToString();
+                if (!contactfloornames.Contains(words[1]))
+                {
+                    contactfloornames.Remove(words[1]);
+                   
+                }
+               
+                contactbodyname = touchingcolor;
             }
-            contactbodyname = "  " ;
+            JumpelapsedTime = 0;
         }
 
         protected override void UnloadContent()
@@ -98,32 +126,44 @@ namespace pony
         // dt is deltatime
         public void Update(GameTime gametime,float dt,World world)
         {
+            deltaTime = dt;
             Position = ConvertUnits.ToDisplayUnits(_body.Position.X-0.6f,
                                                     _body.Position.Y-0.7f);
-            hitting = contactnames.Count==0 ? false : true;
-           // _body.Rotation = 90*dt;
+            hitting = contactfloornames.Count==0 ? false : true;
+         
             spacekey = Keyboard.GetState().IsKeyDown(Keys.Space);
             rightkey = Keyboard.GetState().IsKeyDown(Keys.Right);
             leftkey = Keyboard.GetState().IsKeyDown(Keys.Left);
-
+           
             ChangeDirections(world,dt);
+            CheckColor(dt);
             KeyBoardInput(dt);
-            contactbodyname = _body.LinearVelocity.ToString();
+            //contactbodyname = _body.LinearVelocity.ToString();
         }
 
+        void CheckColor(float dt)
+        {
+            // if (CurrentColor.ToString() == "n") return;
+            // if(!contactcolornames.Contains(CurrentColor.ToString()))
+            if(touchingcolor != CurrentColor.ToString())
+            {
+                contactbodyname = "hitting bad";
+                Bounce(dt);
+            }
+        }
         void ChangeDirections(World world,float dt)
         {
 
-            if(contactnames.Contains("floor"))
+            if(contactfloornames.Contains("f"))
             {
                 Direction = direction.floor;
-            }else if(contactnames.Contains("left"))
+            }else if(contactfloornames.Contains("l"))
             {
                 Direction = direction.leftwall;
-            }else if(contactnames.Contains("right"))
+            }else if(contactfloornames.Contains("r"))
             {
                 Direction = direction.rightwall;
-            }else if(contactnames.Contains("ceiling"))
+            }else if(contactfloornames.Contains("c"))
             {
                 Direction = direction.ceiling;
             }
@@ -131,14 +171,12 @@ namespace pony
             switch(Direction)
             {
                 case direction.floor:
-                    
-
-                    JumpX = 0; JumpY = -400; RestingValueX = 0; RestingValueY = _body.LinearVelocity.Y;
+                    JumpX = 0; JumpY = -1*JumpForce; RestingValueX = 0; RestingValueY = _body.LinearVelocity.Y;
                     RightX = 5; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
                     LeftX = -5; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
                     world.Gravity = new Vector2(0, 9.8f);
 
-                    _resetTime += dt;
+                   /* _resetTime += dt;
                     if (_resetTime <= dt)
                     {
                         if(_body.LinearVelocity.X > 2)
@@ -146,23 +184,23 @@ namespace pony
                             _body.LinearVelocity = new Vector2(1, _body.LinearVelocity.Y);
                         }
                        
-                    }
+                    }*/
                     break;
                 case direction.leftwall:
                     
-                    JumpX = 400; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
+                    JumpX = JumpForce; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
                     RightX = 0; RightY = 5; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
                     LeftX = 0; LeftY = -5; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
                     world.Gravity = new Vector2(-9.8f, 0);
                     break;
                 case direction.rightwall:
-                    JumpX = -400; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
+                    JumpX = -1*JumpForce; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
                     RightX = 0; RightY = 5; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
                     LeftX = 0; LeftY = -5; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
                     world.Gravity = new Vector2(9.8f, 0);
                     break;
                 case direction.ceiling:
-                    JumpX = 0; JumpY = 400; RestingValueX = 0; RestingValueY = _body.LinearVelocity.Y;
+                    JumpX = 0; JumpY = JumpForce; RestingValueX = 0; RestingValueY = _body.LinearVelocity.Y;
                     RightX = 5; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
                     LeftX = -5; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
                     world.Gravity = new Vector2(0, -9.8f);
@@ -172,17 +210,39 @@ namespace pony
             }
         }
 
+        void Bounce(float dt)
+        {
+            JumpelapsedTime += dt;
+            if(JumpelapsedTime<=dt)
+            {
+                _body.ApplyForce(new Vector2(JumpX, JumpY));
+            }
+           
+        }
+
         void KeyBoardInput(float dt)
         {
             //////////////////////////////////////////JUMP/////////////////////////////////////////////
+            Jumps = hitting ? 0 : Jumps;
+            //contactbodyname = Jumps.ToString();
             if (spacekey)
             {
                 elapsedtime += dt;
-                if (hitting && elapsedtime <= dt)
+               
+               
+                if (Jumps<1 && elapsedtime <= dt)
                 {
-                   
-                   _body.ApplyForce(new Vector2(JumpX, JumpY));
-                    
+                    Jumps += 1;
+                    if (Jumps == 0 && (_body.LinearVelocity.Length()< 0.5f) )
+                    {
+                       
+                        _body.ApplyForce(new Vector2(JumpX, JumpY));
+            
+                        return;
+                    }
+                    _body.ApplyForce(new Vector2(JumpX, JumpY));
+
+
                 }
             }
             else if (Keyboard.GetState().IsKeyUp(Keys.Space))

@@ -16,8 +16,8 @@ namespace MonoGame_Test
 
         public Body _body;            // body that is effected by physics
         public string Name;
-        private Body _aura;
-
+        private List<Body> _aura = new List<Body>();
+        private int count=0;
         public Walls(string name, World world, float width, float height, float density, Vector2 pos,bool Static)
         {
             Name = name;
@@ -36,10 +36,31 @@ namespace MonoGame_Test
             _aura.IsSensor = true;*/
 
         }
+        public Walls(World world, float width, float height, float density, Vector2 pos, bool Static)
+        {
+            _body = BodyFactory.CreateRectangle(world, width, height, density);
+
+            _body.Position = pos;
+            _body.IsStatic = Static;
+            _body.Restitution = 0;
+            _body.Friction = 0;
+            _body.OnCollision += MyOnCollision;
+        }
 
         ~Walls()
         {
             _body.OnCollision -= MyOnCollision;
+        }
+
+        public void CreateSensor(int numberofaura,string name,World world,float width,float height,Vector2 pos,float density)
+        {
+            Body body = BodyFactory.CreateRectangle(world, width, height, density);
+            body.Position = pos;
+            body.IsStatic = true;
+            body.IsSensor = false;
+            body.BodyName = name;
+            _aura.Add(body);
+            
         }
 
         public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)

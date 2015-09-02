@@ -69,7 +69,7 @@ namespace MonoGame_Test
            
         }
 
-        void Update(Unicorn unicorn)
+        public void Update(Unicorn unicorn)
         {
             float distance = Vector2.Distance(unicorn.Position, Position );
 
@@ -82,6 +82,7 @@ namespace MonoGame_Test
 
         public void Draw(SpriteBatch spriteBatch)
         {
+         
             if (isActive)
             {
                 spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
@@ -94,6 +95,7 @@ namespace MonoGame_Test
 
             }
 
+           
         }
 
      
