@@ -8,9 +8,15 @@ using FarseerPhysics.DebugView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
+
 using pony;
 using levels;
 using Game2;
+
+using xTile;
+using xTile.Dimensions;
+using xTile.Display;
 
 namespace MonoGame_Test
 {
@@ -34,11 +40,17 @@ namespace MonoGame_Test
         public string debugstring="Debuglog";
         // Initialize a ballon
         List<Balloon> balloons = new List<Balloon>();
-        List<Vector2> balloonsPos = new List<Vector2> {new Vector2(100,100),new Vector2(200,200),new Vector2(300,300)};
-        int amount = 3;
-       // Balloon b1; 
-        Texture2D backgroundTexture;
+        List<Vector2> balloonsPos = new List<Vector2> {new Vector2(100,100),new Vector2(200,200),new Vector2(300,300),new Vector2(400,400),new Vector2(500,500),new Vector2(600,500),new Vector2(700,500)};
        
+        int amount;
+        Texture2D backgroundTexture;
+
+        private Map map;
+        IDisplayDevice mapDisplayDevice;
+        xTile.Dimensions.Rectangle viewport;
+
+        //Add Songs
+        private Song backgroundMusic;
 
         public Game1()
         {
@@ -50,16 +62,20 @@ namespace MonoGame_Test
                 PreferredBackBufferWidth = Width,
                 IsFullScreen = true
             };
-            Content.RootDirectory = "Content";  
+
+         
+            Content.RootDirectory = "Content";
+
+            // Initialize the balloon list
+            amount = balloonsPos.Count;
+            for (int i = 0; i < amount; i++)
+            {
+                Balloon balloon = new Balloon((Vector2)balloonsPos[i],Content);
+                balloons.Add(balloon);
+            }
+
         }
 
-        public void RemoveBaloon(Balloon b)
-        {
-            
-            balloons.Remove(b);
-            
-            
-        }
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -74,17 +90,17 @@ namespace MonoGame_Test
            
             _levels = new Levels();
 
-            // Initialize the balloon list
-            for (int i = 0; i < amount; i++)
-            {
-                Balloon balloon = new Balloon((Vector2)balloonsPos[i], Content);
-                balloons.Add(balloon);
-            }
 
             // DebugView for Physics objects
             debugview = new DebugViewXNA(_world);
             base.Initialize();
             Components.Add(Uno);
+
+            mapDisplayDevice = new XnaDisplayDevice(Content, graphics.GraphicsDevice);
+
+            map.LoadTileSheets(mapDisplayDevice);
+
+            viewport = new xTile.Dimensions.Rectangle(new Size(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
         }
 
         protected override void LoadContent()
@@ -92,6 +108,9 @@ namespace MonoGame_Test
             // TODO: use this.Content to load your game content here
 
             debugview.LoadContent(GraphicsDevice, Content);
+
+            var stream = TitleContainer.OpenStream("Content\\Map1.tbin");
+            map = xTile.Format.FormatManager.Instance.BinaryFormat.Load(stream);
 
             _levels.InitializeBoundaries(_world);
             _levels.Initialize(1, _world);
@@ -102,12 +121,15 @@ namespace MonoGame_Test
 
             for (int i = 0; i < amount; i++)
             {
-                balloons[i].LoadContent(Content);
+                Balloon b = (Balloon)balloons[i];
+                b.LoadContent(Content);
             }
-         //   b1 = new Balloon(new Vector2(500, 300),Content);
-          //  b1.LoadContent(Content);
+   
            
             backgroundTexture = Content.Load<Texture2D>("StoneDungeon_bg");
+
+          //  backgroundMusic = Content.Load<Song>("test");
+           // MediaPlayer.Play(backgroundMusic);
         }
 
        
@@ -117,10 +139,14 @@ namespace MonoGame_Test
             //Uno.UnloadContent();
         }
 
+
+        float t;
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+
+             map.Update(gameTime.ElapsedGameTime.Milliseconds);
 
              deltatime = gameTime.ElapsedGameTime.Milliseconds;
              deltatime = deltatime / 1000;
@@ -128,6 +154,31 @@ namespace MonoGame_Test
              Uno.Update(gameTime,deltatime,_world);
        
             _world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
+
+
+            for (int i = 0; i < balloons.Count; i++)
+            {
+                Balloon b = (Balloon)balloons[i];
+
+                if (!b.isActive) {
+                  
+                    t +=  (float)deltatime;     // I'm working on it.
+                    if (t >= .5f)
+                    {
+                        balloons.Remove(balloons[i]);
+                        t = .0f;
+                    }
+                  
+                }
+            }
+
+            // balloons pop check
+            for (int i = 0; i < balloons.Count; i++)
+            {
+                Balloon b = (Balloon)balloons[i];
+                b.Update(Uno);
+             
+            }
             base.Update(gameTime);
         }
 
@@ -138,10 +189,8 @@ namespace MonoGame_Test
             GraphicsDevice.Clear(Color.Orange);
             spriteBatch.Begin(SpriteSortMode.Immediate,BlendState.AlphaBlend);
 
-            spriteBatch.Draw(backgroundTexture, new Rectangle(0,
-                                                              0,
-                                                              graphics.GraphicsDevice.Viewport.Width,
-                                                              graphics.GraphicsDevice.Viewport.Height), Color.White);
+            map.Draw(mapDisplayDevice, viewport);
+
             var projection = Matrix.CreateOrthographicOffCenter(
                 0f,
                 ConvertUnits.ToSimUnits(graphics.GraphicsDevice.Viewport.Width),
@@ -151,15 +200,21 @@ namespace MonoGame_Test
             debugview.RenderDebugData(ref projection);
 
             Uno.Draw(spriteBatch);
-            spriteBatch.DrawString(font, debugstring, new Vector2(Width/2, 20), Color.Tomato);
+          //  spriteBatch.DrawString(font, debugstring, new Vector2(Width/2, 20), Color.Tomato);
+
+            spriteBatch.DrawString(font, Uno.contactbodyname, new Vector2(Width/2, 20), Color.Tomato);
+           
+            
+
             // test~
-            for (int i = 0; i < amount; i++)
+            for (int i = 0; i < balloons.Count; i++)
             {
-                balloons[i].Draw(spriteBatch);
+               Balloon b = (Balloon)balloons[i];
+               b.Draw(spriteBatch);
             }
-         //   b1.Draw(spriteBatch);
+ 
             spriteBatch.End();
-         
+
 
             base.Draw(gameTime);
         }

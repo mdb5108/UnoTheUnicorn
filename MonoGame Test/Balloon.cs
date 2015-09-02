@@ -12,10 +12,12 @@ namespace MonoGame_Test
     public class Balloon
     {
         private Texture2D Texture;
-        private Vector2 Position;
-        private bool isActive;
-
         private string path;
+        private Vector2 Position;
+        public bool isActive;
+
+        private Texture2D popTexture;
+        private int popImageCount;
         private string color;
 
         public ContentManager Content;
@@ -26,6 +28,9 @@ namespace MonoGame_Test
             this.Position = Position;
             this.Content = Content;
             isActive = true;
+            path = "blue_Balloon";
+
+     
         }
         public Balloon(World world,Vector2 pos, ContentManager Content)
         {
@@ -43,8 +48,15 @@ namespace MonoGame_Test
         }
         public void LoadContent(ContentManager Content)
         {
-            this.Content = Content; 
-             Texture = Content.Load<Texture2D>("blue_Balloon");
+            this.Content = Content;
+            Texture = Content.Load<Texture2D>(path);
+
+
+      
+                string tempPath = "PopImg";
+                popTexture = Content.Load<Texture2D>(tempPath);
+                
+           
         }
 
         public void UnloadContent()
@@ -60,17 +72,32 @@ namespace MonoGame_Test
         void Update(Unicorn unicorn)
         {
             float distance = Vector2.Distance(unicorn.Position, Position );
-           
-            if (Math.Abs(distance) < 1)
+
+            if (Math.Abs(distance) < 20)
                 isActive = false;
+                
+                
 
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
-           
+            if (isActive)
+            {
+                spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+            }
+
+            if (!isActive)
+            {
+              
+                   spriteBatch.Draw(popTexture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+            }
+
         }
+
+     
+
 
     }
 }
