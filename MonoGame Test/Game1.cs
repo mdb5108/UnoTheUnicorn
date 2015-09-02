@@ -42,27 +42,24 @@ namespace MonoGame_Test
 
         public Game1()
         {
-            Height = 800;
-            Width = 1000;
+            Height = 1024;
+            Width = 1536;
             graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferHeight = Height,
                 PreferredBackBufferWidth = Width,
                 IsFullScreen = true
             };
-            Content.RootDirectory = "Content";
-
-
-
-            // Initialize the balloon list
-            for (int i = 0; i < amount; i++)
-            {
-                Balloon balloon = new Balloon((Vector2)balloonsPos[i],Content);
-                balloons.Add(balloon);
-            }
+            Content.RootDirectory = "Content";  
         }
 
-     
+        public void RemoveBaloon(Balloon b)
+        {
+            
+            balloons.Remove(b);
+            
+            
+        }
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
@@ -74,8 +71,16 @@ namespace MonoGame_Test
         
             // Create a world for physics to act
             _world = new World(new Vector2(0f, 9.8f));
-            //_world = new World(new Vector2(200, 0));
+           
             _levels = new Levels();
+
+            // Initialize the balloon list
+            for (int i = 0; i < amount; i++)
+            {
+                Balloon balloon = new Balloon((Vector2)balloonsPos[i], Content);
+                balloons.Add(balloon);
+            }
+
             // DebugView for Physics objects
             debugview = new DebugViewXNA(_world);
             base.Initialize();
@@ -89,6 +94,7 @@ namespace MonoGame_Test
             debugview.LoadContent(GraphicsDevice, Content);
 
             _levels.InitializeBoundaries(_world);
+            _levels.Initialize(1, _world);
             Vector2 unopos = new Vector2(Width/2, 300);
             Uno.Initialize(Content.Load<Texture2D>("Uno"), unopos,_world);
             font = Content.Load<SpriteFont>("TestingFont");
@@ -96,8 +102,7 @@ namespace MonoGame_Test
 
             for (int i = 0; i < amount; i++)
             {
-                Balloon b = (Balloon)balloons[i];
-                b.LoadContent(Content);
+                balloons[i].LoadContent(Content);
             }
          //   b1 = new Balloon(new Vector2(500, 300),Content);
           //  b1.LoadContent(Content);
@@ -146,13 +151,11 @@ namespace MonoGame_Test
             debugview.RenderDebugData(ref projection);
 
             Uno.Draw(spriteBatch);
-            spriteBatch.DrawString(font, Uno.contactbodyname, new Vector2(Width/2, 20), Color.Tomato);
+            spriteBatch.DrawString(font, debugstring, new Vector2(Width/2, 20), Color.Tomato);
             // test~
             for (int i = 0; i < amount; i++)
             {
-                Balloon b = (Balloon)balloons[i];
-                b.Draw(spriteBatch);
-
+                balloons[i].Draw(spriteBatch);
             }
          //   b1.Draw(spriteBatch);
             spriteBatch.End();

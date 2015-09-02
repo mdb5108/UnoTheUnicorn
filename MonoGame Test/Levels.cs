@@ -27,6 +27,14 @@ namespace levels
             switch(level)
             {
                 case 1:
+                    Walls slab = new Walls("floor", world, ConvertUnits.ToSimUnits(200),
+                                                         ConvertUnits.ToSimUnits(10), 10f,
+                                                         ConvertUnits.ToSimUnits(300, 500), 
+                                                         true);
+                    Walls slab1 = new Walls("floor", world, ConvertUnits.ToSimUnits(100),
+                                                           ConvertUnits.ToSimUnits(10), 10f,
+                                                           ConvertUnits.ToSimUnits(600, 200),
+                                                           true);
 
 
 

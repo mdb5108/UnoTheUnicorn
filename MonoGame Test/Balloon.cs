@@ -2,10 +2,14 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Dynamics.Contacts;
+using FarseerPhysics.Factories;
 using pony;
-namespace Game2
+namespace MonoGame_Test
 {
-    class Balloon
+    public class Balloon
     {
         private Texture2D Texture;
         private Vector2 Position;
@@ -15,14 +19,28 @@ namespace Game2
         private string color;
 
         public ContentManager Content;
-                
+        Body _body;
+        public string name;
         public Balloon(Vector2 Position, ContentManager Content)
         {
             this.Position = Position;
             this.Content = Content;
             isActive = true;
         }
+        public Balloon(World world,Vector2 pos, ContentManager Content)
+        {
+            _body = BodyFactory.CreateCircle(world, 0.35f, 2.0f);
+            _body.Position = ConvertUnits.ToSimUnits(pos.X+55,pos.Y+45);
+            _body.BodyName = "baloon";
+            
+            this.Position = pos;
+            this.Content = Content;
+        }
 
+        public void Destroy()
+        {
+            _body.Dispose();
+        }
         public void LoadContent(ContentManager Content)
         {
             this.Content = Content; 
@@ -39,7 +57,7 @@ namespace Game2
            
         }
 
-        public void Update(Unicorn unicorn)
+        void Update(Unicorn unicorn)
         {
             float distance = Vector2.Distance(unicorn.Position, Position );
            
