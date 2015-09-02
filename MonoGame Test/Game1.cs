@@ -12,6 +12,10 @@ using pony;
 using levels;
 using Game2;
 
+using xTile;
+using xTile.Dimensions;
+using xTile.Display;
+
 namespace MonoGame_Test
 {
     /// <summary>
@@ -38,12 +42,15 @@ namespace MonoGame_Test
         int amount = 3;
        // Balloon b1; 
         Texture2D backgroundTexture;
-       
+
+        private Map map;
+        IDisplayDevice mapDisplayDevice;
+        xTile.Dimensions.Rectangle viewport;
 
         public Game1()
         {
-            Height = 800;
-            Width = 1000;
+            Height = 1024;
+            Width = 1536;
             graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferHeight = Height,
@@ -51,8 +58,6 @@ namespace MonoGame_Test
                 IsFullScreen = true
             };
             Content.RootDirectory = "Content";
-
-
 
             // Initialize the balloon list
             for (int i = 0; i < amount; i++)
@@ -80,6 +85,12 @@ namespace MonoGame_Test
             debugview = new DebugViewXNA(_world);
             base.Initialize();
             Components.Add(Uno);
+
+            mapDisplayDevice = new XnaDisplayDevice(Content, graphics.GraphicsDevice);
+
+            map.LoadTileSheets(mapDisplayDevice);
+
+            viewport = new xTile.Dimensions.Rectangle(new Size(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
         }
 
         protected override void LoadContent()
@@ -87,6 +98,9 @@ namespace MonoGame_Test
             // TODO: use this.Content to load your game content here
 
             debugview.LoadContent(GraphicsDevice, Content);
+
+            var stream = TitleContainer.OpenStream("Content\\Map1.tbin");
+            map = xTile.Format.FormatManager.Instance.BinaryFormat.Load(stream);
 
             _levels.InitializeBoundaries(_world);
             Vector2 unopos = new Vector2(Width/2, 300);
@@ -117,6 +131,8 @@ namespace MonoGame_Test
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+             map.Update(gameTime.ElapsedGameTime.Milliseconds);
+
              deltatime = gameTime.ElapsedGameTime.Milliseconds;
              deltatime = deltatime / 1000;
 
@@ -133,10 +149,8 @@ namespace MonoGame_Test
             GraphicsDevice.Clear(Color.Orange);
             spriteBatch.Begin(SpriteSortMode.Immediate,BlendState.AlphaBlend);
 
-            spriteBatch.Draw(backgroundTexture, new Rectangle(0,
-                                                              0,
-                                                              graphics.GraphicsDevice.Viewport.Width,
-                                                              graphics.GraphicsDevice.Viewport.Height), Color.White);
+            map.Draw(mapDisplayDevice, viewport);
+
             var projection = Matrix.CreateOrthographicOffCenter(
                 0f,
                 ConvertUnits.ToSimUnits(graphics.GraphicsDevice.Viewport.Width),
