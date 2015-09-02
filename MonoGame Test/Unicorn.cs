@@ -10,11 +10,19 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
 using MonoGame_Test;
+
+using Microsoft.Xna.Framework.Content;
 namespace pony
 {
     class Unicorn : DrawableGameComponent
     {
         public Texture2D UnicornTexture;
+        public Texture2D []HairTexture;
+        private byte hairAmout = 4;    // need to be changed 
+        private string[] colorPath = {"blue","green","orange","yellow"};
+        private int colorIndex = 0;
+        private string colorStatu = "normal";
+        public ContentManager Content;
 
         public Vector2 Position;
         float elapsedtime = 0;
@@ -40,9 +48,11 @@ namespace pony
         };
         direction Direction;
 
-        public Unicorn(Game game):base(game)
+        public Unicorn(Game game, ContentManager Content):base(game)
         {
-            
+            this.Content = Content;
+            HairTexture = new Texture2D[hairAmout];
+        
         }
 
         public void Initialize(Texture2D texture,Vector2 pos,World world)
@@ -61,7 +71,21 @@ namespace pony
              hitting = false;
             _body.OnCollision += MyOnCollision;
             _body.OnSeparation += MyOnSeparation;
+
+
+
+            for (int i = 0; i < hairAmout; i++)
+            {
+                string tempPath = "Uno_" + colorPath[i].ToString();
+               // Console.WriteLine(tempPath);
+                HairTexture[i] = Content.Load<Texture2D>(tempPath);
+            }
+          
         }
+
+       
+       
+
 
         public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)
         {
@@ -153,6 +177,39 @@ namespace pony
             }
         }
 
+
+        public void ChangeHair(string balloonColor)
+        {
+            string temp = "Uno_";
+            colorStatu = null;
+            switch (balloonColor)
+            {
+                
+                case "Balloon_blue":   
+                    colorStatu = temp + "blue";
+                    colorIndex = 0;
+                    break;
+                case "Balloon_green":
+                    colorStatu = temp + "green";
+                    colorIndex = 1;
+                    break;
+                case "Balloon_orange":
+                    colorStatu = temp + "orange";
+                    colorIndex = 2;
+                    break;
+                case "Balloon_red":
+                    colorStatu = temp + "blue";
+                    break;
+                case "Balloon_yellow":
+                    colorStatu = temp + "yellow";
+                    colorIndex = 3;
+                    break;
+                default:
+                    colorStatu = "normal";
+                    break;
+            }
+        }
+
         void KeyBoardInput(float dt)
         {
             //////////////////////////////////////////JUMP/////////////////////////////////////////////
@@ -200,7 +257,15 @@ namespace pony
 
         public void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(UnicornTexture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+         
+                spritebatch.Draw(UnicornTexture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+
+                if (colorStatu != "normal")
+                {
+               
+                    spritebatch.Draw(HairTexture[colorIndex],Position,null,Color.White,0f,Vector2.Zero,1f,SpriteEffects.None,0f);
+                }
+            
         }
 
         double ConvertDegreetoRadians(float degree)

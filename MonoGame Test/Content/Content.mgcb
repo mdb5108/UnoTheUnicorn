@@ -19,3 +19,9 @@
 /processorParam:TextureFormat=Compressed
 /build:TestingFont.spritefont
 
+#begin test.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:test.mp3
+
