@@ -105,7 +105,7 @@ namespace MonoGame_Test
             map = xTile.Format.FormatManager.Instance.BinaryFormat.Load(stream);
 
             _levels.InitializeBoundaries(_world);
-            _levels.Initialize(1, _world);
+            _levels.Initialize(1, _world, Content);
             Vector2 unopos = new Vector2(Width/2, 300);
             Uno.Initialize(Content.Load<Texture2D>("Uno"), unopos,_world);
             font = Content.Load<SpriteFont>("TestingFont");

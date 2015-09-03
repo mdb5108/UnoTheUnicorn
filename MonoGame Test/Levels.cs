@@ -7,8 +7,10 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.DebugView;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using MonoGame_Test;
 using pony;
+using Game2;
 
 namespace levels
 {
@@ -20,25 +22,52 @@ namespace levels
         public Walls _leftwall;
         public Walls _ceiling;
 
+        public List<Walls> walls = new List<Walls>();
+
+        private static readonly float TILE_SIZE = 32f;
+        private static readonly float TILE_SIZE_CONV = ConvertUnits.ToSimUnits(TILE_SIZE);
+
         private Unicorn Uno;
-     
-        public void Initialize(int level,World world)
+
+        public void Initialize(int level,World world, ContentManager content)
         {
             switch(level)
             {
                 case 1:
-                    Walls slab = new Walls( world, ConvertUnits.ToSimUnits(200),
-                                                         ConvertUnits.ToSimUnits(10), 10f,
-                                                         ConvertUnits.ToSimUnits(300, 500), 
-                                                         true);
-                    Walls slab1 = new Walls(world, ConvertUnits.ToSimUnits(100),
-                                                           ConvertUnits.ToSimUnits(10), 10f,
-                                                           ConvertUnits.ToSimUnits(600, 200),
-                                                           true);
+                    //Top Left orange
+                    walls.Add(new Walls("o", world, 5, 1, new Point(0, 3), true));
+                    walls.Add(new Walls("o", world, 1, 11, new Point(0, 3), true));
+                    walls.Add(new Walls("o", world, 23, 1, new Point(0, 13), true));
 
-                   _floor.CreateSensor(0, "o.f", world, SimUnits(100),
-                                                      SimUnits(50),
-                                                      SimVector(300, Game1.Height-50),1.0f);
+                    //Top left yellow
+                    walls.Add(new Walls("y", world, 7, 1, new Point(7, 8), true));
+                    walls.Add(new Walls("y", world, 5, 1, new Point(23, 8), true));
+
+                    //Top Right Normal
+                    walls.Add(new Walls("", world, 1, 7, new Point(32, 3), true));
+                    walls.Add(new Walls("", world, 8, 1, new Point(32, 3), true));
+                    walls.Add(new Walls("", world, 1, 7, new Point(39, 3), true));
+
+                    //Bottom Left Normal
+                    walls.Add(new Walls("", world, 8, 1, new Point(8, 25), true));
+                    walls.Add(new Walls("", world, 1, 3, new Point(15, 23), true));
+                    walls.Add(new Walls("", world, 4, 1, new Point(15, 23), true));
+
+                    //Bottom Right Normal
+                    walls.Add(new Walls("", world, 1, 6, new Point(26, 18), true));
+                    walls.Add(new Walls("", world, 8, 1, new Point(26, 18), true));
+
+                    //Bottom Right Orange
+                    walls.Add(new Walls("o", world, 6, 1, new Point(34, 18), true));
+
+                    //Bottom Right Yellow
+                    walls.Add(new Walls("y", world, 9, 1, new Point(34, 26), true));
+
+                    //Initialize the balloons
+                    GameManager.getInstance().AddBalloon(new Balloon(new Point(10, 1), content, "y"));
+                    GameManager.getInstance().AddBalloon(new Balloon(new Point(35, 5), content, "o"));
+                    GameManager.getInstance().AddBalloon(new Balloon(new Point(12, 18), content, "o"));
+                    GameManager.getInstance().AddBalloon(new Balloon(new Point(33, 19), content, "y"));
 
                     break;
                 default:
@@ -51,23 +80,10 @@ namespace levels
         public void InitializeBoundaries(World world)
         {
             // n=no color, n = non magnetic wall
-            _floor = new Walls(world, ConvertUnits.ToSimUnits(Game1.Width),
-                                              ConvertUnits.ToSimUnits(10), 10f, 
-                                              ConvertUnits.ToSimUnits(Game1.Width / 2, Game1.Height - 10),
-                                              true);
-
-            _rightwall = new Walls(world, ConvertUnits.ToSimUnits(10),
-                                              ConvertUnits.ToSimUnits(Game1.Height), 10f,
-                                              ConvertUnits.ToSimUnits(Game1.Width - 10, Game1.Height / 2),
-                                              true);
-            _leftwall = new Walls(world, ConvertUnits.ToSimUnits(10),
-                                              ConvertUnits.ToSimUnits(Game1.Height), 10f,
-                                              ConvertUnits.ToSimUnits(10, Game1.Height / 2),
-                                              true);
-            _ceiling = new Walls(world, ConvertUnits.ToSimUnits(Game1.Width),
-                                              ConvertUnits.ToSimUnits(10), 10f,
-                                              ConvertUnits.ToSimUnits(Game1.Width / 2, 10),
-                                              true);
+            _floor = new Walls("", world, 48, 1, new Point(0, 31), true);
+            _rightwall = new Walls("", world, 1, 32, new Point(47, 0), true);
+            _leftwall = new Walls("", world, 1, 32, new Point(0, 0), true);
+            _ceiling = new Walls("", world, 48, 1, new Point(0, 0), true);
         }
 
 
