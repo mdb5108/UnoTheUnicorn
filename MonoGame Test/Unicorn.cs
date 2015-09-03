@@ -37,6 +37,7 @@ namespace pony
         public List<string> contactcolornames = new List<string>();
 
         private int JumpForce = 300;
+        private float runForce = 100;
 
         float JumpX=0, JumpY=0,RestingValueX=0,RestingValueY=0,  // RestingValue: Force needed to get back to resting phase
               RightX=0,RightY=0,RightVeltoCheck=0,RightMaxVel=0, 
@@ -201,8 +202,8 @@ namespace pony
             {
                 case direction.floor:
                     JumpX = 0; JumpY = -1*JumpForce; RestingValueX = 0; RestingValueY = _body.LinearVelocity.Y;
-                    RightX = 5; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
-                    LeftX = -5; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
+                    RightX = runForce; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
+                    LeftX = -runForce; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
                     world.Gravity = new Vector2(0, 9.8f);
 
                    /* _resetTime += dt;
@@ -218,20 +219,20 @@ namespace pony
                 case direction.leftwall:
                     
                     JumpX = JumpForce; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
-                    RightX = 0; RightY = 5; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
-                    LeftX = 0; LeftY = -5; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
+                    RightX = 0; RightY = runForce; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
+                    LeftX = 0; LeftY = -runForce; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
                     world.Gravity = new Vector2(-9.8f, 0);
                     break;
                 case direction.rightwall:
                     JumpX = -1*JumpForce; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
-                    RightX = 0; RightY = 5; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
-                    LeftX = 0; LeftY = -5; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
+                    RightX = 0; RightY = runForce; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
+                    LeftX = 0; LeftY = -runForce; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
                     world.Gravity = new Vector2(9.8f, 0);
                     break;
                 case direction.ceiling:
                     JumpX = 0; JumpY = JumpForce; RestingValueX = 0; RestingValueY = _body.LinearVelocity.Y;
-                    RightX = 5; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
-                    LeftX = -5; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
+                    RightX = runForce; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
+                    LeftX = -runForce; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
                     world.Gravity = new Vector2(0, -9.8f);
                     break;
                 default:
@@ -354,7 +355,6 @@ namespace pony
 
                 if (colorStatu != "normal")
                 {
-               
                     spritebatch.Draw(HairTexture[colorIndex],Position,null,Color.White,0f,Vector2.Zero,1f,SpriteEffects.None,0f);
                 }
             
