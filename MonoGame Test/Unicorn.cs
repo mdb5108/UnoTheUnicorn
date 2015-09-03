@@ -74,6 +74,9 @@ namespace pony
         private bool bouncing = false;
         private Vector2 bouncingForce;
 
+        private float width = 128;
+        private float height = 128;
+
         public Unicorn(Game game) : base(game)
         {
             _game = (Game1)game;
@@ -382,6 +385,11 @@ namespace pony
             {
                 _body.LinearVelocity = new Vector2(RestingValueX,RestingValueY);
             }
+        }
+
+        public Vector2 GetCenterPos()
+        {
+            return Position + new Vector2(width/2, height/2);
         }
 
         public void Draw(SpriteBatch spritebatch)

@@ -19,6 +19,9 @@ namespace MonoGame_Test
 
         private Texture2D popTexture;
         private int popImageCount;
+
+        private float width = 64;
+        private float height = 64;
        
 
         public ContentManager Content;
@@ -104,9 +107,9 @@ namespace MonoGame_Test
 
         public Balloon Update(Unicorn unicorn)
         {
-            float distance = Vector2.Distance(unicorn.Position, Position );
+            float distance = Vector2.Distance(unicorn.GetCenterPos(), Position + new Vector2(width/2, height/2) );
 
-            if (Math.Abs(distance) < 20)
+            if (Math.Abs(distance) < 96)
             {
                 isActive = false;
 
