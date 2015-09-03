@@ -199,7 +199,7 @@ namespace MonoGame_Test
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Orange);
-            spriteBatch.Begin(SpriteSortMode.Immediate,BlendState.AlphaBlend);
+            spriteBatch.Begin(SpriteSortMode.Deferred,BlendState.AlphaBlend);
 
             map.Draw(mapDisplayDevice, viewport);
 
