@@ -18,7 +18,7 @@ namespace pony
     {
         public Texture2D UnicornTexture;
         public Texture2D []HairTexture;
-        private byte hairAmout = 4;    // need to be changed 
+        private byte hairAmout = 4;    
         private string[] colorPath = {"blue","green","orange","yellow"};
         private int colorIndex = 0;
         private string colorStatu = "normal";
@@ -35,9 +35,7 @@ namespace pony
         Body _body;
         public string contactfloorname = "f";
         public List<string> contactcolornames = new List<string>();
-
         private Dictionary<string, HashSet<Rectangle>> auraContacts;
-
         private int JumpForce = 220;
         private float runForce = 200;
 
@@ -121,7 +119,6 @@ namespace pony
             for (int i = 0; i < hairAmout; i++)
             {
                 string tempPath = "Uno_" + colorPath[i].ToString();
-               // Console.WriteLine(tempPath);
                 HairTexture[i] = Content.Load<Texture2D>(tempPath);
             }
           

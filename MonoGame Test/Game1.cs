@@ -9,6 +9,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
+using Microsoft.Xna.Framework.Audio;
 
 using pony;
 using levels;
@@ -21,9 +22,7 @@ using xTile.Display;
 
 namespace MonoGame_Test
 {
-    /// <summary>
-    /// This is the main type for your game.
-    /// </summary>
+
     public class Game1 : Game
     {
 
@@ -47,8 +46,7 @@ namespace MonoGame_Test
         IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
 
-        //Add Songs
-        Song song;
+    
       
         public Game1()
         {
@@ -117,16 +115,6 @@ namespace MonoGame_Test
             }
    
 
-           
-            backgroundTexture = Content.Load<Texture2D>("StoneDungeon_bg");
-
-          //  backgroundMusic = Content.Load<Song>("test");
-           // MediaPlayer.Play(backgroundMusic);
-          //  this.song = Content.Load<Song>("test");
-          //  MediaPlayer.Play(song);
-            //  Uncomment the following line will also loop the song
-            //  MediaPlayer.IsRepeating = true;
-          //  MediaPlayer.MediaStateChanged += MediaPlayer_MediaStateChanged;
         }
 
        
@@ -159,7 +147,7 @@ namespace MonoGame_Test
             {
                 if (!b.isActive) {
                   
-                    t +=  (float)deltatime;     // I'm working on it.
+                    t +=  (float)deltatime;     
                     if (t >= .5f)
                     {
                         removed.Add(b);
@@ -183,10 +171,9 @@ namespace MonoGame_Test
             {
                 Balloon balloon = b.Update(Uno);
 
-                if (balloon!=null)   // test color
+                if (balloon!=null)   
                 {
                     Uno.ChangeHair(balloon.path);
-                   // Console.WriteLine(balloon.path);
                 }
 
                 balloon = null;
@@ -218,7 +205,6 @@ namespace MonoGame_Test
            
             
 
-            // test~
             foreach(Balloon b in GameManager.getInstance().GetBalloons())
             {
                b.Draw(spriteBatch);

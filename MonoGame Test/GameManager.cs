@@ -23,7 +23,6 @@ namespace Game2
       //  public int ScreenSizeX;
       //  public int ScreenSizeY;
 
-        public float BackgroundMusicVol;
         public ContentManager content;
 
         public static readonly float TILE_SIZE = 32f;

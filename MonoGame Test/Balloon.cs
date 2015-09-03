@@ -15,10 +15,10 @@ namespace MonoGame_Test
         private Texture2D Texture;
         public string path;
         private Vector2 Position;
+        private Vector2 startPosition;
         public bool isActive;
 
         private Texture2D popTexture;
-        private int popImageCount;
 
         private float width = 64;
         private float height = 64;
@@ -27,12 +27,16 @@ namespace MonoGame_Test
         public ContentManager Content;
         Body _body;
         public string name;
-       
-                
-        public Balloon(Point position, ContentManager Content, string color)
+
+
+        float speed = 0f;
+        float range = 0f;
+
+        public Balloon(Point position, ContentManager Content, string color,float speed, float range)
         {
             var tileSize = GameManager.TILE_SIZE;
             Vector2 Position = new Vector2(position.X*tileSize, position.Y*tileSize);
+            startPosition = Position;
             string colorPath = "Balloon_";
             switch(color)
             {
@@ -51,10 +55,14 @@ namespace MonoGame_Test
                     break;
                 case "y":
                     colorPath += "yellow";
+                    this.speed = speed;
+                    this.range = range;
                     break;
             }
             InitializeBase(Position, Content, colorPath);
         }
+
+        
 
         public Balloon(Vector2 Position, ContentManager Content, string colorPath)
         {
@@ -126,6 +134,11 @@ namespace MonoGame_Test
          
             if (isActive)
             {
+                if (path == "Balloon_yellow")
+                {
+                    CheckEdge();
+                }
+
                 spriteBatch.Draw(Texture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
             }
 
@@ -137,6 +150,21 @@ namespace MonoGame_Test
             }
 
            
+        }
+
+        private void CheckEdge()
+        {
+
+
+            if (startPosition.X + range < Position.X || Position.X< startPosition.X)
+            {
+            
+                speed *= -1f;
+            }
+
+            Position.X += speed;
+           
+
         }
 
      

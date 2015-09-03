@@ -64,10 +64,10 @@ namespace levels
                     walls.Add(new Walls("y", world, 9, 1, new Point(34, 26), true));
 
                     //Initialize the balloons
-                    GameManager.getInstance().AddBalloon(new Balloon(new Point(10, 1), content, "y"));
-                    GameManager.getInstance().AddBalloon(new Balloon(new Point(36, 5), content, "o"));
-                    GameManager.getInstance().AddBalloon(new Balloon(new Point(12, 18), content, "o"));
-                    GameManager.getInstance().AddBalloon(new Balloon(new Point(33, 19), content, "y"));
+                    GameManager.getInstance().AddBalloon(new Balloon(new Point(10, 1), content, "y",1f,300f));
+                    GameManager.getInstance().AddBalloon(new Balloon(new Point(36, 5), content, "o",0f,0f));
+                    GameManager.getInstance().AddBalloon(new Balloon(new Point(12, 18), content, "o",0f,0f));
+                    GameManager.getInstance().AddBalloon(new Balloon(new Point(33, 19), content, "y",2f,100f));
 
                     break;
                 default:
