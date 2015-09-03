@@ -9,6 +9,7 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
+using FarseerPhysics.Common;
 using MonoGame_Test;
 
 using Microsoft.Xna.Framework.Content;
@@ -176,7 +177,29 @@ namespace pony
                 }
             }
 
-            hitting = true;
+            Vector2 normal;
+            FixedArray2<Vector2> points;
+            contact.GetWorldManifold(out normal, out points);
+            switch(Direction)
+            {
+                case direction.floor:
+                    if(normal.Y < 0)
+                        hitting = true;
+                    break;
+                case direction.ceiling:
+                    if(normal.Y > 0)
+                        hitting = true;
+                    break;
+                case direction.leftwall:
+                    if(normal.X < 0)
+                        hitting = true;
+                    break;
+                case direction.rightwall:
+                    if(normal.Y > 0)
+                        hitting = true;
+                    break;
+
+            }
             return true;
         }
 
