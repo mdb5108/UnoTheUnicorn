@@ -9,10 +9,13 @@ using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.DebugView;
 using Microsoft.Xna.Framework;
 
+using Game2;
+
 namespace MonoGame_Test
 {
     class Walls
     {
+        private enum Orientation {HORIZONTAL, VERTICAL, EQUAL};
 
         public Body _body;            // body that is effected by physics
         public string Name;
@@ -36,7 +39,90 @@ namespace MonoGame_Test
             _aura.IsSensor = true;*/
 
         }
+
+        public Walls(string magneticAttribute, World world, uint width, uint height, Point pos, bool Static)
+        {
+            float tileSize = GameManager.TILE_SIZE_CONV;
+            float widthR = width*tileSize;
+            float heightR = height*tileSize;
+            Vector2 topLeft = new Vector2(pos.X*tileSize, pos.Y*tileSize);
+            Vector2 mid = new Vector2(topLeft.X + widthR/2, topLeft.Y + heightR/2);
+            InitializeBase(world, widthR, heightR, 10f, mid, Static);
+            if(magneticAttribute != "")
+            {
+                Orientation facing;
+                if(width > height)
+                {
+                    facing = Orientation.HORIZONTAL;
+                }
+                else if(width < height)
+                {
+                    facing = Orientation.VERTICAL;
+                }
+                else
+                {
+                    facing = Orientation.EQUAL;
+                }
+
+                float wallExtend = (GameManager.UnoToTiles * tileSize)/8;
+                Action<string,float> createHorizontalSensor = delegate(string dir, float offsetY)
+                {
+                    CreateSensor(0,
+                            magneticAttribute+"."+dir,
+                            world,
+                            widthR,
+                            wallExtend,
+                            new Vector2(mid.X, mid.Y+offsetY),
+                            1.0f);
+                };
+                Action<string,float> createVerticalSensor = delegate(string dir, float offsetX)
+                {
+                    CreateSensor(0,
+                            magneticAttribute+"."+dir,
+                            world,
+                            wallExtend,
+                            heightR,
+                            new Vector2(mid.X+offsetX, mid.Y),
+                            1.0f);
+                };
+
+                switch(facing)
+                {
+                    case Orientation.HORIZONTAL:
+                        {
+                            float offset = (heightR/2 + wallExtend/2);
+                            createHorizontalSensor("f", -offset);
+                            createHorizontalSensor("c", +offset);
+                        }
+                        break;
+                    case Orientation.VERTICAL:
+                        {
+                            float offset = (widthR/2 + wallExtend/2);
+                            createVerticalSensor("r", -offset);
+                            createVerticalSensor("l", +offset);
+                        }
+                        break;
+                    case Orientation.EQUAL:
+                    default:
+                        {
+                            float offsetH = (heightR/2 + wallExtend/2);
+                            float offsetV = (widthR/2 + wallExtend/2);
+                            createHorizontalSensor("f", -offsetH);
+                            createHorizontalSensor("c", +offsetH);
+                            createVerticalSensor("r", -offsetV);
+                            createVerticalSensor("l", +offsetV);
+                        }
+                        break;
+                }
+            }
+        }
+
         public Walls(World world, float width, float height, float density, Vector2 pos, bool Static)
+        {
+            InitializeBase(world, width, height, density, pos, Static);
+        }
+
+        private void InitializeBase(World world, float width, float height, float density, Vector2 pos, bool Static)
         {
             _body = BodyFactory.CreateRectangle(world, width, height, density);
 

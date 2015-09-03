@@ -2,6 +2,11 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
+using FarseerPhysics;
+using FarseerPhysics.Dynamics;
+using FarseerPhysics.Factories;
+using FarseerPhysics.Dynamics.Contacts;
+
 namespace Game2
 {
     class GameManager
@@ -15,6 +20,11 @@ namespace Game2
 
         public float BackgroundMusicVol;
         public ContentManager content;
+
+        public static readonly float TILE_SIZE = 32f;
+        public static readonly float TILE_SIZE_CONV = ConvertUnits.ToSimUnits(TILE_SIZE);
+        public static readonly uint UnoToTiles = 4;
+
         private GameManager()
         {
             // set the height & width of screen, change freely!!!
