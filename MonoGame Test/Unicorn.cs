@@ -71,6 +71,9 @@ namespace pony
         }
         public color CurrentColor;
 
+        private bool bouncing = false;
+        private Vector2 bouncingForce;
+
         public Unicorn(Game game) : base(game)
         {
             _game = (Game1)game;
@@ -131,6 +134,27 @@ namespace pony
                 {
                     contactfloorname = words[1];
                     return false;
+                }
+                else
+                {
+                    Vector2 jumpingForce = new Vector2();
+                    switch(words[1])
+                    {
+                        case "f":
+                            jumpingForce.Y = -JumpForce;
+                            break;
+                        case "c":
+                            jumpingForce.Y = JumpForce;
+                            break;
+                        case "l":
+                            jumpingForce.X = JumpForce;
+                            break;
+                        case "r":
+                            jumpingForce.X = -JumpForce;
+                            break;
+                    }
+                    bouncing = true;
+                    bouncingForce = jumpingForce;
                 }
             }
 
@@ -244,13 +268,16 @@ namespace pony
             }
         }
 
-
         void Bounce(float dt)
         {
             JumpelapsedTime += dt;
-            if (JumpelapsedTime <= dt)
+            if (bouncing && JumpelapsedTime <= dt)
             {
-                _body.ApplyForce(new Vector2(JumpX, JumpY));
+                _body.ApplyForce(bouncingForce);
+            }
+            else
+            {
+                bouncing = false;
             }
         }
            
