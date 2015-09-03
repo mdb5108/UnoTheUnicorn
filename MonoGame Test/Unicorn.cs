@@ -446,12 +446,46 @@ namespace pony
 
         public void Draw(SpriteBatch spritebatch)
         {
-         
-                spritebatch.Draw(UnicornTexture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
+                float rotation = 0f;
+                SpriteEffects imageDirection;
 
+                switch(Direction)
+                {
+                    case  direction.floor:
+                    default:
+                        rotation = 0f;
+                        if(RightVeltoCheck > 0f)
+                            imageDirection = SpriteEffects.FlipHorizontally;
+                        else
+                            imageDirection = SpriteEffects.None;
+                        break;
+                    case direction.leftwall:
+                        rotation = (float)(.5f * Math.PI);
+                        if(RightVeltoCheck > 0f)
+                            imageDirection = SpriteEffects.FlipHorizontally;
+                        else
+                            imageDirection = SpriteEffects.None;
+                        break;
+                    case direction.rightwall:
+                        rotation = (float)(1.5f * Math.PI);
+                        if(RightVeltoCheck > 0f)
+                            imageDirection = SpriteEffects.None;
+                        else
+                            imageDirection = SpriteEffects.FlipHorizontally;
+                        break;
+                    case direction.ceiling:
+                        rotation = (float)Math.PI;
+                        if(RightVeltoCheck > 0f)
+                            imageDirection = SpriteEffects.None;
+                        else
+                            imageDirection = SpriteEffects.FlipHorizontally;
+                        break;
+                }
+                Vector2 relativeCenter = new Vector2(width/2, height/2);
+                spritebatch.Draw(UnicornTexture, Position+relativeCenter, null, Color.White, rotation, relativeCenter, 1f, imageDirection, 0f);
                 if (colorStatu != "normal")
                 {
-                    spritebatch.Draw(HairTexture[colorIndex],Position,null,Color.White,0f,Vector2.Zero,1f,SpriteEffects.None,0f);
+                    spritebatch.Draw(HairTexture[colorIndex],Position+relativeCenter,null,Color.White,rotation,relativeCenter,1f,imageDirection,0f);
                 }
             
         }
