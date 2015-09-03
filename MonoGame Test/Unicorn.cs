@@ -123,14 +123,18 @@ namespace pony
                 // contactbodyname = words[0] + "     " + words[1];
                 touchingcolor = words[0];
 
-                contactfloorname = words[1];
-
-                if(touchingcolor == CurrentColor.ToString())
+                if(CurrentColor == color.n)
                 {
+                    return false;
+                }
+                else if(touchingcolor == CurrentColor.ToString())
+                {
+                    contactfloorname = words[1];
                     return false;
                 }
             }
 
+            hitting = true;
             return true;
         }
 
@@ -144,6 +148,7 @@ namespace pony
                
                 contactbodyname = touchingcolor;
             }
+           hitting = false;
             JumpelapsedTime = 0;
         }
 
@@ -159,7 +164,6 @@ namespace pony
             deltaTime = dt;
             Position = ConvertUnits.ToDisplayUnits(_body.Position.X-0.6f,
                                                     _body.Position.Y-0.7f);
-            hitting = contactfloorname == "" ? false : true;
          
             spacekey = Keyboard.GetState().IsKeyDown(Keys.Space);
             rightkey = Keyboard.GetState().IsKeyDown(Keys.Right);
@@ -175,7 +179,7 @@ namespace pony
         {
             // if (CurrentColor.ToString() == "n") return;
             // if(!contactcolornames.Contains(CurrentColor.ToString()))
-            if(touchingcolor != CurrentColor.ToString())
+            if(CurrentColor != color.n && touchingcolor != CurrentColor.ToString())
             {
                 contactbodyname = "hitting bad";
                 Bounce(dt);
@@ -287,6 +291,11 @@ namespace pony
                     colorStatu = "normal";
                     CurrentColor = color.n;
                     break;
+            }
+
+            if(touchingcolor != CurrentColor.ToString())
+            {
+                contactfloorname = "f";
             }
 
         }
