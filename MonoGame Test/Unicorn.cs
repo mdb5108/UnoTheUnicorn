@@ -38,8 +38,8 @@ namespace pony
 
         private Dictionary<string, HashSet<Rectangle>> auraContacts;
 
-        private int JumpForce = 300;
-        private float runForce = 100;
+        private int JumpForce = 220;
+        private float runForce = 200;
 
         float JumpX=0, JumpY=0,RestingValueX=0,RestingValueY=0,  // RestingValue: Force needed to get back to resting phase
               RightX=0,RightY=0,RightVeltoCheck=0,RightMaxVel=0, 
