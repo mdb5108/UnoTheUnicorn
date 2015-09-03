@@ -7,6 +7,7 @@ using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
 using pony;
+using Game2;
 namespace MonoGame_Test
 {
     public class Balloon
@@ -25,14 +26,36 @@ namespace MonoGame_Test
         public string name;
        
                 
+        public Balloon(Point position, ContentManager Content, string color)
+        {
+            var tileSize = GameManager.TILE_SIZE;
+            Vector2 Position = new Vector2(position.X*tileSize, position.Y*tileSize);
+            string colorPath = "Balloon_";
+            switch(color)
+            {
+                case "o":
+                default:
+                    colorPath += "orange";
+                    break;
+                case "b":
+                    colorPath += "blue";
+                    break;
+                case "g":
+                    colorPath += "green";
+                    break;
+                case "r":
+                    colorPath += "red";
+                    break;
+                case "y":
+                    colorPath += "yellow";
+                    break;
+            }
+            InitializeBase(Position, Content, colorPath);
+        }
+
         public Balloon(Vector2 Position, ContentManager Content, string colorPath)
         {
-            this.Position = Position;
-            this.Content = Content;
-            isActive = true;
-            path = colorPath;
-
-     
+            InitializeBase(Position, Content, colorPath);
         }
         public Balloon(World world,Vector2 pos, ContentManager Content)
         {
@@ -42,6 +65,14 @@ namespace MonoGame_Test
             
             this.Position = pos;
             this.Content = Content;
+        }
+
+        private void InitializeBase(Vector2 Position, ContentManager Content, string colorPath)
+        {
+            this.Position = Position;
+            this.Content = Content;
+            isActive = true;
+            path = colorPath;
         }
 
         public void Destroy()
