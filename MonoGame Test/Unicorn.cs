@@ -36,6 +36,8 @@ namespace pony
         public string contactfloorname = "f";
         public List<string> contactcolornames = new List<string>();
 
+        private Dictionary<string, HashSet<Rectangle>> auraContacts;
+
         private int JumpForce = 300;
         private float runForce = 100;
 
@@ -92,6 +94,14 @@ namespace pony
 
         public void Initialize(Texture2D texture,Vector2 pos,World world)
         {
+            auraContacts = new Dictionary<string, HashSet<Rectangle>>()
+            {
+                {"o", new HashSet<Rectangle>()},
+                {"b", new HashSet<Rectangle>()},
+                {"g", new HashSet<Rectangle>()},
+                {"y", new HashSet<Rectangle>()},
+            };
+
             UnicornTexture = texture;
             Position = pos;
             CurrentColor = color.n;
@@ -102,6 +112,7 @@ namespace pony
             _body.Restitution = 0f;
             _body.Position = ConvertUnits.ToSimUnits(pos.X,pos.Y);
             _body.BodyName = "Unicorn";
+            _body.UserData = new Vector2(96, 96);
              hitting = false;
             _body.OnCollision += MyOnCollision;
             _body.OnSeparation += MyOnSeparation;
@@ -129,12 +140,16 @@ namespace pony
                 // contactbodyname = words[0] + "     " + words[1];
                 touchingcolor = words[0];
 
+                Vector2 size = (Vector2)f2.Body.UserData;
+                Vector2 pos = ConvertUnits.ToDisplayUnits(f2.Body.Position);
                 if(CurrentColor == color.n)
                 {
+                    auraContacts[touchingcolor].Add(new Rectangle((int)(pos.X-(size.X/2)), (int)(pos.Y-(size.Y/2)), (int)size.X, (int)size.Y));
                     return false;
                 }
                 else if(touchingcolor == CurrentColor.ToString())
                 {
+                    auraContacts[touchingcolor].Add(new Rectangle((int)(pos.X-(size.X/2)), (int)(pos.Y-(size.Y/2)), (int)size.X, (int)size.Y));
                     contactfloorname = words[1];
                     return false;
                 }
@@ -171,6 +186,9 @@ namespace pony
             {
                 string[] words = f2.Body.BodyName.Split('.');
                 touchingcolor = CurrentColor.ToString();
+                Vector2 size = (Vector2)f2.Body.UserData;
+                Vector2 pos = ConvertUnits.ToDisplayUnits(f2.Body.Position);
+                auraContacts[words[0]].Remove(new Rectangle((int)(pos.X-(size.X/2)), (int)(pos.Y-(size.Y/2)), (int)size.X, (int)size.Y));
                 contactfloorname = "";
                
                 contactbodyname = touchingcolor;
@@ -191,6 +209,17 @@ namespace pony
             deltaTime = dt;
             Position = ConvertUnits.ToDisplayUnits(_body.Position.X-0.6f,
                                                     _body.Position.Y-0.7f);
+
+            CheckTriggers();
+
+            //If we are not in field, fall down
+            if(touchingcolor != "" && touchingcolor != "n")
+            {
+                if(auraContacts[touchingcolor].Count == 0)
+                {
+                    contactfloorname = "f";
+                }
+            }
          
             spacekey = Keyboard.GetState().IsKeyDown(Keys.Space);
             rightkey = Keyboard.GetState().IsKeyDown(Keys.Right);
@@ -200,6 +229,29 @@ namespace pony
             CheckColor(dt);
             KeyBoardInput(dt);
             //contactbodyname = _body.LinearVelocity.ToString();
+        }
+
+        void CheckTriggers()
+        {
+            Vector2 size = (Vector2)_body.UserData;
+            Vector2 pos = ConvertUnits.ToDisplayUnits(_body.Position);
+            Rectangle bounds = new Rectangle((int)(pos.X-(size.X/2)), (int)(pos.Y-(size.Y/2)), (int)size.X, (int)size.Y);
+            List<KeyValuePair<string, Rectangle>> removed = new List<KeyValuePair<string, Rectangle>>();
+            foreach(var keyRects in auraContacts)
+            {
+                foreach(Rectangle r in keyRects.Value)
+                {
+                    if(!bounds.Intersects(r))
+                    {
+                        removed.Add(new KeyValuePair<string, Rectangle>(keyRects.Key, r));
+                    }
+                }
+            }
+
+            foreach(var keyRect in removed)
+            {
+                auraContacts[keyRect.Key].Remove(keyRect.Value);
+            }
         }
 
         void CheckColor(float dt)

@@ -32,6 +32,7 @@ namespace MonoGame_Test
             _body.Friction = 0;
             _body.OnCollision += MyOnCollision;
             _body.BodyName = name;
+            _body.UserData = ConvertUnits.ToDisplayUnits(new Vector2(width, height));
 
            /* _aura = BodyFactory.CreateCircle(world, 2.0f, 10.0f);
             _aura.Position = pos;
@@ -131,6 +132,7 @@ namespace MonoGame_Test
             _body.Restitution = 0;
             _body.Friction = 0;
             _body.OnCollision += MyOnCollision;
+            _body.UserData = ConvertUnits.ToDisplayUnits(new Vector2(width, height));
         }
 
         ~Walls()
@@ -145,6 +147,7 @@ namespace MonoGame_Test
             body.IsStatic = true;
             body.IsSensor = false;
             body.BodyName = name;
+            body.UserData = ConvertUnits.ToDisplayUnits(new Vector2(width, height));
             _aura.Add(body);
             
         }
