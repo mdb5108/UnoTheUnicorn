@@ -59,11 +59,9 @@ namespace MonoGame_Test
       
         public Game1()
         {
-         //   Height = 1024;
-          //  Width = 1536;
+            Height = 1024;
+            Width = 1536;
 
-            Height = 700;
-            Width = 900;
             graphics = new GraphicsDeviceManager(this)
             {
                 PreferredBackBufferHeight = Height,
@@ -84,6 +82,7 @@ namespace MonoGame_Test
                 balloons.Add(balloon);
             }
 
+            this.Window.Position = new Point(0, 0);
         }
 
         protected override void Initialize()
