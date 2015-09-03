@@ -44,9 +44,9 @@ namespace levels
                     walls.Add(new Walls("y", world, 5, 1, new Point(23, 8), true));
 
                     //Top Right Normal
-                    walls.Add(new Walls("", world, 1, 7, new Point(32, 3), true));
-                    walls.Add(new Walls("", world, 8, 1, new Point(32, 3), true));
-                    walls.Add(new Walls("", world, 1, 7, new Point(39, 3), true));
+                    walls.Add(new Walls("", world, 1, 7, new Point(33, 3), true));
+                    walls.Add(new Walls("", world, 8, 1, new Point(33, 3), true));
+                    walls.Add(new Walls("", world, 1, 7, new Point(40, 3), true));
 
                     //Bottom Left Normal
                     walls.Add(new Walls("", world, 8, 1, new Point(8, 25), true));
@@ -65,7 +65,7 @@ namespace levels
 
                     //Initialize the balloons
                     GameManager.getInstance().AddBalloon(new Balloon(new Point(10, 1), content, "y"));
-                    GameManager.getInstance().AddBalloon(new Balloon(new Point(35, 5), content, "o"));
+                    GameManager.getInstance().AddBalloon(new Balloon(new Point(36, 5), content, "o"));
                     GameManager.getInstance().AddBalloon(new Balloon(new Point(12, 18), content, "o"));
                     GameManager.getInstance().AddBalloon(new Balloon(new Point(33, 19), content, "y"));
 
