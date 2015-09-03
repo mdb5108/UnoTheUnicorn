@@ -41,13 +41,6 @@ namespace MonoGame_Test
         public string debugstring="Debuglog";
        
         
-        // Initialize  balloons
-        List<Balloon> balloons = new List<Balloon>();
-        List<Vector2> balloonsPos = new List<Vector2> {new Vector2(100,500),new Vector2(200,420),new Vector2(300,540),new Vector2(400,500),new Vector2(500,520),new Vector2(600,510),new Vector2(700,470)};
-        string[] colorType = { "Balloon_blue", "Balloon_green", "Balloon_orange", "Balloon_red", "Balloon_yellow" };
-        List<string> colorPath;
-
-        int amount;
         Texture2D backgroundTexture;
 
         private Map map;
@@ -71,16 +64,6 @@ namespace MonoGame_Test
 
          
             Content.RootDirectory = "Content";
-
-            // Initialize the balloon list
-           amount = balloonsPos.Count;
-           colorPath = new List<string>{colorType[0],colorType[1],colorType[2],colorType[3],colorType[4],colorType[2],colorType[0]};
-
-            for (int i = 0; i < amount; i++)
-            {
-                Balloon balloon = new Balloon((Vector2)balloonsPos[i], Content, (string)colorPath[i]);
-                balloons.Add(balloon);
-            }
 
             this.Window.Position = new Point(0, 0);
         }
@@ -128,9 +111,8 @@ namespace MonoGame_Test
             font = Content.Load<SpriteFont>("TestingFont");
 
 
-            for (int i = 0; i < amount; i++)
+            foreach(Balloon b in GameManager.getInstance().GetBalloons())
             {
-                Balloon b = (Balloon)balloons[i];
                 b.LoadContent(Content);
             }
    
@@ -171,20 +153,24 @@ namespace MonoGame_Test
             _world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
 
 
-            for (int i = 0; i < balloons.Count; i++)
-            {
-                Balloon b = (Balloon)balloons[i];
 
+            List<Balloon> removed = new List<Balloon>();
+            foreach(Balloon b in GameManager.getInstance().GetBalloons())
+            {
                 if (!b.isActive) {
                   
                     t +=  (float)deltatime;     // I'm working on it.
                     if (t >= .5f)
                     {
-                        balloons.Remove(balloons[i]);
+                        removed.Add(b);
                         t = .0f;
                     }
                   
                 }
+            }
+            foreach(Balloon b in removed)
+            {
+                GameManager.getInstance().RemoveBalloon(b);
             }
 
 
@@ -193,10 +179,8 @@ namespace MonoGame_Test
 
 
             // balloons pop check & change color 
-
-            for (int i = 0; i < balloons.Count; i++)
+            foreach(Balloon b in GameManager.getInstance().GetBalloons())
             {
-                Balloon b = (Balloon)balloons[i];
                 Balloon balloon = b.Update(Uno);
 
                 if (balloon!=null)   // test color
@@ -235,9 +219,8 @@ namespace MonoGame_Test
             
 
             // test~
-            for (int i = 0; i < balloons.Count; i++)
+            foreach(Balloon b in GameManager.getInstance().GetBalloons())
             {
-               Balloon b = (Balloon)balloons[i];
                b.Draw(spriteBatch);
             }
  

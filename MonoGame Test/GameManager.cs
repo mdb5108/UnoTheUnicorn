@@ -1,4 +1,7 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System.Collections.Generic;
+using System.Collections.ObjectModel;
+
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
 
@@ -6,6 +9,8 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Dynamics.Contacts;
+
+using MonoGame_Test;
 
 namespace Game2
 {
@@ -25,6 +30,8 @@ namespace Game2
         public static readonly float TILE_SIZE_CONV = ConvertUnits.ToSimUnits(TILE_SIZE);
         public static readonly uint UnoToTiles = 4;
 
+        private List<Balloon> balloons = new List<Balloon>();
+
         private GameManager()
         {
             // set the height & width of screen, change freely!!!
@@ -39,6 +46,21 @@ namespace Game2
                 gameManager = new GameManager();
 
             return gameManager;
+        }
+
+        public void AddBalloon(Balloon b)
+        {
+            balloons.Add(b);
+        }
+
+        public void RemoveBalloon(Balloon b)
+        {
+            balloons.Remove(b);
+        }
+
+        public ReadOnlyCollection<Balloon> GetBalloons()
+        {
+            return balloons.AsReadOnly();
         }
 
 
