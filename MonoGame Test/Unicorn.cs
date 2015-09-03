@@ -33,7 +33,7 @@ namespace pony
         private bool leftkey = false;
         public string contactbodyname="nothing";
         Body _body;
-        public List<string> contactfloornames = new List<string>();
+        public string contactfloorname = "f";
         public List<string> contactcolornames = new List<string>();
 
         private int JumpForce = 300;
@@ -62,8 +62,11 @@ namespace pony
         public enum color
         {
             n,
+            b,
+            g,
             o,
-            b
+            r,
+            y,
         }
         public color CurrentColor;
 
@@ -86,8 +89,8 @@ namespace pony
             Position = pos;
             CurrentColor = color.n;
             _body = BodyFactory.CreateRectangle(world,
-                                                ConvertUnits.ToSimUnits(80),
-                                                ConvertUnits.ToSimUnits(80), 0f);
+                                                ConvertUnits.ToSimUnits(96),
+                                                ConvertUnits.ToSimUnits(96), 0f);
             _body.BodyType = BodyType.Dynamic;
             _body.Restitution = 0f;
             _body.Position = ConvertUnits.ToSimUnits(pos.X,pos.Y);
@@ -119,11 +122,12 @@ namespace pony
                 // contactbodyname = words[0] + "     " + words[1];
                 touchingcolor = words[0];
 
-                if (!contactfloornames.Contains(words[1]))
-                {
-                    contactfloornames.Add(words[1]);
-                }
+                contactfloorname = words[1];
 
+                if(touchingcolor == CurrentColor.ToString())
+                {
+                    return false;
+                }
             }
 
             return true;
@@ -135,11 +139,7 @@ namespace pony
             {
                 string[] words = f2.Body.BodyName.Split('.');
                 touchingcolor = CurrentColor.ToString();
-                if (!contactfloornames.Contains(words[1]))
-                {
-                    contactfloornames.Remove(words[1]);
-                   
-                }
+                contactfloorname = "";
                
                 contactbodyname = touchingcolor;
             }
@@ -158,7 +158,7 @@ namespace pony
             deltaTime = dt;
             Position = ConvertUnits.ToDisplayUnits(_body.Position.X-0.6f,
                                                     _body.Position.Y-0.7f);
-            hitting = contactfloornames.Count==0 ? false : true;
+            hitting = contactfloorname == "" ? false : true;
          
             spacekey = Keyboard.GetState().IsKeyDown(Keys.Space);
             rightkey = Keyboard.GetState().IsKeyDown(Keys.Right);
@@ -183,16 +183,16 @@ namespace pony
         void ChangeDirections(World world,float dt)
         {
 
-            if(contactfloornames.Contains("f"))
+            if(contactfloorname == "f")
             {
                 Direction = direction.floor;
-            }else if(contactfloornames.Contains("l"))
+            }else if(contactfloorname == "l")
             {
                 Direction = direction.leftwall;
-            }else if(contactfloornames.Contains("r"))
+            }else if(contactfloorname == "r")
             {
                 Direction = direction.rightwall;
-            }else if(contactfloornames.Contains("c"))
+            }else if(contactfloorname == "c")
             {
                 Direction = direction.ceiling;
             }
@@ -261,24 +261,30 @@ namespace pony
                 case "Balloon_blue":   
                     colorStatu = temp + "blue";
                     colorIndex = 0;
+                    CurrentColor = color.b;
                     break;
                 case "Balloon_green":
                     colorStatu = temp + "green";
                     colorIndex = 1;
+                    CurrentColor = color.g;
                     break;
                 case "Balloon_orange":
                     colorStatu = temp + "orange";
                     colorIndex = 2;
+                    CurrentColor = color.o;
                     break;
                 case "Balloon_red":
-                    colorStatu = temp + "blue";
+                    colorStatu = temp + "red";
+                    CurrentColor = color.r;
                     break;
                 case "Balloon_yellow":
                     colorStatu = temp + "yellow";
                     colorIndex = 3;
+                    CurrentColor = color.y;
                     break;
                 default:
                     colorStatu = "normal";
+                    CurrentColor = color.n;
                     break;
             }
 
