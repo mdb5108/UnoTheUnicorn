@@ -20,7 +20,7 @@ namespace MonoGame_Test
         public Body _body;            // body that is effected by physics
         public string Name;
         private List<Body> _aura = new List<Body>();
-        private int count=0;
+
         public Walls(string name, World world, float width, float height, float density, Vector2 pos,bool Static)
         {
             Name = name;
