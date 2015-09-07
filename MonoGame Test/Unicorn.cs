@@ -111,6 +111,7 @@ namespace pony
                                                 ConvertUnits.ToSimUnits(96), 0f);
             _body.BodyType = BodyType.Dynamic;
             _body.Restitution = 0f;
+            _body.Friction = 0f;
             _body.Position = ConvertUnits.ToSimUnits(pos.X,pos.Y);
             _body.BodyName = "Unicorn";
             _body.UserData = new Vector2(96, 96);
