@@ -48,7 +48,6 @@ namespace pony
 
         private float _resetTime = 0;
         private int Jumps = 0;
-        private float JumpelapsedTime = 0;
 
         float deltaTime = 0;
         private string touchingcolor = "n";
@@ -218,7 +217,6 @@ namespace pony
                 contactbodyname = touchingcolor;
             }
            hitting = false;
-            JumpelapsedTime = 0;
         }
 
         protected override void UnloadContent()
@@ -349,13 +347,9 @@ namespace pony
 
         void Bounce(float dt)
         {
-            JumpelapsedTime += dt;
-            if (bouncing && JumpelapsedTime <= dt)
+            if (bouncing)
             {
                 _body.ApplyForce(bouncingForce);
-            }
-            else
-            {
                 bouncing = false;
             }
         }
