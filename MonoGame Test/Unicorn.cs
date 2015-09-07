@@ -134,6 +134,10 @@ namespace pony
 
         public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)
         {
+            Vector2 normal;
+            FixedArray2<Vector2> points;
+            contact.GetWorldManifold(out normal, out points);
+
             if(f2.Body.BodyName!=null)
             {
                 string[] words = f2.Body.BodyName.Split('.');
@@ -156,30 +160,12 @@ namespace pony
                 }
                 else
                 {
-                    Vector2 jumpingForce = new Vector2();
-                    switch(words[1])
-                    {
-                        case "f":
-                            jumpingForce.Y = -JumpForce;
-                            break;
-                        case "c":
-                            jumpingForce.Y = JumpForce;
-                            break;
-                        case "l":
-                            jumpingForce.X = JumpForce;
-                            break;
-                        case "r":
-                            jumpingForce.X = -JumpForce;
-                            break;
-                    }
+                    Vector2 jumpingForce = normal*JumpForce;
                     bouncing = true;
                     bouncingForce = jumpingForce;
                 }
             }
 
-            Vector2 normal;
-            FixedArray2<Vector2> points;
-            contact.GetWorldManifold(out normal, out points);
             switch(Direction)
             {
                 case direction.floor:
