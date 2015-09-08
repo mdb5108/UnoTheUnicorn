@@ -28,6 +28,24 @@
         <Property Key="Speed" Type="String"><![CDATA[Med]]></Property>
       </Properties>
     </TileSheet>
+    <TileSheet Id="MetalWallBlue_wall">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_Blue.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Magnetic Wall]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[b]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="MetalWallGreen_wall">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_Green.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Magnetic Wall]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[g]]></Property>
+      </Properties>
+    </TileSheet>
     <TileSheet Id="MetalWallOrange_wall">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[PlatformTile_Orange.png]]></ImageSource>
