@@ -216,7 +216,6 @@ namespace pony
                         if (normal.Y > 0)
                             hitting = hittingState;
                         break;
-
                 }
         }
 
@@ -348,8 +347,6 @@ namespace pony
             }
         }
            
-
-
         public void ChangeHair(string balloonColor)
         {
             string temp = "Uno_";
