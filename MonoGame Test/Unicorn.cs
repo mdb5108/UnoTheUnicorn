@@ -39,7 +39,7 @@ namespace pony
         private Dictionary<string, HashSet<Rectangle>> auraContacts;
 
 
-        private int JumpForce = 283;
+        private int JumpForce = 305;
 
         private float runForce = 200;
 
