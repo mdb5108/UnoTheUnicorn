@@ -34,8 +34,10 @@ namespace MonoGame_Test
         DebugViewXNA debugview; // Debug view to see physics body
         SpriteFont font;
         public string debugstring="Debuglog";
-       
-        
+
+
+        SoundEffect bgs;
+     
         public Game1()
         {
             Height = 1024;
@@ -78,7 +80,8 @@ namespace MonoGame_Test
             debugview.LoadContent(GraphicsDevice, Content);
 
             font = Content.Load<SpriteFont>("TestingFont");
-   
+
+          //  bgs = Content.Load<SoundEffect>("1");
 
         }
 
@@ -87,6 +90,8 @@ namespace MonoGame_Test
         {
             // TODO: Unload any non ContentManager content here
             //Uno.UnloadContent();
+            GameManager.getInstance().UnloadContent(Content);
+            
         }
 
 
@@ -96,6 +101,7 @@ namespace MonoGame_Test
                 Exit();
 
             GameManager.getInstance().Update(gameTime);
+
             base.Update(gameTime);
         }
 

@@ -8,6 +8,7 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.DebugView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Test;
 using pony;
 using Game2;
