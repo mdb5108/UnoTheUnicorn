@@ -113,8 +113,9 @@ namespace MonoGame_Test
             GameManager.getInstance().Draw(spriteBatch);
             //debugview.RenderDebugData(ref projection);
 
+          //  spriteBatch.DrawString(font, debugstring, new Vector2(Width/2, 20), Color.Tomato);
 
-            spriteBatch.DrawString(font, GameManager.getInstance().uno.contactbodyname, new Vector2(Width/2, 20), Color.Tomato);
+            spriteBatch.DrawString(font, GameManager.getInstance().uno.debugString, new Vector2(Width/2, 20), Color.Tomato);
  
             spriteBatch.End();
 
