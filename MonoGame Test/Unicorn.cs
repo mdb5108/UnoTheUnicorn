@@ -164,7 +164,7 @@ namespace pony
                 {
                     Vector2 jumpingForce = normal*JumpForce;
                     bouncing = true;
-                    bouncingForce = jumpingForce;
+                    bouncingForce = 1.6f*jumpingForce;
                 }
             }
 
