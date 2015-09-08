@@ -111,6 +111,10 @@ namespace Game2
                 Vector2 unopos;
                 Levels.getInstance().Initialize(level, world, content, out _map, out unopos);
                 map.LoadTileSheets(mapDisplayDevice);
+                foreach(Balloon b in GetBalloons())
+                {
+                    b.LoadContent(content);
+                }
 
                 uno.Initialize(unoTexture, unopos, world);
                 return true;

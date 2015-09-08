@@ -125,6 +125,8 @@ namespace pony
                 string tempPath = "Uno_" + colorPath[i].ToString();
                 HairTexture[i] = Content.Load<Texture2D>(tempPath);
             }
+
+            ChangeHair("");
           
         }
 
