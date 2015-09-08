@@ -32,7 +32,7 @@ namespace MonoGame_Test
         float speed = 0f;
         float range = 0f;
 
-        public Balloon(Point position, ContentManager Content, string color,float speed, float range)
+        public Balloon(Point position, ContentManager Content, string color, float speed, int range)
         {
             var tileSize = GameManager.TILE_SIZE;
             Vector2 Position = new Vector2(position.X*tileSize, position.Y*tileSize);
@@ -56,7 +56,7 @@ namespace MonoGame_Test
                 case "y":
                     colorPath += "yellow";
                     this.speed = speed;
-                    this.range = range;
+                    this.range = range*tileSize;
                     break;
             }
             InitializeBase(Position, Content, colorPath);
