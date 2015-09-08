@@ -135,7 +135,7 @@
     <Content Include="Content\SpeedSlow.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\StoneDungeonCeiling_v02.png">
+    <Content Include="Content\StoneDungeonCeiling.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\StoneDungeon_bg.png">

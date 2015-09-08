@@ -99,7 +99,6 @@ namespace MonoGame_Test
 
             debugview.LoadContent(GraphicsDevice, Content);
 
-            _levels.InitializeBoundaries(_world);
             Vector2 unopos;
             _levels.Initialize(1, _world, Content, out map, out unopos);
             Uno.Initialize(Content.Load<Texture2D>("Uno"), unopos,_world);

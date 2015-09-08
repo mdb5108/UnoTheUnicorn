@@ -267,16 +267,6 @@ namespace levels
             func(aggregates, pointToAggregate);
         }
 
-        public void InitializeBoundaries(World world)
-        {
-            // n=no color, n = non magnetic wall
-            _floor = new Walls("", world, 48, 1, new Point(0, 31), true);
-            _rightwall = new Walls("", world, 1, 32, new Point(47, 0), true);
-            _leftwall = new Walls("", world, 1, 32, new Point(0, 0), true);
-            _ceiling = new Walls("", world, 48, 1, new Point(0, 0), true);
-        }
-
-
         float SimUnits(float x)
         {
             return ConvertUnits.ToSimUnits(x);
