@@ -43,20 +43,22 @@ namespace levels
             public Dictionary<string, string> properties = new Dictionary<string, string>();
         }
 
-        public void Initialize(int level,World world, ContentManager content, out Map map)
+        public void Initialize(int level,World world, ContentManager content, out Map map, out Vector2 unoPos)
         {
             var stream = TitleContainer.OpenStream("Content\\Map"+level+".tbin");
             map = xTile.Format.FormatManager.Instance.BinaryFormat.Load(stream);
 
-            ParseMap(ref map, world, content);
+            ParseMap(ref map, world, content, out unoPos);
         }
 
-        private void ParseMap(ref Map map, World world, ContentManager content)
+        private void ParseMap(ref Map map, World world, ContentManager content, out Vector2 unoPos)
         {
             var layerCount = map.Layers.Count;
+            Vector2 tempUnoPos = new Vector2();
 
-            xTile.Layers.Layer platformLayer = map.Layers[layerCount-4];
-            xTile.Layers.Layer zoneLayer = map.Layers[layerCount-3];
+            xTile.Layers.Layer platformLayer = map.Layers[layerCount-5];
+            xTile.Layers.Layer zoneLayer = map.Layers[layerCount-4];
+            xTile.Layers.Layer startLayer = map.Layers[layerCount-3];
             xTile.Layers.Layer balloonLayer = map.Layers[layerCount-2];
             xTile.Layers.Layer speedLayer = map.Layers[layerCount-1];
 
@@ -68,6 +70,19 @@ namespace levels
                     {
                         Rectangle rect = aggregate.rect;
                         walls.Add(new Walls(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, new Point(rect.X, rect.Y), true));
+                    }
+                }
+            });
+
+            ParseTiles(startLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+            {
+                foreach(var aggregate in aggregates)
+                {
+                    if(aggregate.type == "Uno")
+                    {
+                        float tileSize = GameManager.TILE_SIZE;
+                        Rectangle rect = aggregate.rect;
+                        tempUnoPos = new Vector2(rect.X*tileSize, rect.Y*tileSize);
                     }
                 }
             });
@@ -141,7 +156,10 @@ namespace levels
             //Remove Non Static Layers
             map.RemoveLayer(speedLayer);
             map.RemoveLayer(balloonLayer);
+            map.RemoveLayer(startLayer);
             map.RemoveLayer(zoneLayer);
+
+            unoPos = tempUnoPos;
         }
 
         delegate void AggregateTileHandler(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate);

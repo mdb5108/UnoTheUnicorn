@@ -151,6 +151,9 @@
     <Content Include="Content\Balloon_yellow.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\UnoEditor.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Uno_blue.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

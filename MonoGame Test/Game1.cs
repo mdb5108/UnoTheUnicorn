@@ -100,8 +100,8 @@ namespace MonoGame_Test
             debugview.LoadContent(GraphicsDevice, Content);
 
             _levels.InitializeBoundaries(_world);
-            _levels.Initialize(1, _world, Content, out map);
-            Vector2 unopos = new Vector2(GameManager.TILE_SIZE, 27*GameManager.TILE_SIZE);
+            Vector2 unopos;
+            _levels.Initialize(1, _world, Content, out map, out unopos);
             Uno.Initialize(Content.Load<Texture2D>("Uno"), unopos,_world);
             font = Content.Load<SpriteFont>("TestingFont");
 
