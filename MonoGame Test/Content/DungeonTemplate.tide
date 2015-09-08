@@ -20,6 +20,24 @@
         <Property Key="Color" Type="String"><![CDATA[g]]></Property>
       </Properties>
     </TileSheet>
+    <TileSheet Id="BalloonOrange_balloon">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[Balloon_orange.png]]></ImageSource>
+      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[o]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="BalloonYellow_balloon">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[Balloon_yellow.png]]></ImageSource>
+      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[y]]></Property>
+      </Properties>
+    </TileSheet>
     <TileSheet Id="DungeonCeiling_wall">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[StoneDungeonCeiling.png]]></ImageSource>
@@ -82,15 +100,6 @@
         <Property Key="Color" Type="String"><![CDATA[y]]></Property>
       </Properties>
     </TileSheet>
-    <TileSheet Id="BalloonOrange_balloon">
-      <Description><![CDATA[]]></Description>
-      <ImageSource><![CDATA[Balloon_orange.png]]></ImageSource>
-      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
-      <Properties>
-        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
-        <Property Key="Color" Type="String"><![CDATA[o]]></Property>
-      </Properties>
-    </TileSheet>
     <TileSheet Id="RedZone_zone">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[RedZone.png]]></ImageSource>
@@ -131,21 +140,48 @@
         <Property Key="Type" Type="String"><![CDATA[Wall]]></Property>
       </Properties>
     </TileSheet>
+    <TileSheet Id="Trigger1_trigger">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_one.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Trigger]]></Property>
+        <Property Key="Number" Type="Int32"><![CDATA[1]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Trigger2_trigger">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_two.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Trigger]]></Property>
+        <Property Key="Number" Type="Int32"><![CDATA[2]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Trigger3_trigger">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_three.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Trigger]]></Property>
+        <Property Key="Number" Type="Int32"><![CDATA[3]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Trigger4_trigger">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_four.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Trigger]]></Property>
+        <Property Key="Number" Type="Int32"><![CDATA[4]]></Property>
+      </Properties>
+    </TileSheet>
     <TileSheet Id="UnoStart_uno">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[UnoEditor.png]]></ImageSource>
       <Alignment SheetSize="4 x 4" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
       <Properties>
         <Property Key="Type" Type="String"><![CDATA[Uno]]></Property>
-      </Properties>
-    </TileSheet>
-    <TileSheet Id="BalloonYellow_balloon">
-      <Description><![CDATA[]]></Description>
-      <ImageSource><![CDATA[Balloon_yellow.png]]></ImageSource>
-      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
-      <Properties>
-        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
-        <Property Key="Color" Type="String"><![CDATA[y]]></Property>
       </Properties>
     </TileSheet>
   </TileSheets>
@@ -553,6 +589,109 @@
       </TileArray>
       <Properties />
     </Layer>
+    <Layer Id="Movable Platform Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
     <Layer Id="Zones Layer" Visible="True">
       <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
@@ -863,6 +1002,109 @@
       <Properties />
     </Layer>
     <Layer Id="Speed Modifier Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Trigger Groups" Visible="True">
       <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
       <TileArray>

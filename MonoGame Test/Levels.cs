@@ -81,11 +81,13 @@ namespace levels
             var layerCount = map.Layers.Count;
             Vector2 tempUnoPos = new Vector2();
 
-            xTile.Layers.Layer platformLayer = map.Layers[layerCount-5];
-            xTile.Layers.Layer zoneLayer = map.Layers[layerCount-4];
-            xTile.Layers.Layer startLayer = map.Layers[layerCount-3];
-            xTile.Layers.Layer balloonLayer = map.Layers[layerCount-2];
-            xTile.Layers.Layer speedLayer = map.Layers[layerCount-1];
+            xTile.Layers.Layer platformLayer = map.Layers[layerCount-7];
+            xTile.Layers.Layer moveablePlatformLayer = map.Layers[layerCount-6];
+            xTile.Layers.Layer zoneLayer = map.Layers[layerCount-5];
+            xTile.Layers.Layer startLayer = map.Layers[layerCount-4];
+            xTile.Layers.Layer balloonLayer = map.Layers[layerCount-3];
+            xTile.Layers.Layer speedLayer = map.Layers[layerCount-2];
+            xTile.Layers.Layer triggerLayer = map.Layers[layerCount-1];
 
             ParseTiles(platformLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
             {
