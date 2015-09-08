@@ -19,7 +19,7 @@ namespace pony
     {
         public Texture2D UnicornTexture;
         public Texture2D []HairTexture;
-        private byte hairAmout = 4;    // need to be changed 
+        private byte hairAmout = 4;    
         private string[] colorPath = {"blue","green","orange","yellow"};
         private int colorIndex = 0;
         private string colorStatu = "normal";
@@ -36,10 +36,11 @@ namespace pony
         Body _body;
         public string contactFloorName = "f";
         public List<string> contactcolornames = new List<string>();
-
         private Dictionary<string, HashSet<Rectangle>> auraContacts;
 
+
         private int JumpForce = 283;
+
         private float runForce = 200;
 
         float JumpX=0, JumpY=0,RestingValueX=0,RestingValueY=0,  // RestingValue: Force needed to get back to resting phase
@@ -49,6 +50,7 @@ namespace pony
         private int Jumps = 0;
         private float JumpelapsedTime = 0;
         private List<int> touchingSurfaces_Jump = new List<int>();
+
 
         float deltaTime = 0;
         private string touchingcolor = "n";
@@ -79,6 +81,8 @@ namespace pony
 
         private float width = 128;
         private float height = 128;
+
+        SpriteEffects imageDirection = SpriteEffects.None;
 
         public Unicorn(Game game) : base(game)
         {
@@ -111,6 +115,7 @@ namespace pony
                                                 ConvertUnits.ToSimUnits(96), 0f);
             _body.BodyType = BodyType.Dynamic;
             _body.Restitution = 0f;
+            _body.Friction = 0f;
             _body.Position = ConvertUnits.ToSimUnits(pos.X,pos.Y);
             _body.BodyName = "Unicorn";
             _body.UserData = new Vector2(96, 96);
@@ -122,7 +127,6 @@ namespace pony
             for (int i = 0; i < hairAmout; i++)
             {
                 string tempPath = "Uno_" + colorPath[i].ToString();
-               // Console.WriteLine(tempPath);
                 HairTexture[i] = Content.Load<Texture2D>(tempPath);
             }
          
@@ -130,6 +134,10 @@ namespace pony
 
         public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)
         {
+            Vector2 normal;
+            FixedArray2<Vector2> points;
+            contact.GetWorldManifold(out normal, out points);
+
             if(f2.Body.BodyName!=null)
             {
                 string[] words = f2.Body.BodyName.Split('.');
@@ -152,30 +160,16 @@ namespace pony
                 }
                 else
                 {
-                    Vector2 jumpingForce = new Vector2();
-                    switch(words[1])
-                    {
-                        case "f":
-                            jumpingForce.Y = -JumpForce;
-                            break;
-                        case "c":
-                            jumpingForce.Y = JumpForce;
-                            break;
-                        case "l":
-                            jumpingForce.X = JumpForce;
-                            break;
-                        case "r":
-                            jumpingForce.X = -JumpForce;
-                            break;
-                    }
+                    Vector2 jumpingForce = normal*JumpForce;
                     bouncing = true;
                     bouncingForce = jumpingForce;
                 }
             }
+
             
-            if (!touchingSurfaces_Jump.Contains(f2.Body.BodyId)) touchingSurfaces_Jump.Add(f2.Body.BodyId);
+            if (!touchingSurfaces_Jump.Contains(f2.Body.BodyId))
+                touchingSurfaces_Jump.Add(f2.Body.BodyId);
             
-            //CheckFixtureHits(true, contact);
             return true;
         }
 
@@ -192,7 +186,10 @@ namespace pony
                 debugString = touchingcolor;
                
             }
-            if (touchingSurfaces_Jump.Contains(f2.Body.BodyId)) touchingSurfaces_Jump.Remove(f2.Body.BodyId);
+
+            if (touchingSurfaces_Jump.Contains(f2.Body.BodyId))
+                touchingSurfaces_Jump.Remove(f2.Body.BodyId);
+
             JumpelapsedTime = 0;
         }
 
@@ -344,13 +341,9 @@ namespace pony
 
         void Bounce(float dt)
         {
-            JumpelapsedTime += dt;
-            if (bouncing && JumpelapsedTime <= dt)
+            if (bouncing)
             {
                 _body.ApplyForce(bouncingForce);
-            }
-            else
-            {
                 bouncing = false;
             }
         }
@@ -462,37 +455,37 @@ namespace pony
         public void Draw(SpriteBatch spritebatch)
         {
                 float rotation = 0f;
-                SpriteEffects imageDirection;
+                const float VEL_THRESHOLD = .5f;
 
                 switch(Direction)
                 {
                     case  direction.floor:
                     default:
                         rotation = 0f;
-                        if(RightVeltoCheck > 0f)
+                        if(RightVeltoCheck > VEL_THRESHOLD)
                             imageDirection = SpriteEffects.FlipHorizontally;
-                        else
+                        else if(RightVeltoCheck < -VEL_THRESHOLD)
                             imageDirection = SpriteEffects.None;
                         break;
                     case direction.leftwall:
                         rotation = (float)(.5f * Math.PI);
-                        if(RightVeltoCheck > 0f)
+                        if(RightVeltoCheck > VEL_THRESHOLD)
                             imageDirection = SpriteEffects.FlipHorizontally;
-                        else
+                        else if(RightVeltoCheck < -VEL_THRESHOLD)
                             imageDirection = SpriteEffects.None;
                         break;
                     case direction.rightwall:
                         rotation = (float)(1.5f * Math.PI);
-                        if(RightVeltoCheck > 0f)
+                        if(RightVeltoCheck > VEL_THRESHOLD)
                             imageDirection = SpriteEffects.None;
-                        else
+                        else if(RightVeltoCheck < -VEL_THRESHOLD)
                             imageDirection = SpriteEffects.FlipHorizontally;
                         break;
                     case direction.ceiling:
                         rotation = (float)Math.PI;
-                        if(RightVeltoCheck > 0f)
+                        if(RightVeltoCheck > VEL_THRESHOLD)
                             imageDirection = SpriteEffects.None;
-                        else
+                        else if(RightVeltoCheck < -VEL_THRESHOLD)
                             imageDirection = SpriteEffects.FlipHorizontally;
                         break;
                 }
