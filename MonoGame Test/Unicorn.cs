@@ -87,8 +87,6 @@ namespace pony
         public Unicorn(Game game, ContentManager Content):base(game)
         {
             this.Content = Content;
-            HairTexture = new Texture2D[hairAmout];
-        
 
         }
 
@@ -105,6 +103,8 @@ namespace pony
             UnicornTexture = texture;
             Position = pos;
             CurrentColor = color.n;
+            if(_body != null)
+                _body.Dispose();
             _body = BodyFactory.CreateRectangle(world,
                                                 ConvertUnits.ToSimUnits(96),
                                                 ConvertUnits.ToSimUnits(96), 0f);
@@ -119,6 +119,7 @@ namespace pony
             _body.OnSeparation += MyOnSeparation;
 
 
+            HairTexture = new Texture2D[hairAmout];
             for (int i = 0; i < hairAmout; i++)
             {
                 string tempPath = "Uno_" + colorPath[i].ToString();
