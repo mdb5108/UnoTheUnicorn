@@ -39,7 +39,7 @@ namespace pony
         private Dictionary<string, HashSet<Rectangle>> auraContacts;
 
 
-        private int JumpForce = 283;
+        private int JumpForce = 305;
 
         private float runForce = 200;
 
@@ -84,6 +84,10 @@ namespace pony
 
         SpriteEffects imageDirection = SpriteEffects.None;
 
+        bool gravityLingering = false;
+        double endLinger;
+        readonly double GRAVITY_LINGER_TIME = .5;
+
         public Unicorn(Game game) : base(game)
         {
             _game = (Game1)game;
@@ -92,8 +96,6 @@ namespace pony
         public Unicorn(Game game, ContentManager Content):base(game)
         {
             this.Content = Content;
-            HairTexture = new Texture2D[hairAmout];
-        
 
         }
 
@@ -110,6 +112,8 @@ namespace pony
             UnicornTexture = texture;
             Position = pos;
             CurrentColor = color.n;
+            if(_body != null)
+                _body.Dispose();
             _body = BodyFactory.CreateRectangle(world,
                                                 ConvertUnits.ToSimUnits(96),
                                                 ConvertUnits.ToSimUnits(96), 0f);
@@ -124,12 +128,14 @@ namespace pony
             _body.OnSeparation += MyOnSeparation;
 
 
+            HairTexture = new Texture2D[hairAmout];
             for (int i = 0; i < hairAmout; i++)
             {
                 string tempPath = "Uno_" + colorPath[i].ToString();
                 HairTexture[i] = Content.Load<Texture2D>(tempPath);
             }
-         
+
+            ChangeHair("");
         }
 
         public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)
@@ -162,7 +168,7 @@ namespace pony
                 {
                     Vector2 jumpingForce = normal*JumpForce;
                     bouncing = true;
-                    bouncingForce = jumpingForce;
+                    bouncingForce = 1.6f*jumpingForce;
                 }
             }
 
@@ -235,11 +241,27 @@ namespace pony
             CheckTriggers();
 
             //If we are not in field, fall down
-            if(touchingcolor != "" && touchingcolor != "n")
+            if(CurrentColor.ToString() != "" && CurrentColor.ToString() != "n")
             {
-                if(auraContacts[touchingcolor].Count == 0)
+                if(auraContacts[CurrentColor.ToString()].Count == 0)
                 {
-                    contactFloorName = "f";
+                    if(gravityLingering)
+                    {
+                        if(endLinger < gametime.TotalGameTime.TotalSeconds)
+                        {
+                            contactFloorName = "f";
+                            gravityLingering = false;
+                        }
+                    }
+                    else
+                    {
+                        gravityLingering = true;
+                        endLinger = gametime.TotalGameTime.TotalSeconds + GRAVITY_LINGER_TIME;
+                    }
+                }
+                else
+                {
+                    gravityLingering = false;
                 }
             }
          

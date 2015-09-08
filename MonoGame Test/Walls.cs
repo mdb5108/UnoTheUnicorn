@@ -135,11 +135,6 @@ namespace MonoGame_Test
             _body.UserData = ConvertUnits.ToDisplayUnits(new Vector2(width, height));
         }
 
-        ~Walls()
-        {
-            _body.OnCollision -= MyOnCollision;
-        }
-
         public void CreateSensor(int numberofaura,string name,World world,float width,float height,Vector2 pos,float density)
         {
             Body body = BodyFactory.CreateRectangle(world, width, height, density);
@@ -159,6 +154,15 @@ namespace MonoGame_Test
 
 
             return true;
+        }
+
+        public void Destroy()
+        {
+            _body.Dispose();
+            foreach(var aura in _aura)
+            {
+                aura.Dispose();
+            }
         }
 
 

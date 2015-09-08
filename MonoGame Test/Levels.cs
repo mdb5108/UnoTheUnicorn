@@ -26,12 +26,23 @@ namespace levels
 
         private static readonly float[] BALLOON_SPEEDS = {1f, 2f, 3f};
 
+        private static Levels levelInstance;
+
         public List<Walls> walls = new List<Walls>();
 
         private static readonly float TILE_SIZE = 32f;
         private static readonly float TILE_SIZE_CONV = ConvertUnits.ToSimUnits(TILE_SIZE);
 
         private Unicorn Uno;
+
+        private static readonly string[] levels = {
+            "Content\\Level3.tbin",
+            "Content\\Map1.tbin",
+        };
+        public static int levelCount
+        {
+            get {return levels.Length;}
+        }
 
         private enum TileDirection {COMBINED, HORIZONTAL, VERTICAL, UNDEFINED};
         class TileAggregate
@@ -43,9 +54,23 @@ namespace levels
             public Dictionary<string, string> properties = new Dictionary<string, string>();
         }
 
-        public void Initialize(int level,World world, ContentManager content, out Map map, out Vector2 unoPos)
+        public static Levels getInstance()
         {
-            var stream = TitleContainer.OpenStream("Content\\Map"+level+".tbin");
+
+            if (levelInstance == null)
+                levelInstance = new Levels();
+
+            return levelInstance;
+        }
+
+        public void Initialize(uint level,World world, ContentManager content, out Map map, out Vector2 unoPos)
+        {
+            foreach(var wall in walls)
+            {
+                wall.Destroy();
+            }
+
+            var stream = TitleContainer.OpenStream(levels[level]);
             map = xTile.Format.FormatManager.Instance.BinaryFormat.Load(stream);
 
             ParseMap(ref map, world, content, out unoPos);
