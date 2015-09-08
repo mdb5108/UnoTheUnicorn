@@ -209,12 +209,12 @@ namespace MonoGame_Test
                 ConvertUnits.ToSimUnits(graphics.GraphicsDevice.Viewport.Height),
                 0f,0f,1f);
 
-            //debugview.RenderDebugData(ref projection);
+            debugview.RenderDebugData(ref projection);
 
             Uno.Draw(spriteBatch);
           //  spriteBatch.DrawString(font, debugstring, new Vector2(Width/2, 20), Color.Tomato);
 
-            spriteBatch.DrawString(font, Uno.contactbodyname, new Vector2(Width/2, 20), Color.Tomato);
+            spriteBatch.DrawString(font, Uno.debugString, new Vector2(Width/2, 20), Color.Tomato);
            
             
 

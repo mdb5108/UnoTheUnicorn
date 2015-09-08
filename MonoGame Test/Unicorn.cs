@@ -32,23 +32,23 @@ namespace pony
         private bool spacekey = false;
         private bool rightkey = false;
         private bool leftkey = false;
-        public string contactbodyname="nothing";
+        public string debugString="nothing";
         Body _body;
-        public string contactfloorname = "f";
+        public string contactFloorName = "f";
         public List<string> contactcolornames = new List<string>();
 
         private Dictionary<string, HashSet<Rectangle>> auraContacts;
 
-        private int JumpForce = 220;
+        private int JumpForce = 283;
         private float runForce = 200;
 
         float JumpX=0, JumpY=0,RestingValueX=0,RestingValueY=0,  // RestingValue: Force needed to get back to resting phase
               RightX=0,RightY=0,RightVeltoCheck=0,RightMaxVel=0, 
               LeftX=0, LeftY = 0,LeftVeltoCheck=0,LeftMaxVel=0;
 
-        private float _resetTime = 0;
         private int Jumps = 0;
         private float JumpelapsedTime = 0;
+        private List<int> touchingSurfaces_Jump = new List<int>();
 
         float deltaTime = 0;
         private string touchingcolor = "n";
@@ -125,12 +125,8 @@ namespace pony
                // Console.WriteLine(tempPath);
                 HairTexture[i] = Content.Load<Texture2D>(tempPath);
             }
-          
+         
         }
-
-       
-       
-
 
         public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)
         {
@@ -151,7 +147,7 @@ namespace pony
                 else if(touchingcolor == CurrentColor.ToString())
                 {
                     auraContacts[touchingcolor].Add(new Rectangle((int)(pos.X-(size.X/2)), (int)(pos.Y-(size.Y/2)), (int)size.X, (int)size.Y));
-                    contactfloorname = words[1];
+                    contactFloorName = words[1];
                     return false;
                 }
                 else
@@ -176,30 +172,10 @@ namespace pony
                     bouncingForce = jumpingForce;
                 }
             }
-
-            Vector2 normal;
-            FixedArray2<Vector2> points;
-            contact.GetWorldManifold(out normal, out points);
-            switch(Direction)
-            {
-                case direction.floor:
-                    if(normal.Y < 0)
-                        hitting = true;
-                    break;
-                case direction.ceiling:
-                    if(normal.Y > 0)
-                        hitting = true;
-                    break;
-                case direction.leftwall:
-                    if(normal.X < 0)
-                        hitting = true;
-                    break;
-                case direction.rightwall:
-                    if(normal.Y > 0)
-                        hitting = true;
-                    break;
-
-            }
+            
+            if (!touchingSurfaces_Jump.Contains(f2.Body.BodyId)) touchingSurfaces_Jump.Add(f2.Body.BodyId);
+            
+            //CheckFixtureHits(true, contact);
             return true;
         }
 
@@ -212,12 +188,39 @@ namespace pony
                 Vector2 size = (Vector2)f2.Body.UserData;
                 Vector2 pos = ConvertUnits.ToDisplayUnits(f2.Body.Position);
                 auraContacts[words[0]].Remove(new Rectangle((int)(pos.X-(size.X/2)), (int)(pos.Y-(size.Y/2)), (int)size.X, (int)size.Y));
-                contactfloorname = "";
+                contactFloorName = "";
+                debugString = touchingcolor;
                
-                contactbodyname = touchingcolor;
             }
-           hitting = false;
+            if (touchingSurfaces_Jump.Contains(f2.Body.BodyId)) touchingSurfaces_Jump.Remove(f2.Body.BodyId);
             JumpelapsedTime = 0;
+        }
+
+        void CheckFixtureHits(bool hittingState,Contact contact)
+        {
+            Vector2 normal;
+            FixedArray2<Vector2> points;
+             contact.GetWorldManifold(out normal, out points);
+                switch (Direction)
+                {
+                    case direction.floor:
+                        if (normal.Y < 0)
+                            hitting = hittingState;
+                        break;
+                    case direction.ceiling:
+                        if (normal.Y > 0)
+                            hitting = hittingState;
+                        break;
+                    case direction.leftwall:
+                        if (normal.X < 0)
+                            hitting = hittingState;
+                        break;
+                    case direction.rightwall:
+                        if (normal.Y > 0)
+                            hitting = hittingState;
+                        break;
+
+                }
         }
 
         protected override void UnloadContent()
@@ -240,17 +243,19 @@ namespace pony
             {
                 if(auraContacts[touchingcolor].Count == 0)
                 {
-                    contactfloorname = "f";
+                    contactFloorName = "f";
                 }
             }
          
             spacekey = Keyboard.GetState().IsKeyDown(Keys.Space);
             rightkey = Keyboard.GetState().IsKeyDown(Keys.Right);
             leftkey = Keyboard.GetState().IsKeyDown(Keys.Left);
-           
+
+            hitting = touchingSurfaces_Jump.Count == 0 ? false : true;
             ChangeDirections(world,dt);
             CheckColor(dt);
             KeyBoardInput(dt);
+            Console.WriteLine(touchingSurfaces_Jump.Count.ToString());
             //contactbodyname = _body.LinearVelocity.ToString();
         }
 
@@ -283,23 +288,23 @@ namespace pony
             // if(!contactcolornames.Contains(CurrentColor.ToString()))
             if(CurrentColor != color.n && touchingcolor != CurrentColor.ToString())
             {
-                contactbodyname = "hitting bad";
+                debugString = "hitting bad";
                 Bounce(dt);
             }
         }
         void ChangeDirections(World world,float dt)
         {
 
-            if(contactfloorname == "f")
+            if(contactFloorName == "f")
             {
                 Direction = direction.floor;
-            }else if(contactfloorname == "l")
+            }else if(contactFloorName == "l")
             {
                 Direction = direction.leftwall;
-            }else if(contactfloorname == "r")
+            }else if(contactFloorName == "r")
             {
                 Direction = direction.rightwall;
-            }else if(contactfloorname == "c")
+            }else if(contactFloorName == "c")
             {
                 Direction = direction.ceiling;
             }
@@ -312,15 +317,6 @@ namespace pony
                     LeftX = -runForce; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
                     world.Gravity = new Vector2(0, 9.8f);
 
-                   /* _resetTime += dt;
-                    if (_resetTime <= dt)
-                    {
-                        if(_body.LinearVelocity.X > 2)
-                        {
-                            _body.LinearVelocity = new Vector2(1, _body.LinearVelocity.Y);
-                        }
-                       
-                    }*/
                     break;
                 case direction.leftwall:
                     
@@ -400,7 +396,7 @@ namespace pony
 
             if(touchingcolor != CurrentColor.ToString())
             {
-                contactfloorname = "f";
+                contactFloorName = "f";
             }
 
         }
@@ -408,32 +404,28 @@ namespace pony
         void KeyBoardInput(float dt)
         {
             //////////////////////////////////////////JUMP/////////////////////////////////////////////
-            Jumps = hitting ? 0 : Jumps;
-            //contactbodyname = Jumps.ToString();
-            if (spacekey)
+            
+            
+            if (spacekey)  // spacekey is true when key is pressed (works as a long press)
             {
                 elapsedtime += dt;
-               
-               
-                if (Jumps<1 && elapsedtime <= dt)
+                if(elapsedtime<=dt && Jumps<1 )  
                 {
                     Jumps += 1;
-                    if (Jumps == 0 && (_body.LinearVelocity.Length()< 0.5f) )
+                    _body.ApplyForce(new Vector2(JumpX, JumpY));
+                    if (Jumps == 1)
                     {
-                       
-                        _body.ApplyForce(new Vector2(JumpX, JumpY));
-            
+                        _body.LinearVelocity = new Vector2(0, 0);
                         return;
                     }
-                    _body.ApplyForce(new Vector2(JumpX, JumpY));
-
-
                 }
             }
             else if (Keyboard.GetState().IsKeyUp(Keys.Space))
             {
                 elapsedtime = 0;
             }
+            debugString = Jumps.ToString();
+            Jumps = hitting ? 0 : Jumps;
             /////////////////////////////////////////RIGHT///////////////////////////////////////////////
             if (rightkey)
             {
