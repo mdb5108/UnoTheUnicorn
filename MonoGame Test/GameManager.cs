@@ -135,7 +135,6 @@ namespace Game2
             this.graphics = graphics;
 
             this.uno = uno;
-            this.world = world;
             this.content = content;
             level = 0;
 
