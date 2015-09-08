@@ -90,6 +90,10 @@ namespace Game2
         public void RemoveBalloon(Balloon b)
         {
             balloons.Remove(b);
+            if(balloons.Count == 0)
+            {
+                NextLevel();
+            }
         }
 
         public ReadOnlyCollection<Balloon> GetBalloons()
