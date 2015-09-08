@@ -10,6 +10,24 @@
         <Property Key="Type" Type="String"><![CDATA[Wall]]></Property>
       </Properties>
     </TileSheet>
+    <TileSheet Id="Fast_speed">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[SpeedFast.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Speed Modifier]]></Property>
+        <Property Key="Speed" Type="String"><![CDATA[Fast]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Medium_speed">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[SpeedMed.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Speed Modifier]]></Property>
+        <Property Key="Speed" Type="String"><![CDATA[Med]]></Property>
+      </Properties>
+    </TileSheet>
     <TileSheet Id="MetalWallOrange_wall">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[PlatformTile_Orange.png]]></ImageSource>
@@ -52,6 +70,15 @@
       <Alignment SheetSize="8 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
       <Properties>
         <Property Key="Type" Type="String"><![CDATA[Wall]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Slow_speed">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[SpeedSlow.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Speed Modifier]]></Property>
+        <Property Key="Speed" Type="String"><![CDATA[Slow]]></Property>
       </Properties>
     </TileSheet>
     <TileSheet Id="StoneDungeon_bg">
@@ -852,6 +879,115 @@
           <Static Index="2" BlendMode="Alpha" />
           <Static Index="3" BlendMode="Alpha" />
           <Null Count="13" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Speed Modifier Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <TileSheet Ref="Slow_speed" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="38" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="33" />
+          <TileSheet Ref="Medium_speed" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="14" />
+        </Row>
+        <Row>
+          <Null Count="48" />
         </Row>
         <Row>
           <Null Count="48" />

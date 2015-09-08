@@ -24,6 +24,8 @@ namespace levels
         public Walls _leftwall;
         public Walls _ceiling;
 
+        private static readonly float[] BALLOON_SPEEDS = {1f, 2f, 3f};
+
         public List<Walls> walls = new List<Walls>();
 
         private static readonly float TILE_SIZE = 32f;
@@ -38,6 +40,7 @@ namespace levels
             public string color;
             public TileDirection dir;
             public Rectangle rect;
+            public Dictionary<string, string> properties = new Dictionary<string, string>();
         }
 
         public void Initialize(int level,World world, ContentManager content, out Map map)
@@ -52,9 +55,10 @@ namespace levels
         {
             var layerCount = map.Layers.Count;
 
-            xTile.Layers.Layer platformLayer = map.Layers[layerCount-3];
-            xTile.Layers.Layer zoneLayer = map.Layers[layerCount-2];
-            xTile.Layers.Layer balloonLayer = map.Layers[layerCount-1];
+            xTile.Layers.Layer platformLayer = map.Layers[layerCount-4];
+            xTile.Layers.Layer zoneLayer = map.Layers[layerCount-3];
+            xTile.Layers.Layer balloonLayer = map.Layers[layerCount-2];
+            xTile.Layers.Layer speedLayer = map.Layers[layerCount-1];
 
             ParseTiles(platformLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
             {
@@ -69,10 +73,15 @@ namespace levels
             });
 
             Dictionary<Point, TileAggregate> pointToZoneAggregate = null;
-
             ParseTiles(zoneLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
             {
                 pointToZoneAggregate = pointToAggregate;
+            });
+
+            Dictionary<Point, TileAggregate> pointToSpeedAggregate = null;
+            ParseTiles(speedLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+            {
+                pointToSpeedAggregate = pointToAggregate;
             });
 
             ParseTiles(balloonLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
@@ -90,6 +99,27 @@ namespace levels
                         if(aggregate.color == "y")
                         {
                             speed = 1f;
+                            TileAggregate speedAggregate;
+                            string speedName;
+                            if(pointToSpeedAggregate.TryGetValue(new Point(rect.X, rect.Y), out speedAggregate)
+                                && speedAggregate.type == "Speed Modifier"
+                                && speedAggregate.properties.TryGetValue("Speed", out speedName))
+                            {
+                                switch(speedName)
+                                {
+                                    default:
+                                    case "Slow":
+                                        speed = BALLOON_SPEEDS[0];
+                                        break;
+                                    case "Med":
+                                        speed = BALLOON_SPEEDS[1];
+                                        break;
+                                    case "Fast":
+                                        speed = BALLOON_SPEEDS[2];
+                                        break;
+                                }
+                            }
+
                             TileAggregate zone;
                             if(pointToZoneAggregate.TryGetValue(new Point(rect.X, rect.Y), out zone)
                                 && zone.color == "r")
@@ -109,6 +139,7 @@ namespace levels
             });
 
             //Remove Non Static Layers
+            map.RemoveLayer(speedLayer);
             map.RemoveLayer(balloonLayer);
             map.RemoveLayer(zoneLayer);
         }
@@ -130,6 +161,7 @@ namespace levels
                     {
                         string type = "";
                         string color = "";
+                        Dictionary<string, string> properties = new Dictionary<string, string>();
                         foreach(var property in tiles[x, y].TileSheet.Properties)
                         {
                             switch(property.Key)
@@ -141,6 +173,7 @@ namespace levels
                                     color = property.Value;
                                     break;
                                 default:
+                                    properties[property.Key] = property.Value;
                                     break;
                             }
                         }
@@ -176,6 +209,11 @@ namespace levels
                             pointToAggregate[new Point(x, y)] = aggregate;
                             aggregates.Add(aggregate);
                         }
+
+                        foreach(var keyPair in properties)
+                        {
+                            aggregate.properties[keyPair.Key] = keyPair.Value;
+                        }
                     }
                 }
             }
@@ -197,6 +235,10 @@ namespace levels
                     aboveAggregate.dir = TileDirection.COMBINED;
                     aboveAggregate.rect.Height++;
                     pointToAggregate[new Point(aggregate.rect.X, aggregate.rect.Y)] = aboveAggregate;
+                    foreach(var keyPair in aggregate.properties)
+                    {
+                        aboveAggregate.properties[keyPair.Key] = keyPair.Value;
+                    }
                 }
             }
             foreach(var aggregate in combinedStripsToRemove)
