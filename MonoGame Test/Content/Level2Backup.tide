@@ -599,6 +599,109 @@
       </TileArray>
       <Properties />
     </Layer>
+    <Layer Id="Movable Platform Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
     <Layer Id="Zones Layer" Visible="True">
       <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
@@ -974,6 +1077,109 @@
           <TileSheet Ref="Slow_speed" />
           <Static Index="0" BlendMode="Alpha" />
           <Null Count="41" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Trigger Groups" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
         </Row>
         <Row>
           <Null Count="48" />
