@@ -2,6 +2,24 @@
 <Map Id="Map3">
   <Description><![CDATA[]]></Description>
   <TileSheets>
+    <TileSheet Id="BalloonBlue_balloon">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[Balloon_blue.png]]></ImageSource>
+      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[b]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="BalloonGreen_balloon">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[Balloon_green.png]]></ImageSource>
+      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[g]]></Property>
+      </Properties>
+    </TileSheet>
     <TileSheet Id="DungeonCeiling_wall">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[StoneDungeonCeiling.png]]></ImageSource>
@@ -64,7 +82,7 @@
         <Property Key="Color" Type="String"><![CDATA[y]]></Property>
       </Properties>
     </TileSheet>
-    <TileSheet Id="OrangeBalloon_balloon">
+    <TileSheet Id="BalloonOrange_balloon">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[Balloon_orange.png]]></ImageSource>
       <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
@@ -121,7 +139,7 @@
         <Property Key="Type" Type="String"><![CDATA[Uno]]></Property>
       </Properties>
     </TileSheet>
-    <TileSheet Id="YellowBalloon_balloon">
+    <TileSheet Id="BalloonYellow_balloon">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[Balloon_yellow.png]]></ImageSource>
       <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
