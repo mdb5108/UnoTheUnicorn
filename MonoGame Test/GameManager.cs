@@ -154,6 +154,9 @@ namespace Game2
         public void ResetLevel()
         {
             balloons.Clear();
+            updatable.Clear();
+            drawable.Clear();
+
             Vector2 unopos;
             Levels.getInstance().Initialize(level, world, content, out _map, out unopos);
             map.LoadTileSheets(mapDisplayDevice);
