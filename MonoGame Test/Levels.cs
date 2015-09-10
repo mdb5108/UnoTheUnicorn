@@ -191,61 +191,69 @@ namespace levels
                         float speed = 0f;
                         int range = 0;
 
-                        //If yellow set speed and range
-                        if(aggregate.color == "y")
-                        {
-                            speed = 1f;
-                            TileAggregate speedAggregate;
-                            string speedName;
-                            if(pointToSpeedAggregate.TryGetValue(new Point(rect.X, rect.Y), out speedAggregate)
-                                && speedAggregate.type == "Speed Modifier"
-                                && speedAggregate.properties.TryGetValue("Speed", out speedName))
-                            {
-                                switch(speedName)
-                                {
-                                    default:
-                                    case "Slow":
-                                        speed = BALLOON_SPEEDS[0];
-                                        break;
-                                    case "Med":
-                                        speed = BALLOON_SPEEDS[1];
-                                        break;
-                                    case "Fast":
-                                        speed = BALLOON_SPEEDS[2];
-                                        break;
-                                }
-                            }
-
-                            TileAggregate zone;
-                            if(pointToZoneAggregate.TryGetValue(new Point(rect.X, rect.Y), out zone)
-                                && zone.color == "r")
-                            {
-                                //Start at left side
-                                rect.X = zone.rect.X;
-                                rect.Y = zone.rect.Y;
-                                //Go for horizontal width of zone
-                                range = zone.rect.Width;
-                            }
-
-                        }
-
                         Balloon balloon;
-                        if(aggregate.color != "g")
+                        switch(aggregate.color)
                         {
-                            balloon = new Balloon(new Point(rect.X, rect.Y), content, aggregate.color, speed, range);
-                        }
-                        else
-                        {
-                            GreenBalloon greenBalloon = new GreenBalloon(new Point(rect.X, rect.Y), content);
-                            List<IActivateable> activatables;
-                            TileAggregate trigger;
-                            if(pointToTriggerAggregate.TryGetValue(rect.Location, out trigger)
-                               && activators.TryGetValue(trigger.properties["Number"], out activatables))
-                            {
-                                foreach(var a in activatables)
-                                    greenBalloon.AddToActivatable(a);
-                            }
-                            balloon = greenBalloon;
+                            case "g":
+                                {
+                                    GreenBalloon greenBalloon = new GreenBalloon(new Point(rect.X, rect.Y), content);
+                                    List<IActivateable> activatables;
+                                    TileAggregate trigger;
+                                    if(pointToTriggerAggregate.TryGetValue(rect.Location, out trigger)
+                                            && activators.TryGetValue(trigger.properties["Number"], out activatables))
+                                    {
+                                        foreach(var a in activatables)
+                                            greenBalloon.AddToActivatable(a);
+                                    }
+                                    balloon = greenBalloon;
+                                }
+                                break;
+                            case "b":
+                                {
+                                    BlueBalloon blueBalloon = new BlueBalloon(new Point(rect.X, rect.Y), world, content, 3f);
+                                    balloon = blueBalloon;
+                                }
+                                break;
+                            case "y":
+                                {
+                                    speed = 1f;
+                                    TileAggregate speedAggregate;
+                                    string speedName;
+                                    if(pointToSpeedAggregate.TryGetValue(new Point(rect.X, rect.Y), out speedAggregate)
+                                        && speedAggregate.type == "Speed Modifier"
+                                        && speedAggregate.properties.TryGetValue("Speed", out speedName))
+                                    {
+                                        switch(speedName)
+                                        {
+                                            default:
+                                            case "Slow":
+                                                speed = BALLOON_SPEEDS[0];
+                                                break;
+                                            case "Med":
+                                                speed = BALLOON_SPEEDS[1];
+                                                break;
+                                            case "Fast":
+                                                speed = BALLOON_SPEEDS[2];
+                                                break;
+                                        }
+                                    }
+
+                                    TileAggregate zone;
+                                    if(pointToZoneAggregate.TryGetValue(new Point(rect.X, rect.Y), out zone)
+                                        && zone.color == "r")
+                                    {
+                                        //Start at left side
+                                        rect.X = zone.rect.X;
+                                        rect.Y = zone.rect.Y;
+                                        //Go for horizontal width of zone
+                                        range = zone.rect.Width;
+                                    }
+
+                                }
+                                goto default;
+                            default:
+                                balloon = new Balloon(new Point(rect.X, rect.Y), content, aggregate.color, speed, range);
+                                break;
                         }
 
                         GameManager.getInstance().AddBalloon(balloon);

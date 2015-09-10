@@ -92,6 +92,14 @@ namespace pony
         double endLinger;
         readonly double GRAVITY_LINGER_TIME = .5;
 
+        public Vector2 CenterPosition
+        {
+            get
+            {
+                return Position + new Vector2(width/2, height/2);
+            }
+        }
+
         public Unicorn(Game game) : base(game)
         {
             _game = (Game1)game;

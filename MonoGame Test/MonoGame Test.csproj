@@ -54,6 +54,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Balloon.cs" />
+    <Compile Include="BlueBalloon.cs" />
     <Compile Include="GreenBalloon.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameManager.cs" />
