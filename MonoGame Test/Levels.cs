@@ -8,7 +8,7 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.DebugView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+//using Microsoft.Xna.Framework.Graphics;
 using MonoGame_Test;
 using pony;
 using Game2;
@@ -37,9 +37,11 @@ namespace levels
         private Unicorn Uno;
 
         private static readonly string[] levels = {
-            "Content\\Level3.tbin",
             "Content\\Map1.tbin",
             "Content\\DemoLevelConcept3.tbin",
+            "Content\\Level3.tbin",
+            
+            
         };
         public static int levelCount
         {
@@ -128,6 +130,58 @@ namespace levels
                 pointToSpeedAggregate = pointToAggregate;
             });
 
+            Dictionary<string, List<IActivateable>> activators = new Dictionary<string, List<IActivateable>>();
+            Dictionary<Point, TileAggregate> pointToTriggerAggregate = null;
+            ParseTiles(triggerLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+            {
+                pointToTriggerAggregate = pointToAggregate;
+            });
+
+            ParseTiles(moveablePlatformLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+            {
+                foreach(var aggregate in aggregates)
+                {
+                    if(aggregate.type == "Wall" || aggregate.type == "Magnetic Wall")
+                    {
+                        Rectangle rect = aggregate.rect;
+
+                        Point origin = rect.Location;
+                        Point destination = origin;
+                        TileAggregate zone;
+                        if(pointToZoneAggregate.TryGetValue(origin, out zone))
+                        {
+                            bool zoneIsWide = zone.rect.Width > zone.rect.Height;
+                            if(zone.rect.Location == origin)
+                            {
+                                if(zoneIsWide)
+                                    origin = new Point(zone.rect.Right-rect.Width, rect.Y);
+                                else
+                                    origin = new Point(rect.X, zone.rect.Bottom-rect.Height);
+                            }
+                            else
+                            {
+                                if(zoneIsWide)
+                                    origin = new Point(zone.rect.X, rect.Y);
+                                else
+                                    origin = new Point(rect.X, zone.rect.Y);
+                            }
+                        }
+
+                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, 5f, destination);
+
+                        walls.Add(wall);
+                        TileAggregate trigger;
+                        if(pointToTriggerAggregate.TryGetValue(rect.Location, out trigger))
+                        {
+                            string triggerNumber = trigger.properties["Number"];
+                            if(!activators.ContainsKey(triggerNumber))
+                                    activators[triggerNumber] = new List<IActivateable>();
+                            activators[triggerNumber].Add(wall);
+                        }
+                    }
+                }
+            });
+
             ParseTiles(balloonLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
             {
                 foreach(var aggregate in aggregates)
@@ -139,53 +193,82 @@ namespace levels
                         float speed = 0f;
                         int range = 0;
 
-                        //If yellow set speed and range
-                        if(aggregate.color == "y")
+                        Balloon balloon;
+                        switch(aggregate.color)
                         {
-                            speed = 1f;
-                            TileAggregate speedAggregate;
-                            string speedName;
-                            if(pointToSpeedAggregate.TryGetValue(new Point(rect.X, rect.Y), out speedAggregate)
-                                && speedAggregate.type == "Speed Modifier"
-                                && speedAggregate.properties.TryGetValue("Speed", out speedName))
-                            {
-                                switch(speedName)
+                            case "g":
                                 {
-                                    default:
-                                    case "Slow":
-                                        speed = BALLOON_SPEEDS[0];
-                                        break;
-                                    case "Med":
-                                        speed = BALLOON_SPEEDS[1];
-                                        break;
-                                    case "Fast":
-                                        speed = BALLOON_SPEEDS[2];
-                                        break;
+                                    GreenBalloon greenBalloon = new GreenBalloon(new Point(rect.X, rect.Y), content);
+                                    List<IActivateable> activatables;
+                                    TileAggregate trigger;
+                                    if(pointToTriggerAggregate.TryGetValue(rect.Location, out trigger)
+                                            && activators.TryGetValue(trigger.properties["Number"], out activatables))
+                                    {
+                                        foreach(var a in activatables)
+                                            greenBalloon.AddToActivatable(a);
+                                    }
+                                    balloon = greenBalloon;
                                 }
-                            }
+                                break;
+                            case "b":
+                                {
+                                    BlueBalloon blueBalloon = new BlueBalloon(new Point(rect.X, rect.Y), world, content, 3f);
+                                    balloon = blueBalloon;
+                                }
+                                break;
+                            case "y":
+                                {
+                                    speed = 1f;
+                                    TileAggregate speedAggregate;
+                                    string speedName;
+                                    if(pointToSpeedAggregate.TryGetValue(new Point(rect.X, rect.Y), out speedAggregate)
+                                        && speedAggregate.type == "Speed Modifier"
+                                        && speedAggregate.properties.TryGetValue("Speed", out speedName))
+                                    {
+                                        switch(speedName)
+                                        {
+                                            default:
+                                            case "Slow":
+                                                speed = BALLOON_SPEEDS[0];
+                                                break;
+                                            case "Med":
+                                                speed = BALLOON_SPEEDS[1];
+                                                break;
+                                            case "Fast":
+                                                speed = BALLOON_SPEEDS[2];
+                                                break;
+                                        }
+                                    }
 
-                            TileAggregate zone;
-                            if(pointToZoneAggregate.TryGetValue(new Point(rect.X, rect.Y), out zone)
-                                && zone.color == "r")
-                            {
-                                //Start at left side
-                                rect.X = zone.rect.X;
-                                rect.Y = zone.rect.Y;
-                                //Go for horizontal width of zone
-                                range = zone.rect.Width;
-                            }
+                                    TileAggregate zone;
+                                    if(pointToZoneAggregate.TryGetValue(new Point(rect.X, rect.Y), out zone)
+                                        && zone.color == "r")
+                                    {
+                                        //Start at left side
+                                        rect.X = zone.rect.X;
+                                        rect.Y = zone.rect.Y;
+                                        //Go for horizontal width of zone
+                                        range = zone.rect.Width;
+                                    }
 
+                                }
+                                goto default;
+                            default:
+                                balloon = new Balloon(new Point(rect.X, rect.Y), content, aggregate.color, speed, range);
+                                break;
                         }
 
-                        GameManager.getInstance().AddBalloon(new Balloon(new Point(rect.X, rect.Y), content, aggregate.color, speed, range));
+                        GameManager.getInstance().AddBalloon(balloon);
                     }
                 }
             });
 
             //Remove Non Static Layers
+            map.RemoveLayer(triggerLayer);
             map.RemoveLayer(speedLayer);
             map.RemoveLayer(balloonLayer);
             map.RemoveLayer(startLayer);
+            map.RemoveLayer(moveablePlatformLayer);
             map.RemoveLayer(zoneLayer);
 
             unoPos = tempUnoPos;

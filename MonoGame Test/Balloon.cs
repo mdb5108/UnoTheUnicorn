@@ -14,22 +14,22 @@ namespace MonoGame_Test
     {
         private Texture2D Texture;
         public string path;
-        private Vector2 Position;
+        protected Vector2 Position;
         private Vector2 startPosition;
         public bool isActive;
 
         private Texture2D popTexture;
 
-        private float width = 64;
-        private float height = 64;
+        protected float width = 64;
+        protected float height = 64;
        
 
         public ContentManager Content;
-        Body _body;
+        protected Body _body;
         public string name;
 
 
-        float speed = 0f;
+        protected float speed = 0f;
         float range = 0f;
 
         public Balloon(Point position, ContentManager Content, string color, float speed, int range)
@@ -55,10 +55,10 @@ namespace MonoGame_Test
                     break;
                 case "y":
                     colorPath += "yellow";
-                    this.speed = speed;
                     this.range = range*tileSize;
                     break;
             }
+            this.speed = speed;
             InitializeBase(Position, Content, colorPath);
         }
 
@@ -88,7 +88,8 @@ namespace MonoGame_Test
 
         public void Destroy()
         {
-            _body.Dispose();
+            if(_body != null)
+                _body.Dispose();
         }
         public void LoadContent(ContentManager Content)
         {
@@ -113,13 +114,14 @@ namespace MonoGame_Test
            
         }
 
-        public Balloon Update(Unicorn unicorn)
+        public virtual Balloon Update(Unicorn unicorn)
         {
             float distance = Vector2.Distance(unicorn.GetCenterPos(), Position + new Vector2(width/2, height/2) );
 
             if (Math.Abs(distance) < 96)
             {
                 isActive = false;
+                Destroy();
 
                 return this;
             }
@@ -129,7 +131,7 @@ namespace MonoGame_Test
         }
 
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
          
             if (isActive)

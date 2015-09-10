@@ -27,7 +27,7 @@ namespace Game2
     {
 
         // properties.
-        private static GameManager gameManager;
+        public static GameManager gameManager;
 
       //  public int ScreenSizeX;
       //  public int ScreenSizeY;
@@ -43,10 +43,15 @@ namespace Game2
 
         private Texture2D unoTexture;
 
+        public Dictionary<string, Texture2D> textures = new Dictionary<string, Texture2D>();
+
         private IDisplayDevice mapDisplayDevice;
         xTile.Dimensions.Rectangle viewport;
 
         private GraphicsDeviceManager graphics;
+
+        private List<IMyUpdatable> updatable = new List<IMyUpdatable>();
+        private List<IMyDrawable> drawable = new List<IMyDrawable>();
 
         public Unicorn uno
         {
@@ -83,6 +88,23 @@ namespace Game2
             return gameManager;
         }
 
+        public void AddUpdatable(IMyUpdatable u)
+        {
+            updatable.Add(u);
+        }
+        public void RemoveUpdatable(IMyUpdatable u)
+        {
+            updatable.Remove(u);
+        }
+        public void AddDrawable(IMyDrawable u)
+        {
+            drawable.Add(u);
+        }
+        public void RemoveDrawable(IMyDrawable d)
+        {
+            drawable.Remove(d);
+        }
+
         public void AddBalloon(Balloon b)
         {
             balloons.Add(b);
@@ -105,6 +127,8 @@ namespace Game2
         public bool NextLevel()
         {
             balloons.Clear();
+            updatable.Clear();
+            drawable.Clear();
 
             level++;
             if(level < Levels.levelCount)
@@ -159,6 +183,20 @@ namespace Game2
 
         public void LoadContent(ContentManager content)
         {
+            Dictionary<string, string> wallTextures = new Dictionary<string, string>()
+            {
+                {"Wall", "PlatformTile_Stone"},
+                {"Wall.b", "PlatformTile_Blue"},
+                {"Wall.g", "PlatformTile_Green"},
+                {"Wall.o", "PlatformTile_Orange"},
+                {"Wall.y", "PlatformTile_Yellow"},
+            };
+
+            foreach(var namePath in wallTextures)
+            {
+                textures[namePath.Key] = content.Load<Texture2D>(namePath.Value);
+            }
+
             Vector2 unopos;
             Levels.getInstance().Initialize(level, world, content, out _map, out unopos);
             map.LoadTileSheets(mapDisplayDevice);
@@ -188,9 +226,16 @@ namespace Game2
              uno.Update(gameTime, deltatime, world);
 
             world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
-            if(Keyboard.GetState().IsKeyDown(Keys.R))
+
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
             {
                 ResetLevel();
+            }
+
+            foreach(var u in updatable)
+            {
+                u.Update(gameTime);
+
             }
 
 
@@ -231,9 +276,12 @@ namespace Game2
         {
             map.Draw(mapDisplayDevice, viewport);
 
+            foreach(var d in drawable)
+            {
+                d.Draw(spriteBatch);
+            }
+
             uno.Draw(spriteBatch);
-
-
 
             foreach(Balloon b in GetBalloons())
             {

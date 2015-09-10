@@ -92,6 +92,14 @@ namespace pony
         double endLinger;
         readonly double GRAVITY_LINGER_TIME = .5;
 
+        public Vector2 CenterPosition
+        {
+            get
+            {
+                return Position + new Vector2(width/2, height/2);
+            }
+        }
+
         public Unicorn(Game game) : base(game)
         {
             _game = (Game1)game;
@@ -171,6 +179,8 @@ namespace pony
                 else
                 {
                     Vector2 jumpingForce = normal*JumpForce;
+                    if (contact.FixtureA == f1)
+                        jumpingForce *= -1;
                     bouncing = true;
                     bouncingForce = 1.6f*jumpingForce;
                 }

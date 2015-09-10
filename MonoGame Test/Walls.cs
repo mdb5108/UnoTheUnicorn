@@ -15,11 +15,11 @@ namespace MonoGame_Test
 {
     class Walls
     {
-        private enum Orientation {HORIZONTAL, VERTICAL, EQUAL};
+        protected enum Orientation {HORIZONTAL, VERTICAL, EQUAL};
 
         public Body _body;            // body that is effected by physics
         public string Name;
-        private List<Body> _aura = new List<Body>();
+        protected List<Body> _aura = new List<Body>();
 
         public Walls(string name, World world, float width, float height, float density, Vector2 pos,bool Static)
         {
