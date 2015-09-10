@@ -39,6 +39,7 @@ namespace levels
         private static readonly string[] levels = {
             "Content\\Level3.tbin",
             "Content\\Map1.tbin",
+            "Content\\DemoLevelConcept3.tbin",
         };
         public static int levelCount
         {
