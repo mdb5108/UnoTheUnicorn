@@ -171,6 +171,8 @@ namespace pony
                 else
                 {
                     Vector2 jumpingForce = normal*JumpForce;
+                    if (contact.FixtureA == f1)
+                        jumpingForce *= -1;
                     bouncing = true;
                     bouncingForce = 1.6f*jumpingForce;
                 }
