@@ -25,7 +25,7 @@ namespace MonoGame_Test
             : base(position, content, "b", speed, 0)
         {
             float tileSize = GameManager.TILE_SIZE;
-            _body = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(96), ConvertUnits.ToSimUnits(96), 0f);
+            _body = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(width), ConvertUnits.ToSimUnits(height), 0f);
             _body.BodyType = BodyType.Dynamic;
             _body.Restitution = 0f;
             _body.Friction = 0f;
