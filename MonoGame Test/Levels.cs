@@ -38,6 +38,7 @@ namespace levels
         private Unicorn Uno;
 
         private static readonly string[] levels = {
+            "Content\\BouncyGym1.tbin",
             "Content\\Level3.tbin",
             "Content\\Map1.tbin",
             "Content\\DemoLevelConcept3.tbin",
