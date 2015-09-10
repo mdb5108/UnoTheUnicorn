@@ -56,6 +56,8 @@
     <Compile Include="Balloon.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameManager.cs" />
+    <Compile Include="IMyUpdatable.cs" />
+    <Compile Include="IMyDrawable.cs" />
     <Compile Include="Levels.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
