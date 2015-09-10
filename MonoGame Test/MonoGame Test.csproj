@@ -200,6 +200,12 @@
     <Content Include="Content\KennyDemoLevel1.tbin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\KennyDemoLevel2.tbin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Kenny Demo Level 3.tbin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Content\Level2Backup.tbin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

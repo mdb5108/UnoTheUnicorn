@@ -40,6 +40,7 @@ namespace levels
         private static readonly string[] levels = {
             "Content\\BouncyGym1.tbin",
             "Content\\KennyDemoLevel1.tbin",
+            "Content\\KennyDemoLevel2.tbin",
             "Content\\Level3.tbin",
             "Content\\Map1.tbin",
             "Content\\DemoLevelConcept3.tbin",
