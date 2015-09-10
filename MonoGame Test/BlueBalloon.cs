@@ -31,7 +31,13 @@ namespace MonoGame_Test
             _body.Friction = 0f;
             _body.Position = ConvertUnits.ToSimUnits(position.X * tileSize, position.Y * tileSize);
             _body.GravityScale = 0;
+            _body.OnCollision += MyOnCollision;
             
+        }
+
+        public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)
+        {
+            return f2.Body.BodyName==null;
         }
 
         public override Balloon Update(Unicorn unicorn)
