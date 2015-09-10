@@ -36,7 +36,7 @@ namespace MonoGame_Test
         public string debugstring="Debuglog";
 
 
-        SoundEffect bgs;
+        Song bgs;
      
         public Game1()
         {
@@ -47,7 +47,7 @@ namespace MonoGame_Test
             {
                 PreferredBackBufferHeight = Height,
                 PreferredBackBufferWidth = Width,
-                IsFullScreen = true
+                IsFullScreen = false
             };
 
          
@@ -81,7 +81,8 @@ namespace MonoGame_Test
 
             font = Content.Load<SpriteFont>("TestingFont");
 
-          //  bgs = Content.Load<SoundEffect>("1");
+            bgs = Content.Load<Song>("test");
+            MediaPlayer.Play(bgs);
 
         }
 
@@ -89,7 +90,7 @@ namespace MonoGame_Test
         protected override void UnloadContent()
         {
             // TODO: Unload any non ContentManager content here
-            //Uno.UnloadContent();
+            
             GameManager.getInstance().UnloadContent(Content);
             
         } 
