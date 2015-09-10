@@ -20,6 +20,7 @@ namespace MonoGame_Test
     class BlueBalloon : Balloon
     {
         static readonly float SCARE_RADIUS = ConvertUnits.ToSimUnits(2*GameManager.UnoToTiles * GameManager.TILE_SIZE);
+        static readonly float ACCELERATION_MODIFIER = 3f;
 
         public BlueBalloon(Point position, World world, ContentManager content, float speed)
             : base(position, content, "b", speed, 0)
@@ -27,7 +28,7 @@ namespace MonoGame_Test
             float tileSize = GameManager.TILE_SIZE;
             _body = BodyFactory.CreateRectangle(world, ConvertUnits.ToSimUnits(width), ConvertUnits.ToSimUnits(height), 0f);
             _body.BodyType = BodyType.Dynamic;
-            _body.Restitution = 0f;
+            _body.Restitution = .5f;
             _body.Friction = 0f;
             _body.Position = ConvertUnits.ToSimUnits(position.X * tileSize, position.Y * tileSize);
             _body.GravityScale = 0;
@@ -46,7 +47,7 @@ namespace MonoGame_Test
             Vector2 difference = _body.Position - ConvertUnits.ToSimUnits(unicorn.CenterPosition);
             if (isActive && difference.Length() <= SCARE_RADIUS)
             {
-                _body.LinearVelocity = Vector2.Normalize(difference) * speed;
+                _body.ApplyForce(Vector2.Normalize(difference)*ACCELERATION_MODIFIER*9.8f);
             }
             else
             {
