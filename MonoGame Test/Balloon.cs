@@ -169,6 +169,11 @@ namespace MonoGame_Test
 
         }
 
+        ~Balloon()
+        {
+            Destroy();
+        }
+
      
 
 
