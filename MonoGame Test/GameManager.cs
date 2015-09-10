@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Input;
 
 using FarseerPhysics;
 using FarseerPhysics.Dynamics;
@@ -150,6 +151,19 @@ namespace Game2
             return false;
         }
 
+        public void ResetLevel()
+        {
+            balloons.Clear();
+            Vector2 unopos;
+            Levels.getInstance().Initialize(level, world, content, out _map, out unopos);
+            map.LoadTileSheets(mapDisplayDevice);
+            foreach(Balloon b in GetBalloons())
+            {
+                b.LoadContent(content);
+            }
+            uno.Initialize(unoTexture, unopos, world);
+        }
+
         public void Initialize(Game game, ContentManager content, ref GraphicsDeviceManager  graphics)
         {
             uno = new Unicorn(game, content);
@@ -213,9 +227,15 @@ namespace Game2
 
             world.Step(Math.Min((float)gameTime.ElapsedGameTime.TotalMilliseconds * 0.001f, (1f / 30f)));
 
+            if (Keyboard.GetState().IsKeyDown(Keys.R))
+            {
+                ResetLevel();
+            }
+
             foreach(var u in updatable)
             {
                 u.Update(gameTime);
+
             }
 
 

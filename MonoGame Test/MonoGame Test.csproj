@@ -8,34 +8,19 @@
     <ProjectGuid>{C03800D7-2188-43A7-8EED-3E330B50AEDB}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>MonoGame_Test</RootNamespace>
-    <AssemblyName>MonoGame Test</AssemblyName>
+    <RootNamespace>Game6</RootNamespace>
+    <AssemblyName>Game6</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MonoGamePlatform>WindowsGL</MonoGamePlatform>
+    <MonoGamePlatform>Windows</MonoGamePlatform>
     <MonoGameContentBuilderExe>
     </MonoGameContentBuilderExe>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\WindowsGL\Debug\</OutputPath>
+    <OutputPath>bin\Windows\Debug\</OutputPath>
     <DefineConstants>DEBUG;TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -44,7 +29,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
-    <OutputPath>bin\WindowsGL\Release\</OutputPath>
+    <OutputPath>bin\Windows\Release\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -55,35 +40,30 @@
   <ItemGroup>
     <Compile Include="Balloon.cs" />
     <Compile Include="BlueBalloon.cs" />
-    <Compile Include="GreenBalloon.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameManager.cs" />
-    <Compile Include="IMyUpdatable.cs" />
-    <Compile Include="IMyDrawable.cs" />
+    <Compile Include="GreenBalloon.cs" />
+    <Compile Include="IActivateable.cs" />
     <Compile Include="IActivator.cs" />
+    <Compile Include="IMyDrawable.cs" />
+    <Compile Include="IMyUpdatable.cs" />
     <Compile Include="Levels.cs" />
+    <Compile Include="MovableWall.cs" />
     <Compile Include="Pillar.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unicorn.cs" />
     <Compile Include="Walls.cs" />
-    <Compile Include="MovableWall.cs" />
-    <Compile Include="IActivateable.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="DebugView MonoGame, Version=3.5.0.31831, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="DebugView MonoGame">
       <HintPath>Dlls\DebugView MonoGame.dll</HintPath>
     </Reference>
-    <Reference Include="FarseerPhysics MonoGame, Version=3.5.0.31670, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
+    <Reference Include="FarseerPhysics MonoGame">
       <HintPath>Dlls\FarseerPhysics MonoGame.dll</HintPath>
     </Reference>
-    <Reference Include="OpenTK">
-      <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\WindowsGL\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="MonoGame.Framework">
-      <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\WindowsGL\MonoGame.Framework.dll</HintPath>
+      <HintPath>$(MSBuildProgramFiles32)\MonoGame\v3.0\Assemblies\Windows\MonoGame.Framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Xml" />
@@ -95,7 +75,11 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\1.mp3">
+    <Content Include="Content\1.mp3" />
+    <Content Include="Content\AlbumArtSmall.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Balloon_blue.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Balloon_green.png">
@@ -104,96 +88,102 @@
     <Content Include="Content\Balloon_orange.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\Balloon_red.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Balloon_yellow.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\BlueZone.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\CircleSprite.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Folder.jpg">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\footstep.wav">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Content\NewXmlContent.xml" />
     <Content Include="Content\Pillar.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_Blue.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_four.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_Green.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_one.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_Orange.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_Red.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_Stone.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_three.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_two.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_Yellow.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PopImg.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Content\Balloon_blue.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Balloon_red.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Content\RedZone.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SidewalkDungeon.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SpeedFast.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SpeedMed.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\SpeedSlow.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\StoneDungeonCeiling.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\StoneDungeon_bg.png">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\test.mp3">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-      <CustomToolNamespace>MonoGame_Test</CustomToolNamespace>
     </Content>
     <Content Include="Content\Uno.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Content\Balloon_yellow.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\UnoEditor.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Uno_blue.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Uno_green.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Uno_orange.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\Uno_yellow.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Icon.ico" />
   </ItemGroup>
@@ -201,46 +191,34 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\Graphics\player.xnb">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <BootstrapperPackage Include=".NETFramework,Version=v4.0">
-      <Visible>False</Visible>
-      <ProductName>Microsoft .NET Framework 4 %28x86 and x64%29</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
-      <Visible>False</Visible>
-      <ProductName>.NET Framework 3.5 SP1</ProductName>
-      <Install>false</Install>
-    </BootstrapperPackage>
-    <BootstrapperPackage Include="Microsoft.Windows.Installer.4.5">
-      <Visible>False</Visible>
-      <ProductName>Windows Installer 4.5</ProductName>
-      <Install>true</Install>
-    </BootstrapperPackage>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Map1.tbin">
+    <None Include="Content\DemoLevelConcept3.tbin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\DungeonTemplate.tide">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Content\KennyDemoLevel1.tbin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Level2Backup.tbin">
+    <None Include="Content\Level2Backup.tbin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\Level3.tbin">
+    </None>
+    <None Include="Content\Level2Backup.tide">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Content\DemoLevelConcept3.tbin">
+    </None>
+    <None Include="Content\Level3.tbin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
+    </None>
+    <None Include="Content\Level3.tide">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Map1.tbin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\Map1.tide">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\TestingFont.spritefont" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\BouncyGym1.tbin">
