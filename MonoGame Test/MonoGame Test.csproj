@@ -61,6 +61,7 @@
     <Compile Include="IMyDrawable.cs" />
     <Compile Include="IActivator.cs" />
     <Compile Include="Levels.cs" />
+    <Compile Include="Pillar.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unicorn.cs" />
@@ -93,6 +94,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\1.mp3">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Content\Balloon_green.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
@@ -101,6 +105,9 @@
     </Content>
     <Content Include="Content\BlueZone.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\Pillar.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_Blue.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -230,7 +237,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\TempLevel.tbin">
+    <Content Include="Content\DemoLevelConcept3.tbin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
