@@ -58,6 +58,8 @@ namespace pony
 
         float deltaTime = 0;
         private string touchingcolor = "n";
+        private Keys rightDirectionKey;
+        private Keys leftDirectionKey;
         enum direction
         {
             floor,
@@ -253,10 +255,10 @@ namespace pony
                     gravityLingering = false;
                 }
             }
-         
-            spacekey = Keyboard.GetState().IsKeyDown(Keys.Space);
-            rightkey = Keyboard.GetState().IsKeyDown(Keys.Right);
-            leftkey = Keyboard.GetState().IsKeyDown(Keys.Left);
+
+            spacekey = !(!Keyboard.GetState().IsKeyDown(Keys.Space) | Keyboard.GetState().IsKeyUp(Keys.Space));
+            rightkey = !(!Keyboard.GetState().IsKeyDown(rightDirectionKey) | Keyboard.GetState().IsKeyUp(rightDirectionKey)); // ~(~p|q)
+            leftkey = !(!Keyboard.GetState().IsKeyDown(leftDirectionKey) | Keyboard.GetState().IsKeyUp(leftDirectionKey));
 
             ChangeDirections(world,dt);
             CheckColor(dt);
@@ -351,7 +353,8 @@ namespace pony
                     RightX = runForce; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
                     LeftX = -runForce; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
                     world.Gravity = new Vector2(0, 9.8f);
-
+                    rightDirectionKey = Keys.Right;
+                    leftDirectionKey = Keys.Left;
                     break;
                 case direction.leftwall:
                     
@@ -359,18 +362,24 @@ namespace pony
                     RightX = 0; RightY = runForce; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
                     LeftX = 0; LeftY = -runForce; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
                     world.Gravity = new Vector2(-9.8f, 0);
+                    rightDirectionKey = Keys.Down;
+                    leftDirectionKey = Keys.Up;
                     break;
                 case direction.rightwall:
                     JumpX = -1*JumpForce; JumpY = 0; RestingValueX = _body.LinearVelocity.X; RestingValueY = 0;
                     RightX = 0; RightY = runForce; RightVeltoCheck = _body.LinearVelocity.Y; RightMaxVel = 1;
                     LeftX = 0; LeftY = -runForce; LeftVeltoCheck = _body.LinearVelocity.Y; LeftMaxVel = -1;
                     world.Gravity = new Vector2(9.8f, 0);
+                    rightDirectionKey = Keys.Down;
+                    leftDirectionKey = Keys.Up;
                     break;
                 case direction.ceiling:
                     JumpX = 0; JumpY = JumpForce; RestingValueX = 0; RestingValueY = _body.LinearVelocity.Y;
                     RightX = runForce; RightY = 0; RightVeltoCheck = _body.LinearVelocity.X; RightMaxVel = 1;
                     LeftX = -runForce; LeftY = 0; LeftVeltoCheck = _body.LinearVelocity.X; LeftMaxVel = -1;
                     world.Gravity = new Vector2(0, -9.8f);
+                    rightDirectionKey = Keys.Right;
+                    leftDirectionKey = Keys.Left;
                     break;
                 default:
                     break;
@@ -449,7 +458,7 @@ namespace pony
                     }
                 }
             }
-            else if (Keyboard.GetState().IsKeyUp(Keys.Space))
+            else 
             {
                 elapsedtime = 0;
             }
@@ -461,10 +470,9 @@ namespace pony
                 if (RightVeltoCheck < RightMaxVel || RightVeltoCheck==0)
                 {
                     _body.ApplyForce(new Vector2(RightX, RightY));
-
                 }
             }
-            else if (!leftkey && Keyboard.GetState().IsKeyUp(Keys.Right))
+            else if (!leftkey )
             {
                 _body.LinearVelocity = new Vector2(RestingValueX, RestingValueY);
             }
@@ -477,14 +485,14 @@ namespace pony
                 }
               
             }
-            else if (!rightkey && Keyboard.GetState().IsKeyUp(Keys.Left))
+            else if (!rightkey)
             {
                 _body.LinearVelocity = new Vector2(RestingValueX,RestingValueY);
             }
         }
 
         public Vector2 GetCenterPos()
-        {
+        {  
             return Position + new Vector2(width/2, height/2);
         }
 
