@@ -113,7 +113,7 @@ namespace MonoGame_Test
            
         }
 
-        public Balloon Update(Unicorn unicorn)
+        public virtual Balloon Update(Unicorn unicorn)
         {
             float distance = Vector2.Distance(unicorn.GetCenterPos(), Position + new Vector2(width/2, height/2) );
 
@@ -129,7 +129,7 @@ namespace MonoGame_Test
         }
 
 
-        public void Draw(SpriteBatch spriteBatch)
+        public virtual void Draw(SpriteBatch spriteBatch)
         {
          
             if (isActive)

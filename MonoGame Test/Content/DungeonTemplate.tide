@@ -38,6 +38,15 @@
         <Property Key="Color" Type="String"><![CDATA[y]]></Property>
       </Properties>
     </TileSheet>
+    <TileSheet Id="BlueZone_zone">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[BlueZone.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Zone]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[b]]></Property>
+      </Properties>
+    </TileSheet>
     <TileSheet Id="DungeonCeiling_wall">
       <Description><![CDATA[]]></Description>
       <ImageSource><![CDATA[StoneDungeonCeiling.png]]></ImageSource>

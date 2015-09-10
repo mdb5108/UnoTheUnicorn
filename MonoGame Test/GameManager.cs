@@ -169,6 +169,20 @@ namespace Game2
 
         public void LoadContent(ContentManager content)
         {
+            Dictionary<string, string> wallTextures = new Dictionary<string, string>()
+            {
+                {"Wall", "PlatformTile_Stone"},
+                {"Wall.b", "PlatformTile_Blue"},
+                {"Wall.g", "PlatformTile_Green"},
+                {"Wall.o", "PlatformTile_Orange"},
+                {"Wall.y", "PlatformTile_Yellow"},
+            };
+
+            foreach(var namePath in wallTextures)
+            {
+                textures[namePath.Key] = content.Load<Texture2D>(namePath.Value);
+            }
+
             Vector2 unopos;
             Levels.getInstance().Initialize(level, world, content, out _map, out unopos);
             map.LoadTileSheets(mapDisplayDevice);

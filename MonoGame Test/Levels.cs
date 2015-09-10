@@ -8,6 +8,7 @@ using FarseerPhysics.Factories;
 using FarseerPhysics.DebugView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+
 using MonoGame_Test;
 using pony;
 using Game2;
@@ -126,6 +127,58 @@ namespace levels
                 pointToSpeedAggregate = pointToAggregate;
             });
 
+            Dictionary<string, List<IActivateable>> activators = new Dictionary<string, List<IActivateable>>();
+            Dictionary<Point, TileAggregate> pointToTriggerAggregate = null;
+            ParseTiles(triggerLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+            {
+                pointToTriggerAggregate = pointToAggregate;
+            });
+
+            ParseTiles(moveablePlatformLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+            {
+                foreach(var aggregate in aggregates)
+                {
+                    if(aggregate.type == "Wall" || aggregate.type == "Magnetic Wall")
+                    {
+                        Rectangle rect = aggregate.rect;
+
+                        Point origin = rect.Location;
+                        Point destination = origin;
+                        TileAggregate zone;
+                        if(pointToZoneAggregate.TryGetValue(origin, out zone))
+                        {
+                            bool zoneIsWide = zone.rect.Width > zone.rect.Height;
+                            if(zone.rect.Location == origin)
+                            {
+                                if(zoneIsWide)
+                                    origin = new Point(zone.rect.Right-rect.Width, rect.Y);
+                                else
+                                    origin = new Point(rect.X, zone.rect.Bottom-rect.Height);
+                            }
+                            else
+                            {
+                                if(zoneIsWide)
+                                    origin = new Point(zone.rect.X, rect.Y);
+                                else
+                                    origin = new Point(rect.X, zone.rect.Y);
+                            }
+                        }
+
+                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, 5f, destination);
+
+                        walls.Add(wall);
+                        TileAggregate trigger;
+                        if(pointToTriggerAggregate.TryGetValue(rect.Location, out trigger))
+                        {
+                            string triggerNumber = trigger.properties["Number"];
+                            if(!activators.ContainsKey(triggerNumber))
+                                    activators[triggerNumber] = new List<IActivateable>();
+                            activators[triggerNumber].Add(wall);
+                        }
+                    }
+                }
+            });
+
             ParseTiles(balloonLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
             {
                 foreach(var aggregate in aggregates)
@@ -175,15 +228,36 @@ namespace levels
 
                         }
 
-                        GameManager.getInstance().AddBalloon(new Balloon(new Point(rect.X, rect.Y), content, aggregate.color, speed, range));
+                        Balloon balloon;
+                        if(aggregate.color != "g")
+                        {
+                            balloon = new Balloon(new Point(rect.X, rect.Y), content, aggregate.color, speed, range);
+                        }
+                        else
+                        {
+                            GreenBalloon greenBalloon = new GreenBalloon(new Point(rect.X, rect.Y), content);
+                            List<IActivateable> activatables;
+                            TileAggregate trigger;
+                            if(pointToTriggerAggregate.TryGetValue(rect.Location, out trigger)
+                               && activators.TryGetValue(trigger.properties["Number"], out activatables))
+                            {
+                                foreach(var a in activatables)
+                                    greenBalloon.AddToActivatable(a);
+                            }
+                            balloon = greenBalloon;
+                        }
+
+                        GameManager.getInstance().AddBalloon(balloon);
                     }
                 }
             });
 
             //Remove Non Static Layers
+            map.RemoveLayer(triggerLayer);
             map.RemoveLayer(speedLayer);
             map.RemoveLayer(balloonLayer);
             map.RemoveLayer(startLayer);
+            map.RemoveLayer(moveablePlatformLayer);
             map.RemoveLayer(zoneLayer);
 
             unoPos = tempUnoPos;

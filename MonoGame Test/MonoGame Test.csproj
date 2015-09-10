@@ -54,15 +54,19 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Balloon.cs" />
+    <Compile Include="GreenBalloon.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameManager.cs" />
     <Compile Include="IMyUpdatable.cs" />
     <Compile Include="IMyDrawable.cs" />
+    <Compile Include="IActivator.cs" />
     <Compile Include="Levels.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Unicorn.cs" />
     <Compile Include="Walls.cs" />
+    <Compile Include="MovableWall.cs" />
+    <Compile Include="IActivateable.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="DebugView MonoGame, Version=3.5.0.31831, Culture=neutral, processorArchitecture=x86">
@@ -94,6 +98,9 @@
     </Content>
     <Content Include="Content\Balloon_orange.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Content\BlueZone.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Content\PlatformTile_Blue.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
@@ -219,6 +226,11 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Level3.tbin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Content\TempLevel.tbin">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
