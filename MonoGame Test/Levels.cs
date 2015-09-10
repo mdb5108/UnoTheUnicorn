@@ -26,6 +26,7 @@ namespace levels
         public Walls _ceiling;
 
         private static readonly float[] BALLOON_SPEEDS = {1f, 2f, 3f};
+        private static readonly float[] WALL_SPEEDS = {1f, 2f, 3f};
 
         private static Levels levelInstance;
 
@@ -83,13 +84,14 @@ namespace levels
             var layerCount = map.Layers.Count;
             Vector2 tempUnoPos = new Vector2();
 
-            xTile.Layers.Layer platformLayer = map.Layers[layerCount-7];
-            xTile.Layers.Layer moveablePlatformLayer = map.Layers[layerCount-6];
-            xTile.Layers.Layer zoneLayer = map.Layers[layerCount-5];
-            xTile.Layers.Layer startLayer = map.Layers[layerCount-4];
-            xTile.Layers.Layer balloonLayer = map.Layers[layerCount-3];
-            xTile.Layers.Layer speedLayer = map.Layers[layerCount-2];
-            xTile.Layers.Layer triggerLayer = map.Layers[layerCount-1];
+            xTile.Layers.Layer platformLayer = map.Layers.First((x) => x.Id == "Platform Layer");
+            xTile.Layers.Layer moveablePlatformLayer = map.Layers.First((x) => x.Id == "Movable Platform Layer");
+            xTile.Layers.Layer zoneLayer = map.Layers.First((x) => x.Id == "Zones Layer");
+            xTile.Layers.Layer zone2Layer = map.Layers.FirstOrDefault((x) => x.Id == "Zones2 Layer");
+            xTile.Layers.Layer startLayer = map.Layers.First((x) => x.Id == "Start Position Layer");
+            xTile.Layers.Layer balloonLayer = map.Layers.First((x) => x.Id == "Balloon Layer");
+            xTile.Layers.Layer speedLayer = map.Layers.First((x) => x.Id == "Speed Modifier Layer");
+            xTile.Layers.Layer triggerLayer = map.Layers.First((x) => x.Id == "Trigger Groups");
 
             ParseTiles(platformLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
             {
@@ -121,6 +123,17 @@ namespace levels
             {
                 pointToZoneAggregate = pointToAggregate;
             });
+
+            if(zone2Layer != null)
+            {
+                ParseTiles(zone2Layer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+                {
+                    foreach(var keyPair in pointToAggregate)
+                    {
+                        pointToZoneAggregate[keyPair.Key] = keyPair.Value;
+                    }
+                });
+            }
 
             Dictionary<Point, TileAggregate> pointToSpeedAggregate = null;
             ParseTiles(speedLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
@@ -165,7 +178,28 @@ namespace levels
                             }
                         }
 
-                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, 5f, destination);
+                        TileAggregate speedAggregate;
+                        string speedName;
+                        float speed = WALL_SPEEDS[0];
+                        if(pointToSpeedAggregate.TryGetValue(new Point(rect.X, rect.Y), out speedAggregate)
+                                && speedAggregate.type == "Speed Modifier"
+                                && speedAggregate.properties.TryGetValue("Speed", out speedName))
+                        {
+                            switch(speedName)
+                            {
+                                default:
+                                case "Slow":
+                                    speed = WALL_SPEEDS[0];
+                                    break;
+                                case "Med":
+                                    speed = WALL_SPEEDS[1];
+                                    break;
+                                case "Fast":
+                                    speed = WALL_SPEEDS[2];
+                                    break;
+                            }
+                        }
+                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, 5f, destination, speed);
 
                         walls.Add(wall);
                         TileAggregate trigger;
@@ -267,6 +301,8 @@ namespace levels
             map.RemoveLayer(balloonLayer);
             map.RemoveLayer(startLayer);
             map.RemoveLayer(moveablePlatformLayer);
+            if(zone2Layer != null)
+                map.RemoveLayer(zone2Layer);
             map.RemoveLayer(zoneLayer);
 
             unoPos = tempUnoPos;
