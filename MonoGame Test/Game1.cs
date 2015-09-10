@@ -92,7 +92,7 @@ namespace MonoGame_Test
             //Uno.UnloadContent();
             GameManager.getInstance().UnloadContent(Content);
             
-        }
+        } 
 
 
         protected override void Update(GameTime gameTime)
@@ -117,7 +117,7 @@ namespace MonoGame_Test
                 0f,0f,1f);
 
             GameManager.getInstance().Draw(spriteBatch);
-            //debugview.RenderDebugData(ref projection);
+           // debugview.RenderDebugData(ref projection);
 
           //  spriteBatch.DrawString(font, debugstring, new Vector2(Width/2, 20), Color.Tomato);
 
