@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using FarseerPhysics;
 using FarseerPhysics.Dynamics;
+using FarseerPhysics.Collision;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Common;
@@ -47,10 +48,13 @@ namespace pony
               RightX=0,RightY=0,RightVeltoCheck=0,RightMaxVel=0, 
               LeftX=0, LeftY = 0,LeftVeltoCheck=0,LeftMaxVel=0;
 
+        readonly float RayLength = 0.5f;
+        Vector2 RayDirection;
+
         private int Jumps = 0;
         private float JumpelapsedTime = 0;
         private List<int> touchingSurfaces_Jump = new List<int>();
-
+        private List<Fixture> raycastingFixtures = new List<Fixture>();
 
         float deltaTime = 0;
         private string touchingcolor = "n";
@@ -199,31 +203,6 @@ namespace pony
             JumpelapsedTime = 0;
         }
 
-        void CheckFixtureHits(bool hittingState,Contact contact)
-        {
-            Vector2 normal;
-            FixedArray2<Vector2> points;
-             contact.GetWorldManifold(out normal, out points);
-                switch (Direction)
-                {
-                    case direction.floor:
-                        if (normal.Y < 0)
-                            hitting = hittingState;
-                        break;
-                    case direction.ceiling:
-                        if (normal.Y > 0)
-                            hitting = hittingState;
-                        break;
-                    case direction.leftwall:
-                        if (normal.X < 0)
-                            hitting = hittingState;
-                        break;
-                    case direction.rightwall:
-                        if (normal.Y > 0)
-                            hitting = hittingState;
-                        break;
-                }
-        }
 
         protected override void UnloadContent()
         {
@@ -269,12 +248,40 @@ namespace pony
             rightkey = Keyboard.GetState().IsKeyDown(Keys.Right);
             leftkey = Keyboard.GetState().IsKeyDown(Keys.Left);
 
-            hitting = touchingSurfaces_Jump.Count == 0 ? false : true;
             ChangeDirections(world,dt);
             CheckColor(dt);
             KeyBoardInput(dt);
-            Console.WriteLine(touchingSurfaces_Jump.Count.ToString());
-            //contactbodyname = _body.LinearVelocity.ToString();
+            RayCast(world);
+        }
+
+       void RayCast(World world)
+        {
+            switch(Direction)
+            {
+                case direction.floor:
+                    RayDirection.X = 0;
+                    RayDirection.Y = 1;
+                    break;
+                case direction.leftwall:
+                    RayDirection.X = -1;
+                    RayDirection.Y = 0;
+                    break;
+                case direction.rightwall:
+                    RayDirection.X = 1;
+                    RayDirection.Y = 0;
+                    break;
+                case direction.ceiling:
+                    RayDirection.X = 0;
+                    RayDirection.Y = -1;
+                    break;
+                default:
+                    RayDirection.X = 0;
+                    RayDirection.Y = 1;
+                    break;
+            }
+            raycastingFixtures = world.RayCast(_body.Position, new Vector2(_body.Position.X+(RayLength*RayDirection.X) , _body.Position.Y+(RayLength*RayDirection.Y)));
+            debugString = raycastingFixtures.Count.ToString();
+            hitting = raycastingFixtures.Count == 0 ? false : true;
         }
 
         void CheckTriggers()
