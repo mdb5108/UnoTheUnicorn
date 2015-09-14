@@ -204,7 +204,7 @@ namespace Game2
             Levels.getInstance().Initialize(level, world, content, out _map, out unopos);
             map.LoadTileSheets(mapDisplayDevice);
 
-            unoTexture = content.Load<Texture2D>("Uno");
+            unoTexture = content.Load<Texture2D>("Uno_base");
             uno.Initialize(unoTexture, unopos, world);
 
             foreach(Balloon b in GetBalloons())

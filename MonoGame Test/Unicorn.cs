@@ -145,7 +145,7 @@ namespace pony
             HairTexture = new Texture2D[hairAmout];
             for (int i = 0; i < hairAmout; i++)
             {
-                string tempPath = "Uno_" + colorPath[i].ToString();
+                string tempPath = "Uno_body_" + colorPath[i].ToString();
                 HairTexture[i] = Content.Load<Texture2D>(tempPath);
             }
 
@@ -432,7 +432,7 @@ namespace pony
                     break;
             }
 
-            if(touchingcolor != CurrentColor.ToString())
+            if (touchingcolor != CurrentColor.ToString())
             {
                 contactFloorName = "f";
             }
@@ -534,11 +534,14 @@ namespace pony
                         break;
                 }
                 Vector2 relativeCenter = new Vector2(width/2, height/2);
-                spritebatch.Draw(UnicornTexture, Position+relativeCenter, null, Color.White, rotation, relativeCenter, 1f, imageDirection, 0f);
+               
                 if (colorStatu != "normal")
                 {
                     spritebatch.Draw(HairTexture[colorIndex],Position+relativeCenter,null,Color.White,rotation,relativeCenter,1f,imageDirection,0f);
-                }
+                }else
+                {
+                    spritebatch.Draw(UnicornTexture, Position + relativeCenter, null, Color.White, rotation, relativeCenter, 1f, imageDirection, 0f);
+            }
             
         }
 
