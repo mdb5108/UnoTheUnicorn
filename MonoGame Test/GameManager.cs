@@ -50,8 +50,32 @@ namespace Game2
 
         private GraphicsDeviceManager graphics;
 
+        public enum ManagerState{
+            UNSPECIFIED,
+            UPDATING,
+            DRAWING,
+        };
+        public ManagerState State
+        {
+            get;
+            private set;
+        }
+        private bool nextLevelCallDelay;
+
+        private List<IMyDestroyable> destroyable = new List<IMyDestroyable>();
+
         private List<IMyUpdatable> updatable = new List<IMyUpdatable>();
+        private List<IMyUpdatable> bufferUpdatable = new List<IMyUpdatable>();
+        private List<IMyUpdatable> bufferUpdatableRemove = new List<IMyUpdatable>();
         private List<IMyDrawable> drawable = new List<IMyDrawable>();
+        private List<IMyDrawable> bufferDrawable = new List<IMyDrawable>();
+        private List<IMyDrawable> bufferDrawableRemove = new List<IMyDrawable>();
+
+        public ExitPortal exit
+        {
+            get;
+            private set;
+        }
 
         public Unicorn uno
         {
@@ -88,21 +112,41 @@ namespace Game2
             return gameManager;
         }
 
+        public void AddDestroyable(IMyDestroyable d)
+        {
+            destroyable.Add(d);
+        }
+        public void RemoveDestroyable(IMyDestroyable d)
+        {
+            destroyable.Remove(d);
+        }
         public void AddUpdatable(IMyUpdatable u)
         {
-            updatable.Add(u);
+            if(State != ManagerState.UPDATING)
+                updatable.Add(u);
+            else
+                bufferUpdatable.Add(u);
         }
         public void RemoveUpdatable(IMyUpdatable u)
         {
-            updatable.Remove(u);
+            if(State != ManagerState.UPDATING)
+                updatable.Remove(u);
+            else
+                bufferUpdatableRemove.Add(u);
         }
-        public void AddDrawable(IMyDrawable u)
+        public void AddDrawable(IMyDrawable d)
         {
-            drawable.Add(u);
+            if(State != ManagerState.DRAWING)
+                drawable.Add(d);
+            else
+                bufferDrawable.Add(d);
         }
         public void RemoveDrawable(IMyDrawable d)
         {
-            drawable.Remove(d);
+            if(State != ManagerState.DRAWING)
+                drawable.Remove(d);
+            else
+                bufferDrawableRemove.Add(d);
         }
 
         public void AddBalloon(Balloon b)
@@ -113,7 +157,7 @@ namespace Game2
         public void RemoveBalloon(Balloon b)
         {
             balloons.Remove(b);
-            if(balloons.Count == 0)
+            if(balloons.Count == 0 && exit == null)
             {
                 NextLevel();
             }
@@ -124,51 +168,66 @@ namespace Game2
             return balloons.AsReadOnly();
         }
 
-        public bool NextLevel()
-        {
-            balloons.Clear();
-            updatable.Clear();
-            drawable.Clear();
-
-            level++;
-            if(level < Levels.levelCount)
-            {
-                Vector2 unopos;
-                Levels.getInstance().Initialize(level, world, content, out _map, out unopos);
-                map.LoadTileSheets(mapDisplayDevice);
-                foreach(Balloon b in GetBalloons())
-                {
-                    b.LoadContent(content);
-                }
-
-                uno.Initialize(unoTexture, unopos, world);
-                return true;
-            }
-            else
-            {
-                level--;
-            }
-            return false;
-        }
-
-        public void ResetLevel()
+        private void ClearLevel()
         {
             foreach(var b in balloons)
             {
                 b.Destroy();
             }
+            foreach(var d in destroyable)
+            {
+                d.Destroy();
+            }
             balloons.Clear();
             updatable.Clear();
             drawable.Clear();
+        }
 
+        private void LoadLevel(uint level)
+        {
+            ClearLevel();
             Vector2 unopos;
-            Levels.getInstance().Initialize(level, world, content, out _map, out unopos);
+            ExitPortal tmpExitPortal;
+            Levels.getInstance().Initialize(level, world, content, out _map, out unopos, out tmpExitPortal);
+            exit = tmpExitPortal;
             map.LoadTileSheets(mapDisplayDevice);
             foreach(Balloon b in GetBalloons())
             {
                 b.LoadContent(content);
             }
+
             uno.Initialize(unoTexture, unopos, world);
+        }
+
+        public bool NextLevel()
+        {
+            bool ret = false;
+            level++;
+            if(level < Levels.levelCount)
+            {
+                ret = true;
+            }
+            else
+            {
+                level--;
+                ret = false;
+            }
+
+            if(State == ManagerState.UNSPECIFIED)
+            {
+                LoadLevel(level);
+            }
+            else
+            {
+                nextLevelCallDelay = true;
+            }
+
+            return ret;
+        }
+
+        public void ResetLevel()
+        {
+            LoadLevel(level);
         }
 
         public void Initialize(Game game, ContentManager content, ref GraphicsDeviceManager  graphics)
@@ -186,6 +245,8 @@ namespace Game2
             mapDisplayDevice = new XnaDisplayDevice(content, graphics.GraphicsDevice);
 
             viewport = new xTile.Dimensions.Rectangle(new Size(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight));
+
+            nextLevelCallDelay = false;
         }
 
         public void LoadContent(ContentManager content)
@@ -204,17 +265,14 @@ namespace Game2
                 textures[namePath.Key] = content.Load<Texture2D>(namePath.Value);
             }
 
-            Vector2 unopos;
-            Levels.getInstance().Initialize(level, world, content, out _map, out unopos);
-            map.LoadTileSheets(mapDisplayDevice);
-
+            textures["ExitPortal.0"] = content.Load<Texture2D>("Exit_Portal_01");
+            textures["ExitPortal.1"] = content.Load<Texture2D>("Exit_Portal_02");
+            textures["ExitPortal.2"] = content.Load<Texture2D>("Exit_Portal_03");
+            textures["ExitPortal.3"] = content.Load<Texture2D>("Exit_Portal_04");
+            textures["ExitPortal.4"] = content.Load<Texture2D>("Exit_Portal_05");
             unoTexture = content.Load<Texture2D>("Uno_base");
-            uno.Initialize(unoTexture, unopos, world);
 
-            foreach(Balloon b in GetBalloons())
-            {
-                b.LoadContent(content);
-            }
+            LoadLevel(level);
         }
 
         public void UnloadContent(ContentManager content)
@@ -239,11 +297,23 @@ namespace Game2
                 ResetLevel();
             }
 
+            State = ManagerState.UPDATING;
             foreach(var u in updatable)
             {
                 u.Update(gameTime);
 
             }
+            foreach(var u in bufferUpdatable)
+            {
+                updatable.Add(u);
+            }
+            bufferUpdatable.Clear();
+            foreach(var u in bufferUpdatableRemove)
+            {
+                updatable.Remove(u);
+            }
+            bufferUpdatableRemove.Clear();
+            State = ManagerState.UNSPECIFIED;
 
 
             List<Balloon> removed = new List<Balloon>();
@@ -278,16 +348,36 @@ namespace Game2
 
                 balloon = null;
             }
+
+            //load level after the updating so collections are not modified while
+            //updating
+            if(nextLevelCallDelay)
+            {
+                nextLevelCallDelay = false;
+                LoadLevel(level);
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             map.Draw(mapDisplayDevice, viewport);
 
+            State = ManagerState.DRAWING;
             foreach(var d in drawable)
             {
                 d.Draw(spriteBatch);
             }
+            foreach(var d in bufferDrawable)
+            {
+                drawable.Add(d);
+            }
+            bufferDrawable.Clear();
+            foreach(var d in bufferDrawableRemove)
+            {
+                drawable.Remove(d);
+            }
+            bufferDrawableRemove.Clear();
+            State = ManagerState.UNSPECIFIED;
 
             uno.Draw(spriteBatch);
 

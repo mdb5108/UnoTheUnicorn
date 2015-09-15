@@ -13,7 +13,7 @@ using Game2;
 
 namespace MonoGame_Test
 {
-    class Walls
+    class Walls : IMyDestroyable
     {
         protected enum Orientation {HORIZONTAL, VERTICAL, EQUAL};
 
@@ -39,6 +39,7 @@ namespace MonoGame_Test
             _aura.BodyName = "aura";
             _aura.IsSensor = true;*/
 
+            GameManager.getInstance().AddDestroyable(this);
         }
 
         public Walls(string magneticAttribute, World world, uint width, uint height, Point pos, bool Static)

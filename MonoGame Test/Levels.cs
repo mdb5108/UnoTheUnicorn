@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +27,7 @@ namespace levels
 
         private static readonly float[] BALLOON_SPEEDS = {1f, 2f, 3f};
         private static readonly float[] WALL_SPEEDS = {1f, 2f, 3f};
+        private static readonly float[] WALL_TIMES = {3f, 5f, 7f};
 
         private static Levels levelInstance;
 
@@ -39,6 +40,8 @@ namespace levels
 
         private static readonly string[] levels = {
             "Content\\Map1.tbin",
+
+            "Content\\Kenny Demo Level 3.tbin",
             "Content\\BouncyGym1.tbin",
             "Content\\KennyDemoLevel1.tbin",
             "Content\\KennyDemoLevel2.tbin",
@@ -71,7 +74,7 @@ namespace levels
             return levelInstance;
         }
 
-        public void Initialize(uint level,World world, ContentManager content, out Map map, out Vector2 unoPos)
+        public void Initialize(uint level,World world, ContentManager content, out Map map, out Vector2 unoPos, out ExitPortal exit)
         {
             foreach(var wall in walls)
             {
@@ -81,13 +84,14 @@ namespace levels
             var stream = TitleContainer.OpenStream(levels[level]);
             map = xTile.Format.FormatManager.Instance.BinaryFormat.Load(stream);
 
-            ParseMap(ref map, world, content, out unoPos);
+            ParseMap(ref map, world, content, out unoPos, out exit);
         }
 
-        private void ParseMap(ref Map map, World world, ContentManager content, out Vector2 unoPos)
+        private void ParseMap(ref Map map, World world, ContentManager content, out Vector2 unoPos, out ExitPortal exit)
         {
             var layerCount = map.Layers.Count;
             Vector2 tempUnoPos = new Vector2();
+            ExitPortal tmpExitPortal = null;
 
             xTile.Layers.Layer platformLayer = map.Layers.First((x) => x.Id == "Platform Layer");
             xTile.Layers.Layer moveablePlatformLayer = map.Layers.First((x) => x.Id == "Movable Platform Layer");
@@ -96,7 +100,9 @@ namespace levels
             xTile.Layers.Layer startLayer = map.Layers.First((x) => x.Id == "Start Position Layer");
             xTile.Layers.Layer balloonLayer = map.Layers.First((x) => x.Id == "Balloon Layer");
             xTile.Layers.Layer speedLayer = map.Layers.First((x) => x.Id == "Speed Modifier Layer");
+            xTile.Layers.Layer timeLayer = map.Layers.FirstOrDefault((x) => x.Id == "Time Modifier Layer");
             xTile.Layers.Layer triggerLayer = map.Layers.First((x) => x.Id == "Trigger Groups");
+            xTile.Layers.Layer portalLayer = map.Layers.FirstOrDefault((x) => x.Id == "Portal Layer");
 
             ParseTiles(platformLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
             {
@@ -145,6 +151,19 @@ namespace levels
             {
                 pointToSpeedAggregate = pointToAggregate;
             });
+
+            Dictionary<Point, TileAggregate> pointToTimeAggregate = null;
+            if(timeLayer != null)
+            {
+                ParseTiles(timeLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+                {
+                    pointToTimeAggregate = pointToAggregate;
+                });
+            }
+            else
+            {
+                pointToTimeAggregate = new Dictionary<Point, TileAggregate>();
+            }
 
             Dictionary<string, List<IActivateable>> activators = new Dictionary<string, List<IActivateable>>();
             Dictionary<Point, TileAggregate> pointToTriggerAggregate = null;
@@ -204,7 +223,29 @@ namespace levels
                                     break;
                             }
                         }
-                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, 5f, destination, speed);
+
+                        TileAggregate timeAggregate;
+                        string timeName;
+                        float time = WALL_TIMES[0];
+                        if(pointToTimeAggregate.TryGetValue(new Point(rect.X, rect.Y), out timeAggregate)
+                                && timeAggregate.type == "Time Modifier"
+                                && timeAggregate.properties.TryGetValue("Time", out timeName))
+                        {
+                            switch(timeName)
+                            {
+                                case "Short":
+                                    time = WALL_TIMES[0];
+                                    break;
+                                default:
+                                case "Med":
+                                    time = WALL_TIMES[1];
+                                    break;
+                                case "Long":
+                                    time = WALL_TIMES[2];
+                                    break;
+                            }
+                        }
+                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, time, destination, speed);
 
                         walls.Add(wall);
                         TileAggregate trigger;
@@ -300,8 +341,28 @@ namespace levels
                 }
             });
 
+            if(portalLayer != null)
+            {
+                ParseTiles(portalLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+                {
+                    foreach(var aggregate in aggregates)
+                    {
+                        if(aggregate.type == "Exit")
+                        {
+                            float tileSize = GameManager.TILE_SIZE;
+                            Rectangle rect = aggregate.rect;
+                            tmpExitPortal = new ExitPortal(rect.Location);
+                        }
+                    }
+                });
+            }
+
             //Remove Non Static Layers
+            if(portalLayer != null)
+                map.RemoveLayer(portalLayer);
             map.RemoveLayer(triggerLayer);
+            if(timeLayer != null)
+                map.RemoveLayer(timeLayer);
             map.RemoveLayer(speedLayer);
             map.RemoveLayer(balloonLayer);
             map.RemoveLayer(startLayer);
@@ -311,6 +372,7 @@ namespace levels
             map.RemoveLayer(zoneLayer);
 
             unoPos = tempUnoPos;
+            exit = tmpExitPortal;
         }
 
         delegate void AggregateTileHandler(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate);
