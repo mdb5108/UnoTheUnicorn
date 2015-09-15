@@ -96,12 +96,9 @@ namespace MonoGame_Test
           
             Texture = Content.Load<Texture2D>(path);
 
-
-      
             string tempPath = "PopImg";
             popTexture = Content.Load<Texture2D>(tempPath);
-                
-           
+
         }
 
         public void UnloadContent()
