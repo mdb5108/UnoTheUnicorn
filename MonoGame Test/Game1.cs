@@ -81,7 +81,7 @@ namespace MonoGame_Test
 
             font = Content.Load<SpriteFont>("TestingFont");
 
-            bgs = Content.Load<Song>("test");
+            bgs = Content.Load<Song>("sound/background_music");
             MediaPlayer.Play(bgs);
 
         }
