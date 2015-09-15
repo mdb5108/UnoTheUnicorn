@@ -25,3 +25,45 @@
 /processorParam:Quality=Best
 /build:test.mp3
 
+#begin sound/background_music.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sound/background_music.mp3
+
+#begin sound/balloon_pop.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sound/balloon_pop.mp3
+
+#begin sound/blocks_moving.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sound/blocks_moving.mp3
+
+#begin sound/Castle_Crashers_Music.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sound/Castle_Crashers_Music.mp3
+
+#begin sound/footstep.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sound/footstep.mp3
+
+#begin sound/level_win.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sound/level_win.mp3
+
+#begin sound/magnetic_field.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sound/magnetic_field.mp3
+
