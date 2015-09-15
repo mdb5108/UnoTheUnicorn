@@ -20,6 +20,7 @@ namespace pony
     {
         public Texture2D UnicornTexture;
         public Texture2D []HairTexture;
+        public Texture2D EyePopTexture;
         private byte hairAmout = 4;    
         private string[] colorPath = {"blue","green","orange","yellow"};
         private int colorIndex = 0;
@@ -60,6 +61,9 @@ namespace pony
         private string touchingcolor = "n";
         private Keys rightDirectionKey;
         private Keys leftDirectionKey;
+        private bool displayEyePop = false;
+        private float eyePopThreshold = 0;
+
         enum direction
         {
             floor,
@@ -131,6 +135,7 @@ namespace pony
             _body = BodyFactory.CreateRectangle(world,
                                                 ConvertUnits.ToSimUnits(96),
                                                 ConvertUnits.ToSimUnits(96), 0f);
+
             _body.BodyType = BodyType.Dynamic;
             _body.Restitution = 0f;
             _body.Friction = 0f;
@@ -148,6 +153,7 @@ namespace pony
                 string tempPath = "Uno_body_" + colorPath[i].ToString();
                 HairTexture[i] = Content.Load<Texture2D>(tempPath);
             }
+            EyePopTexture = Content.Load<Texture2D>("Uno_eye");
 
             ChangeHair("");
         }
@@ -226,8 +232,10 @@ namespace pony
         public void Update(GameTime gametime,float dt,World world)
         {
             deltaTime = dt;
-            Position = ConvertUnits.ToDisplayUnits(_body.Position.X-0.6f,
-                                                    _body.Position.Y-0.7f);
+
+            Position = ConvertUnits.ToDisplayUnits(_body.Position.X-ConvertUnits.ToSimUnits(width/2),
+                                                    _body.Position.Y-ConvertUnits.ToSimUnits(height/2)-ConvertUnits.ToSimUnits(height/16));
+            
 
             CheckTriggers();
 
@@ -264,6 +272,7 @@ namespace pony
             CheckColor(dt);
             KeyBoardInput(dt);
             RayCast(world);
+            DisplayEyePop(dt);
         }
 
        void RayCast(World world)
@@ -431,12 +440,27 @@ namespace pony
                     CurrentColor = color.n;
                     break;
             }
+            
 
             if (touchingcolor != CurrentColor.ToString())
             {
                 contactFloorName = "f";
             }
+        }
 
+        public void EyePop()
+        {
+            displayEyePop = true;
+        }
+        void DisplayEyePop(float dt)
+        {
+            if (!displayEyePop) return;
+            eyePopThreshold += dt;
+            if (eyePopThreshold >= 0.5f)
+            {
+                displayEyePop = false;
+                eyePopThreshold = 0;
+            }
         }
 
         void KeyBoardInput(float dt)
@@ -533,7 +557,7 @@ namespace pony
                             imageDirection = SpriteEffects.FlipHorizontally;
                         break;
                 }
-                Vector2 relativeCenter = new Vector2(width/2, height/2);
+                Vector2 relativeCenter = new Vector2(width/2, (height/2)+(height/16));
                
                 if (colorStatu != "normal")
                 {
@@ -541,8 +565,14 @@ namespace pony
                 }else
                 {
                     spritebatch.Draw(UnicornTexture, Position + relativeCenter, null, Color.White, rotation, relativeCenter, 1f, imageDirection, 0f);
+                 
+                }
+
+            if (displayEyePop)
+                {
+               
+                spritebatch.Draw(EyePopTexture, Position + relativeCenter, null, Color.White, rotation, relativeCenter, 1f, imageDirection, 0f);
             }
-            
         }
 
         double ConvertDegreetoRadians(float degree)

@@ -273,6 +273,7 @@ namespace Game2
                 if (balloon!=null)
                 {
                     uno.ChangeHair(balloon.path);
+                    uno.EyePop();
                 }
 
                 balloon = null;
