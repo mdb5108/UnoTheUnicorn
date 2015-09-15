@@ -499,37 +499,37 @@ namespace pony
         public void Draw(SpriteBatch spritebatch)
         {
                 float rotation = 0f;
-                const float VEL_THRESHOLD = .5f;
+                const float VEL_THRESHOLD = 1f;
 
                 switch(Direction)
                 {
                     case  direction.floor:
                     default:
                         rotation = 0f;
-                        if(RightVeltoCheck > VEL_THRESHOLD)
+                        if(rightkey || (!leftkey && RightVeltoCheck > VEL_THRESHOLD))
                             imageDirection = SpriteEffects.FlipHorizontally;
-                        else if(RightVeltoCheck < -VEL_THRESHOLD)
+                        else if(leftkey || (!rightkey && RightVeltoCheck < -VEL_THRESHOLD))
                             imageDirection = SpriteEffects.None;
                         break;
                     case direction.leftwall:
                         rotation = (float)(.5f * Math.PI);
-                        if(RightVeltoCheck > VEL_THRESHOLD)
+                        if(rightkey || (!leftkey && RightVeltoCheck > VEL_THRESHOLD))
                             imageDirection = SpriteEffects.FlipHorizontally;
-                        else if(RightVeltoCheck < -VEL_THRESHOLD)
+                        else if(leftkey || (!rightkey && RightVeltoCheck < -VEL_THRESHOLD))
                             imageDirection = SpriteEffects.None;
                         break;
                     case direction.rightwall:
                         rotation = (float)(1.5f * Math.PI);
-                        if(RightVeltoCheck > VEL_THRESHOLD)
+                        if(rightkey || (!leftkey && RightVeltoCheck > VEL_THRESHOLD))
                             imageDirection = SpriteEffects.None;
-                        else if(RightVeltoCheck < -VEL_THRESHOLD)
+                        else if(leftkey || (!rightkey && RightVeltoCheck < -VEL_THRESHOLD))
                             imageDirection = SpriteEffects.FlipHorizontally;
                         break;
                     case direction.ceiling:
                         rotation = (float)Math.PI;
-                        if(RightVeltoCheck > VEL_THRESHOLD)
+                        if(rightkey || (!leftkey && RightVeltoCheck > VEL_THRESHOLD))
                             imageDirection = SpriteEffects.None;
-                        else if(RightVeltoCheck < -VEL_THRESHOLD)
+                        else if(leftkey || (!rightkey && RightVeltoCheck < -VEL_THRESHOLD))
                             imageDirection = SpriteEffects.FlipHorizontally;
                         break;
                 }
