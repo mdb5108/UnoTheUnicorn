@@ -34,7 +34,7 @@ namespace MonoGame_Test
 
         private bool activated;
 
-        private static readonly float SPEED = 1f;
+        private float speed;
         private Vector2 direction;
 
         private Vector2 bodyOffset;
@@ -77,13 +77,15 @@ namespace MonoGame_Test
             }
         }
 
-        public MovableWall(string magneticAttribute, World world, uint width, uint height, Point pos, float activationTime, Point activatedPosition)
+        public MovableWall(string magneticAttribute, World world, uint width, uint height, Point pos, float activationTime, Point activatedPosition, float speed)
         : base(magneticAttribute, world, width, height, pos, false)
         {
             float tileSize = GameManager.TILE_SIZE;
             this.activationTime = activationTime;
             this.curActivatedTime = 0;
             this.activated = false;
+
+            this.speed = speed;
 
             _body.BodyType = BodyType.Kinematic;
             foreach(var aura in _aura)
@@ -135,7 +137,7 @@ namespace MonoGame_Test
                 return true;
 
             Vector2 difference = ConvertUnits.ToSimUnits(targetPosition - Position);
-            Vector2 velocity = SPEED*Vector2.Normalize(difference);
+            Vector2 velocity = speed*Vector2.Normalize(difference);
             if(difference.Length() >= (((float)gameTime.ElapsedGameTime.TotalSeconds)*velocity).Length())
             {
                 SetLinearVelocity(velocity);

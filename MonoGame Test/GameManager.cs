@@ -153,6 +153,10 @@ namespace Game2
 
         public void ResetLevel()
         {
+            foreach(var b in balloons)
+            {
+                b.Destroy();
+            }
             balloons.Clear();
             updatable.Clear();
             drawable.Clear();

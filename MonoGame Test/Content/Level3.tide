@@ -754,7 +754,7 @@
       </TileArray>
       <Properties />
     </Layer>
-    <Layer Id="Movable Platforms Layer" Visible="True">
+    <Layer Id="Movable Platform Layer" Visible="True">
       <Description><![CDATA[]]></Description>
       <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
       <TileArray>
