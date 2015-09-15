@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,6 +27,7 @@ namespace levels
 
         private static readonly float[] BALLOON_SPEEDS = {1f, 2f, 3f};
         private static readonly float[] WALL_SPEEDS = {1f, 2f, 3f};
+        private static readonly float[] WALL_TIMES = {3f, 5f, 7f};
 
         private static Levels levelInstance;
 
@@ -38,11 +39,13 @@ namespace levels
         private Unicorn Uno;
 
         private static readonly string[] levels = {
+            "Content\\Map1.tbin",
+
+            "Content\\Kenny Demo Level 3.tbin",
             "Content\\BouncyGym1.tbin",
             "Content\\KennyDemoLevel1.tbin",
             "Content\\KennyDemoLevel2.tbin",
             "Content\\Level3.tbin",
-            "Content\\Map1.tbin",
             "Content\\DemoLevelConcept3.tbin",
             
             
@@ -97,6 +100,7 @@ namespace levels
             xTile.Layers.Layer startLayer = map.Layers.First((x) => x.Id == "Start Position Layer");
             xTile.Layers.Layer balloonLayer = map.Layers.First((x) => x.Id == "Balloon Layer");
             xTile.Layers.Layer speedLayer = map.Layers.First((x) => x.Id == "Speed Modifier Layer");
+            xTile.Layers.Layer timeLayer = map.Layers.FirstOrDefault((x) => x.Id == "Time Modifier Layer");
             xTile.Layers.Layer triggerLayer = map.Layers.First((x) => x.Id == "Trigger Groups");
             xTile.Layers.Layer portalLayer = map.Layers.FirstOrDefault((x) => x.Id == "Portal Layer");
 
@@ -147,6 +151,19 @@ namespace levels
             {
                 pointToSpeedAggregate = pointToAggregate;
             });
+
+            Dictionary<Point, TileAggregate> pointToTimeAggregate = null;
+            if(timeLayer != null)
+            {
+                ParseTiles(timeLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+                {
+                    pointToTimeAggregate = pointToAggregate;
+                });
+            }
+            else
+            {
+                pointToTimeAggregate = new Dictionary<Point, TileAggregate>();
+            }
 
             Dictionary<string, List<IActivateable>> activators = new Dictionary<string, List<IActivateable>>();
             Dictionary<Point, TileAggregate> pointToTriggerAggregate = null;
@@ -206,7 +223,29 @@ namespace levels
                                     break;
                             }
                         }
-                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, 5f, destination, speed, content);
+
+                        TileAggregate timeAggregate;
+                        string timeName;
+                        float time = WALL_TIMES[0];
+                        if(pointToTimeAggregate.TryGetValue(new Point(rect.X, rect.Y), out timeAggregate)
+                                && timeAggregate.type == "Time Modifier"
+                                && timeAggregate.properties.TryGetValue("Time", out timeName))
+                        {
+                            switch(timeName)
+                            {
+                                case "Short":
+                                    time = WALL_TIMES[0];
+                                    break;
+                                default:
+                                case "Med":
+                                    time = WALL_TIMES[1];
+                                    break;
+                                case "Long":
+                                    time = WALL_TIMES[2];
+                                    break;
+                            }
+                        }
+                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, time, destination, speed, content);
 
                         walls.Add(wall);
                         TileAggregate trigger;
@@ -322,6 +361,8 @@ namespace levels
             if(portalLayer != null)
                 map.RemoveLayer(portalLayer);
             map.RemoveLayer(triggerLayer);
+            if(timeLayer != null)
+                map.RemoveLayer(timeLayer);
             map.RemoveLayer(speedLayer);
             map.RemoveLayer(balloonLayer);
             map.RemoveLayer(startLayer);
