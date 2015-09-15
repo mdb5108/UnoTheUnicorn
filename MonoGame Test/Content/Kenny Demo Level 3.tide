@@ -1,0 +1,1810 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Map Id="Map3">
+  <Description><![CDATA[]]></Description>
+  <TileSheets>
+    <TileSheet Id="BalloonBlue_balloon">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[Balloon_blue.png]]></ImageSource>
+      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[b]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="BalloonGreen_balloon">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[Balloon_green.png]]></ImageSource>
+      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[g]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="BalloonOrange_balloon">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[Balloon_orange.png]]></ImageSource>
+      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[o]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="BalloonYellow_balloon">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[Balloon_yellow.png]]></ImageSource>
+      <Alignment SheetSize="2 x 2" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Balloon]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[y]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="BlueZone_zone">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[BlueZone.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Zone]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[b]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="DungeonCeiling_wall">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[StoneDungeonCeiling.png]]></ImageSource>
+      <Alignment SheetSize="8 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Wall]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="ExitPortal_exit">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[Exit_Portal_Editor.png]]></ImageSource>
+      <Alignment SheetSize="8 x 8" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Exit]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Fast_speed">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[SpeedFast.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Speed Modifier]]></Property>
+        <Property Key="Speed" Type="String"><![CDATA[Fast]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Medium_speed">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[SpeedMed.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Speed Modifier]]></Property>
+        <Property Key="Speed" Type="String"><![CDATA[Med]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="MetalWallBlue_wall">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_Blue.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Magnetic Wall]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[b]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="MetalWallGreen_wall">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_Green.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Magnetic Wall]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[g]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="MetalWallOrange_wall">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_Orange.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Magnetic Wall]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[o]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="MetalWallYellow_wall">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_Yellow.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Magnetic Wall]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[y]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="RedZone_zone">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[RedZone.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Zone]]></Property>
+        <Property Key="Color" Type="String"><![CDATA[r]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="SideWalkDungeon_wall">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[SidewalkDungeon.png]]></ImageSource>
+      <Alignment SheetSize="8 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Wall]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Slow_speed">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[SpeedSlow.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Speed Modifier]]></Property>
+        <Property Key="Speed" Type="String"><![CDATA[Slow]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="StoneDungeon_bg">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[StoneDungeon_bg.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="256 x 256" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties />
+    </TileSheet>
+    <TileSheet Id="StoneWall_wall">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_Stone.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Wall]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Trigger1_trigger">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_one.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Trigger]]></Property>
+        <Property Key="Number" Type="Int32"><![CDATA[1]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Trigger2_trigger">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_two.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Trigger]]></Property>
+        <Property Key="Number" Type="Int32"><![CDATA[2]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Trigger3_trigger">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_three.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Trigger]]></Property>
+        <Property Key="Number" Type="Int32"><![CDATA[3]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="Trigger4_trigger">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[PlatformTile_four.png]]></ImageSource>
+      <Alignment SheetSize="1 x 1" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Trigger]]></Property>
+        <Property Key="Number" Type="Int32"><![CDATA[4]]></Property>
+      </Properties>
+    </TileSheet>
+    <TileSheet Id="UnoStart_uno">
+      <Description><![CDATA[]]></Description>
+      <ImageSource><![CDATA[UnoEditor.png]]></ImageSource>
+      <Alignment SheetSize="4 x 4" TileSize="32 x 32" Margin="0 x 0" Spacing="0 x 0" />
+      <Properties>
+        <Property Key="Type" Type="String"><![CDATA[Uno]]></Property>
+      </Properties>
+    </TileSheet>
+  </TileSheets>
+  <Layers>
+    <Layer Id="Background Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="6 x 4" TileSize="256 x 256" />
+      <TileArray>
+        <Row>
+          <TileSheet Ref="StoneDungeon_bg" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Base Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Portal Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <TileSheet Ref="ExitPortal_exit" />
+          <Static Index="10" BlendMode="Alpha" />
+          <Static Index="11" BlendMode="Alpha" />
+          <Static Index="12" BlendMode="Alpha" />
+          <Static Index="13" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="18" BlendMode="Alpha" />
+          <Static Index="19" BlendMode="Alpha" />
+          <Static Index="20" BlendMode="Alpha" />
+          <Static Index="21" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="26" BlendMode="Alpha" />
+          <Static Index="27" BlendMode="Alpha" />
+          <Static Index="28" BlendMode="Alpha" />
+          <Static Index="29" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="34" BlendMode="Alpha" />
+          <Static Index="35" BlendMode="Alpha" />
+          <Static Index="36" BlendMode="Alpha" />
+          <Static Index="37" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="42" BlendMode="Alpha" />
+          <Static Index="43" BlendMode="Alpha" />
+          <Static Index="44" BlendMode="Alpha" />
+          <Static Index="45" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="50" BlendMode="Alpha" />
+          <Static Index="51" BlendMode="Alpha" />
+          <Static Index="52" BlendMode="Alpha" />
+          <Static Index="53" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Platform Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <TileSheet Ref="DungeonCeiling_wall" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Static Index="7" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Static Index="7" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Static Index="7" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Static Index="7" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Static Index="7" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Static Index="7" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <TileSheet Ref="StoneWall_wall" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="46" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="39" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+        </Row>
+        <Row>
+          <TileSheet Ref="SideWalkDungeon_wall" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Movable Platform Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="37" />
+          <TileSheet Ref="MetalWallGreen_wall" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="32" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="30" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="13" />
+        </Row>
+        <Row>
+          <Null Count="21" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="25" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="23" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="20" />
+        </Row>
+        <Row>
+          <Null Count="28" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="18" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="16" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="11" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="34" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Zones Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="37" />
+          <TileSheet Ref="RedZone_zone" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="37" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="37" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="22" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="22" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="22" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="15" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="8" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="8" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="8" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="8" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="3" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="4" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="1" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Start Position Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <TileSheet Ref="UnoStart_uno" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="4" BlendMode="Alpha" />
+          <Static Index="5" BlendMode="Alpha" />
+          <Static Index="6" BlendMode="Alpha" />
+          <Static Index="7" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="8" BlendMode="Alpha" />
+          <Static Index="9" BlendMode="Alpha" />
+          <Static Index="10" BlendMode="Alpha" />
+          <Static Index="11" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="1" />
+          <Static Index="12" BlendMode="Alpha" />
+          <Static Index="13" BlendMode="Alpha" />
+          <Static Index="14" BlendMode="Alpha" />
+          <Static Index="15" BlendMode="Alpha" />
+          <Null Count="43" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Balloon Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="26" />
+          <TileSheet Ref="BalloonBlue_balloon" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="20" />
+        </Row>
+        <Row>
+          <Null Count="26" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="20" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="41" />
+          <TileSheet Ref="BalloonYellow_balloon" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="5" />
+        </Row>
+        <Row>
+          <Null Count="41" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="5" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="6" />
+          <TileSheet Ref="BalloonGreen_balloon" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="27" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Static Index="1" BlendMode="Alpha" />
+          <Null Count="11" />
+        </Row>
+        <Row>
+          <Null Count="6" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="27" />
+          <Static Index="2" BlendMode="Alpha" />
+          <Static Index="3" BlendMode="Alpha" />
+          <Null Count="11" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Speed Modifier Layer" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+    <Layer Id="Trigger Groups" Visible="True">
+      <Description><![CDATA[]]></Description>
+      <Dimensions LayerSize="48 x 32" TileSize="32 x 32" />
+      <TileArray>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="37" />
+          <TileSheet Ref="Trigger1_trigger" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="10" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="14" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="33" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="30" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="17" />
+        </Row>
+        <Row>
+          <Null Count="21" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="26" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="23" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="24" />
+        </Row>
+        <Row>
+          <Null Count="28" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="19" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="16" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="18" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="12" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="9" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="38" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="6" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="28" />
+          <Static Index="0" BlendMode="Alpha" />
+          <Null Count="12" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+        <Row>
+          <Null Count="48" />
+        </Row>
+      </TileArray>
+      <Properties />
+    </Layer>
+  </Layers>
+  <Properties />
+</Map>
