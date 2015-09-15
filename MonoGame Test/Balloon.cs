@@ -117,6 +117,9 @@ namespace MonoGame_Test
 
             if (Math.Abs(distance) < 96)
             {
+                ExitPortal exit = GameManager.getInstance().exit;
+                if(isActive && exit != null)
+                    exit.IncreasePhase();
                 isActive = false;
                 Destroy();
 

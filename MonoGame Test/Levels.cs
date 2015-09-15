@@ -71,7 +71,7 @@ namespace levels
             return levelInstance;
         }
 
-        public void Initialize(uint level,World world, ContentManager content, out Map map, out Vector2 unoPos)
+        public void Initialize(uint level,World world, ContentManager content, out Map map, out Vector2 unoPos, out ExitPortal exit)
         {
             foreach(var wall in walls)
             {
@@ -81,13 +81,14 @@ namespace levels
             var stream = TitleContainer.OpenStream(levels[level]);
             map = xTile.Format.FormatManager.Instance.BinaryFormat.Load(stream);
 
-            ParseMap(ref map, world, content, out unoPos);
+            ParseMap(ref map, world, content, out unoPos, out exit);
         }
 
-        private void ParseMap(ref Map map, World world, ContentManager content, out Vector2 unoPos)
+        private void ParseMap(ref Map map, World world, ContentManager content, out Vector2 unoPos, out ExitPortal exit)
         {
             var layerCount = map.Layers.Count;
             Vector2 tempUnoPos = new Vector2();
+            ExitPortal tmpExitPortal = null;
 
             xTile.Layers.Layer platformLayer = map.Layers.First((x) => x.Id == "Platform Layer");
             xTile.Layers.Layer moveablePlatformLayer = map.Layers.First((x) => x.Id == "Movable Platform Layer");
@@ -97,6 +98,7 @@ namespace levels
             xTile.Layers.Layer balloonLayer = map.Layers.First((x) => x.Id == "Balloon Layer");
             xTile.Layers.Layer speedLayer = map.Layers.First((x) => x.Id == "Speed Modifier Layer");
             xTile.Layers.Layer triggerLayer = map.Layers.First((x) => x.Id == "Trigger Groups");
+            xTile.Layers.Layer portalLayer = map.Layers.FirstOrDefault((x) => x.Id == "Portal Layer");
 
             ParseTiles(platformLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
             {
@@ -300,7 +302,25 @@ namespace levels
                 }
             });
 
+            if(portalLayer != null)
+            {
+                ParseTiles(portalLayer, delegate(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate)
+                {
+                    foreach(var aggregate in aggregates)
+                    {
+                        if(aggregate.type == "Exit")
+                        {
+                            float tileSize = GameManager.TILE_SIZE;
+                            Rectangle rect = aggregate.rect;
+                            tmpExitPortal = new ExitPortal(rect.Location);
+                        }
+                    }
+                });
+            }
+
             //Remove Non Static Layers
+            if(portalLayer != null)
+                map.RemoveLayer(portalLayer);
             map.RemoveLayer(triggerLayer);
             map.RemoveLayer(speedLayer);
             map.RemoveLayer(balloonLayer);
@@ -311,6 +331,7 @@ namespace levels
             map.RemoveLayer(zoneLayer);
 
             unoPos = tempUnoPos;
+            exit = tmpExitPortal;
         }
 
         delegate void AggregateTileHandler(List<TileAggregate> aggregates, Dictionary<Point, TileAggregate> pointToAggregate);
