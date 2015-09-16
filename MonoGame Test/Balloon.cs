@@ -6,6 +6,7 @@ using FarseerPhysics;
 using FarseerPhysics.Dynamics;
 using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
+using Microsoft.Xna.Framework.Audio;
 using pony;
 using Game2;
 namespace MonoGame_Test
@@ -32,6 +33,8 @@ namespace MonoGame_Test
         protected float speed = 0f;
         float range = 0f;
 
+        private SoundEffect popAudio;
+        
         public Balloon(Point position, ContentManager Content, string color, float speed, int range)
         {
             var tileSize = GameManager.TILE_SIZE;
@@ -99,6 +102,9 @@ namespace MonoGame_Test
             string tempPath = "PopImg";
             popTexture = Content.Load<Texture2D>(tempPath);
 
+
+            popAudio = Content.Load<SoundEffect>("sfx/balloon_pop");
+
         }
 
         public void UnloadContent()
@@ -120,8 +126,17 @@ namespace MonoGame_Test
                 ExitPortal exit = GameManager.getInstance().exit;
                 if(isActive && exit != null)
                     exit.IncreasePhase();
+
+                if (isActive)
+                {
+                    popAudio.Play();
+                }
+
                 isActive = false;
                 Destroy();
+
+                
+               
 
                 return this;
             }
@@ -146,7 +161,10 @@ namespace MonoGame_Test
 
             if (!isActive)
             {
-              
+
+
+                 
+                    
                    spriteBatch.Draw(popTexture, Position, null, Color.White, 0f, Vector2.Zero, 1f, SpriteEffects.None, 0f);
 
             }

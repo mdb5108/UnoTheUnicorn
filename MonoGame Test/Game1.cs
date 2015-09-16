@@ -36,8 +36,9 @@ namespace MonoGame_Test
         public string debugstring="Debuglog";
 
 
-        Song bgs;
-     
+        Song bgmusic;
+
+        SoundEffect wallMovingAudio;
         public Game1()
         {
             Height = 1024;
@@ -81,9 +82,15 @@ namespace MonoGame_Test
 
             font = Content.Load<SpriteFont>("TestingFont");
 
-            bgs = Content.Load<Song>("sound/background_music");
-            MediaPlayer.Play(bgs);
+            bgmusic = Content.Load<Song>("sound/Castle_Crashers_Music");
 
+            wallMovingAudio = Content.Load<SoundEffect>("sfx/blocks_moving");
+
+            MediaPlayer.Volume = 0.2f;
+
+            MediaPlayer.Play(bgmusic);
+
+            
         }
 
        

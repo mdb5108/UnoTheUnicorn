@@ -67,3 +67,33 @@
 /processorParam:Quality=Best
 /build:sound/magnetic_field.mp3
 
+#begin sfx/balloon_pop.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/balloon_pop.wav
+
+#begin sfx/blocks_moving.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/blocks_moving.wav
+
+#begin sfx/footstep.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/footstep.wav
+
+#begin sfx/level_up.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/level_up.wav
+
+#begin sfx/magnetic_field.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sfx/magnetic_field.wav
+

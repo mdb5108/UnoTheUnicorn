@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -39,12 +39,13 @@ namespace levels
         private Unicorn Uno;
 
         private static readonly string[] levels = {
+            "Content\\Map1.tbin",
+
             "Content\\Kenny Demo Level 3.tbin",
             "Content\\BouncyGym1.tbin",
             "Content\\KennyDemoLevel1.tbin",
             "Content\\KennyDemoLevel2.tbin",
             "Content\\Level3.tbin",
-            "Content\\Map1.tbin",
             "Content\\DemoLevelConcept3.tbin",
             
             
@@ -244,7 +245,7 @@ namespace levels
                                     break;
                             }
                         }
-                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, time, destination, speed);
+                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, time, destination, speed, content);
 
                         walls.Add(wall);
                         TileAggregate trigger;
