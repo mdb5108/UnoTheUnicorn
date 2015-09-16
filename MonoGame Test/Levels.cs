@@ -245,7 +245,7 @@ namespace levels
                                     break;
                             }
                         }
-                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, time, destination, speed);
+                        MovableWall wall = new MovableWall(aggregate.color, world, (uint)rect.Width, (uint)rect.Height, origin, time, destination, speed, content);
 
                         walls.Add(wall);
                         TileAggregate trigger;

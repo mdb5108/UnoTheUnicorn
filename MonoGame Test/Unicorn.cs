@@ -12,6 +12,7 @@ using FarseerPhysics.Dynamics.Contacts;
 using FarseerPhysics.Factories;
 using FarseerPhysics.Common;
 using MonoGame_Test;
+using Microsoft.Xna.Framework.Audio;
 
 using Microsoft.Xna.Framework.Content;
 namespace pony
@@ -61,6 +62,11 @@ namespace pony
         private string touchingcolor = "n";
         private Keys rightDirectionKey;
         private Keys leftDirectionKey;
+
+        private SoundEffect footstepAudio;
+
+        SoundEffectInstance footstepCopy;
+
         private bool displayEyePop = false;
         private float eyePopThreshold = 0;
 
@@ -115,6 +121,7 @@ namespace pony
         {
             this.Content = Content;
 
+
         }
 
         public void Initialize(Texture2D texture,Vector2 pos,World world)
@@ -156,6 +163,11 @@ namespace pony
             EyePopTexture = Content.Load<Texture2D>("Uno_eye");
 
             ChangeHair("");
+
+            footstepAudio = Content.Load<SoundEffect>("sfx/footstep");
+
+            footstepCopy = footstepAudio.CreateInstance();
+
         }
 
         public bool MyOnCollision(Fixture f1, Fixture f2, Contact contact)
@@ -466,7 +478,14 @@ namespace pony
         void KeyBoardInput(float dt)
         {
             //////////////////////////////////////////JUMP/////////////////////////////////////////////
-            
+            if (rightkey || leftkey )
+            {
+                if (footstepCopy.State == SoundState.Stopped)
+                {
+                    footstepCopy.Play();
+                }
+                
+            }
             
             if (spacekey)  // spacekey is true when key is pressed (works as a long press)
             {
