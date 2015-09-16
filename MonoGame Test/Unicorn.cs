@@ -279,7 +279,7 @@ namespace pony
             spacekey = !(!Keyboard.GetState().IsKeyDown(Keys.Space) | Keyboard.GetState().IsKeyUp(Keys.Space));
             rightkey = !(!Keyboard.GetState().IsKeyDown(rightDirectionKey) | Keyboard.GetState().IsKeyUp(rightDirectionKey)); // ~(~p|q)
             leftkey = !(!Keyboard.GetState().IsKeyDown(leftDirectionKey) | Keyboard.GetState().IsKeyUp(leftDirectionKey));
-
+       
             ChangeDirections(world,dt);
             CheckColor(dt);
             KeyBoardInput(dt);
@@ -505,7 +505,7 @@ namespace pony
             {
                 elapsedtime = 0;
             }
-            debugString = Jumps.ToString();
+            //debugString = Jumps.ToString();
             Jumps = hitting ? 0 : Jumps;
             /////////////////////////////////////////RIGHT///////////////////////////////////////////////
             if (rightkey)

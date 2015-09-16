@@ -224,6 +224,21 @@ namespace Game2
 
             return ret;
         }
+    
+        public bool BackLevel()
+        {
+            bool ret = false;
+            if (level >= 1) level--;
+
+            if(State == ManagerState.UNSPECIFIED)
+            {
+                LoadLevel(level);
+            }else
+            {
+                nextLevelCallDelay = true;
+            }
+            return ret;
+        }
 
         public void ResetLevel()
         {
@@ -281,6 +296,8 @@ namespace Game2
         }
 
         float t;
+        bool pressedN = false;
+        bool pressedB = false;
         public void Update(GameTime gameTime)
         {
              map.Update(gameTime.ElapsedGameTime.Milliseconds);
@@ -296,6 +313,26 @@ namespace Game2
             {
                 ResetLevel();
             }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.N))
+            {
+              if(!pressedN) NextLevel();
+                pressedN = true;
+            }else if(Keyboard.GetState().IsKeyUp(Keys.N))
+            {
+                pressedN = false;
+            }
+
+            if (Keyboard.GetState().IsKeyDown(Keys.B))
+            {
+                if (!pressedB) BackLevel();
+                pressedB = true;
+            }
+            else if (Keyboard.GetState().IsKeyUp(Keys.B))
+            {
+                pressedB = false;
+            }
+
 
             State = ManagerState.UPDATING;
             foreach(var u in updatable)
