@@ -12,6 +12,10 @@ using FarseerPhysics.DebugView;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Audio;
+
+
 using Game2;
 
 namespace MonoGame_Test
@@ -41,6 +45,12 @@ namespace MonoGame_Test
         private Vector2[] auraOffset;
 
         private Vector2 _Position;
+
+        private ContentManager Content;
+
+        private SoundEffect wallMovingAudio;
+        private SoundEffectInstance wallMovingCopy;
+
         public Vector2 Position
         {
             get
@@ -77,7 +87,7 @@ namespace MonoGame_Test
             }
         }
 
-        public MovableWall(string magneticAttribute, World world, uint width, uint height, Point pos, float activationTime, Point activatedPosition, float speed)
+        public MovableWall(string magneticAttribute, World world, uint width, uint height, Point pos, float activationTime, Point activatedPosition, float speed, ContentManager Content)
         : base(magneticAttribute, world, width, height, pos, false)
         {
             float tileSize = GameManager.TILE_SIZE;
@@ -86,6 +96,11 @@ namespace MonoGame_Test
             this.activated = false;
 
             this.speed = speed;
+
+            this.Content = Content;
+
+            wallMovingAudio = Content.Load<SoundEffect>("sfx/blocks_moving");
+            wallMovingCopy = wallMovingAudio.CreateInstance();
 
             _body.BodyType = BodyType.Kinematic;
             foreach(var aura in _aura)
@@ -179,6 +194,14 @@ namespace MonoGame_Test
                 activated = true;
                 curActivatedTime = 0;
             }
+
+
+            if (activated && wallMovingCopy.State != SoundState.Playing)
+            {
+                wallMovingCopy.Play();
+               
+            }
+
         }
 
         ~MovableWall()
