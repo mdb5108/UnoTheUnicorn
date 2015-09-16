@@ -11,8 +11,10 @@ using FarseerPhysics.DebugView;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
+
 
 using Game2;
 
@@ -43,10 +45,12 @@ namespace MonoGame_Test
         private Vector2[] auraOffset;
 
         private Vector2 _Position;
+
         private ContentManager Content;
 
         private SoundEffect wallMovingAudio;
         private SoundEffectInstance wallMovingCopy;
+
         public Vector2 Position
         {
             get
@@ -191,11 +195,13 @@ namespace MonoGame_Test
                 curActivatedTime = 0;
             }
 
+
             if (activated && wallMovingCopy.State != SoundState.Playing)
             {
                 wallMovingCopy.Play();
                
             }
+
         }
 
         ~MovableWall()
