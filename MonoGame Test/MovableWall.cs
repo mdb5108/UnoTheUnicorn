@@ -11,8 +11,11 @@ using FarseerPhysics.DebugView;
 
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Audio;
+
+
 using Game2;
 
 namespace MonoGame_Test
@@ -33,7 +36,7 @@ namespace MonoGame_Test
 
         private string color;
 
-        public bool activated;
+        private bool activated;
 
         private float speed;
         private Vector2 direction;
@@ -192,11 +195,13 @@ namespace MonoGame_Test
                 curActivatedTime = 0;
             }
 
+
             if (activated && wallMovingCopy.State != SoundState.Playing)
             {
                 wallMovingCopy.Play();
                
             }
+
         }
 
         ~MovableWall()

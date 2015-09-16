@@ -27,7 +27,8 @@ namespace levels
 
         private static readonly float[] BALLOON_SPEEDS = {1f, 2f, 3f};
         private static readonly float[] WALL_SPEEDS = {1f, 2f, 3f};
-        private static readonly float[] WALL_TIMES = {5f, 5f, 7f};
+
+        private static readonly float[] WALL_TIMES = {3f, 5f, 10f};
 
         private static Levels levelInstance;
 
@@ -39,7 +40,10 @@ namespace levels
         private Unicorn Uno;
 
         private static readonly string[] levels = {
-            //"Content\\Map1.tbin",
+
+            "Content\\RayDemo1.tbin",
+            "Content\\Map1.tbin",
+
             "Content\\Kenny Demo Level 3.tbin",
             "Content\\BouncyGym1.tbin",
             "Content\\KennyDemoLevel1.tbin",
@@ -225,7 +229,7 @@ namespace levels
 
                         TileAggregate timeAggregate;
                         string timeName;
-                        float time = WALL_TIMES[0];
+                        float time = WALL_TIMES[1];
                         if(pointToTimeAggregate.TryGetValue(new Point(rect.X, rect.Y), out timeAggregate)
                                 && timeAggregate.type == "Time Modifier"
                                 && timeAggregate.properties.TryGetValue("Time", out timeName))
