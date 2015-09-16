@@ -227,7 +227,7 @@ namespace levels
 
                         TileAggregate timeAggregate;
                         string timeName;
-                        float time = WALL_TIMES[0];
+                        float time = WALL_TIMES[1];
                         if(pointToTimeAggregate.TryGetValue(new Point(rect.X, rect.Y), out timeAggregate)
                                 && timeAggregate.type == "Time Modifier"
                                 && timeAggregate.properties.TryGetValue("Time", out timeName))
