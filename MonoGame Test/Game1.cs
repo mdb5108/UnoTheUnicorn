@@ -86,8 +86,11 @@ namespace MonoGame_Test
 
             wallMovingAudio = Content.Load<SoundEffect>("sfx/blocks_moving");
 
+            MediaPlayer.Volume = 0.2f;
+
             MediaPlayer.Play(bgmusic);
 
+            
         }
 
        
