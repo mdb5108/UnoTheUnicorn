@@ -295,6 +295,9 @@
     <None Include="Content\Map1.tide">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+    <Content Include="Content\RayDemo1.tbin">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Content\TestingFont.spritefont" />
   </ItemGroup>
   <ItemGroup>
