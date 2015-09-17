@@ -41,14 +41,14 @@ namespace levels
 
         private static readonly string[] levels = {
 
-            "Content\\RayDemo1.tbin",
-            "Content\\Map1.tbin",
-            "Content\\Kenny Demo Level 3.tbin",
             "Content\\BouncyGym1.tbin",
+            "Content\\Kenny Demo Level 3.tbin",
+            "Content\\RayDemo1.tbin",
             "Content\\KennyDemoLevel1.tbin",
             "Content\\KennyDemoLevel2.tbin",
-            "Content\\Level3.tbin",
+            //"Content\\Level3.tbin",
             "Content\\DemoLevelConcept3.tbin",
+            "Content\\Map1.tbin",
             
             
         };
